@@ -1,6 +1,6 @@
 # TimeView
 
- ## Systeem om werktijden van collega's of aanverwanten te raadplegen.
+### Systeem om werktijden van collega's of aanverwanten te raadplegen
  Hierbij gaan we ons vooral toespitsen op shiften in de zorgsector.
 
  We maken gebruik van volgende datasets:
