@@ -20,10 +20,10 @@ namespace TimeView.context.Migrations
             //
             // Add Schedules
             //
-            Schedule schedule1 = new Schedule { start = DateTime.Parse("2016-01-01 07:00"), end = DateTime.Parse("2016-01-01 09:00") };
-            Schedule schedule2 = new Schedule { start = DateTime.Parse("2016-01-02 14:00"), end = DateTime.Parse("2016-01-01 22:00") };
+            Schedule schedule1 = new Schedule { Start = DateTime.Parse("2016-01-01 07:00"), End = DateTime.Parse("2016-01-01 09:00") };
+            Schedule schedule2 = new Schedule { Start = DateTime.Parse("2016-01-02 14:00"), End = DateTime.Parse("2016-01-01 22:00") };
             context.Schedule.AddOrUpdate(
-             s => s.start,
+             s => s.Start,
                 schedule1,
                 schedule2
              );

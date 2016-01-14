@@ -7,10 +7,10 @@ namespace TimeView.data
     {
         public int Id { get; set; }
         public String Name { get; set; }
-
         public int CompanyId { get; set; }
         public Company Company { get; set; }
-
         public virtual ICollection<Schedule> Schedules { get; set; }
+        public virtual ICollection<Follower> Followers { get; set; }
+
     }
 }
