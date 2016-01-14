@@ -8,6 +8,6 @@ namespace TimeView.data
         public int Id { get; set; }
         public String Name { get; set; }
 
-        public List<Employee> Following { get; set; }
+        public virtual ICollection<Employee> Following { get; set; }
     }
 }

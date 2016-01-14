@@ -6,11 +6,11 @@ namespace TimeView.data
     public class Employee
     {
         public int Id { get; set; }
-        public int Name { get; set; }
+        public String Name { get; set; }
 
         public int CompanyId { get; set; }
         public Company Company { get; set; }
 
-        public List<Schedule> Schedules { get; set; }
+        public virtual ICollection<Schedule> Schedules { get; set; }
     }
 }
