@@ -8,7 +8,7 @@ using TimeView.data;
 
 namespace TimeView.context
 {
-    class TimeViewContext : DbContext
+    public class TimeViewContext : DbContext
     {
         public DbSet<Company> Company { get; set; }
         public DbSet<Employee> Employee { get; set; }
@@ -16,5 +16,10 @@ namespace TimeView.context
         public DbSet<Schedule> Schedule { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<CategoryEntry> CategoryEntry { get; set; }
+
+        public TimeViewContext()
+        {
+
+        }
     }
 }

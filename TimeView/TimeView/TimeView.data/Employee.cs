@@ -9,8 +9,8 @@ namespace TimeView.data
         public String Name { get; set; }
         public int CompanyId { get; set; }
         public Company Company { get; set; }
-        public virtual ICollection<Schedule> Schedules { get; set; }
-        public virtual ICollection<Follower> Followers { get; set; }
+        public virtual List<Schedule> Schedules { get; set; }
+        public virtual List<Follower> Followers { get; set; }
 
     }
 }
