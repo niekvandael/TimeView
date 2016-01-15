@@ -37,6 +37,8 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Category.cs" />
+    <Compile Include="CategoryEntry.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="Follower.cs" />

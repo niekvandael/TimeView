@@ -14,5 +14,7 @@ namespace TimeView.context
         public DbSet<Employee> Employee { get; set; }
         public DbSet<Follower> Follower { get; set; }
         public DbSet<Schedule> Schedule { get; set; }
+        public DbSet<Category> Category { get; set; }
+        public DbSet<CategoryEntry> CategoryEntry { get; set; }
     }
 }

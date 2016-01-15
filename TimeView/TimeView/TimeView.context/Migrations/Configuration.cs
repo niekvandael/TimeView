@@ -28,7 +28,21 @@ namespace TimeView.context.Migrations
                 schedule2
              );
 
+            //
+            // Add Category
+            //
+            Category category1 = new Category { Name = "Colors", CategorieEntries = new List<CategoryEntry>() };
 
+            //
+            // Add Category entries
+            //
+            CategoryEntry categoryEntry1 = new CategoryEntry { Category = category1, Name = "gray", Start = TimeSpan.Parse("09:00"), End = TimeSpan.Parse("17:00") };
+            CategoryEntry categoryEntry2 = new CategoryEntry { Category = category1, Name = "green", Start = TimeSpan.Parse("17:00"), End = TimeSpan.Parse("22:00") };
+
+            category1.CategorieEntries.Add(categoryEntry1);
+            category1.CategorieEntries.Add(categoryEntry2);
+
+            context.Category.AddOrUpdate(category1);
 
             //
             // Add companies
