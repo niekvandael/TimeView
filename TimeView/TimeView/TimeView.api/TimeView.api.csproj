@@ -239,18 +239,19 @@
     <Compile Include="Controllers\CategoryEntriesController.cs" />
     <Compile Include="Controllers\CompaniesController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
-    <Compile Include="Controllers\FollowersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SchedulesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Providers\TimeViewContext.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -330,10 +331,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TimeView.context\TimeView.context.csproj">
-      <Project>{5540039d-98b8-4624-b127-220bfa0ab2f5}</Project>
-      <Name>TimeView.context</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TimeView.data\TimeView.data.csproj">
       <Project>{57841a83-b2ee-45a9-98dd-1755cc81ee43}</Project>
       <Name>TimeView.data</Name>

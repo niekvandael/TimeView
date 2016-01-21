@@ -10,7 +10,7 @@ namespace TimeView.data
         public int CompanyId { get; set; }
         public Company Company { get; set; }
         public virtual List<Schedule> Schedules { get; set; }
-        public virtual List<Follower> Followers { get; set; }
+        public virtual List<Employee> Followers { get; set; }
 
     }
 }

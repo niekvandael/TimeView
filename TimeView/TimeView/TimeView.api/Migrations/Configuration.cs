@@ -1,4 +1,4 @@
-namespace TimeView.context.Migrations
+namespace TimeView.api.Migrations
 {
     using data;
     using System;
@@ -12,7 +12,6 @@ namespace TimeView.context.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(TimeView.context.TimeViewContext context)
@@ -48,7 +47,7 @@ namespace TimeView.context.Migrations
             // Add companies
             //
 
-            Company comp1 = new Company { Name = "UZ Antwerpen", Id = 0  };
+            Company comp1 = new Company { Name = "UZ Antwerpen", Id = 0 };
             Company comp2 = new Company { Name = "UZ Leuven", Id = 1 };
             context.Company.AddOrUpdate(
              c => c.Name,
@@ -60,11 +59,13 @@ namespace TimeView.context.Migrations
             // Add Employees
             //
 
-            Employee emp1 = new Employee { Name = "Chrissy Steegen", CompanyId = 0, Schedules = new List<Schedule>() };
+            Employee emp1 = new Employee { Name = "Chrissy Steegen", CompanyId = 0, Schedules = new List<Schedule>(), Followers = new List<Employee>() };
             emp1.Schedules.Add(schedule1);
 
-            Employee emp2 = new Employee { Name = "Liesbeth Ramaekers", CompanyId = 1, Schedules = new List<Schedule>() };
+            Employee emp2 = new Employee { Name = "Niek Vandael", CompanyId = 1, Schedules = new List<Schedule>(), Followers = new List<Employee>() };
             emp2.Schedules.Add(schedule2);
+
+            emp1.Followers.Add(emp2);
 
             context.Employee.AddOrUpdate(
              e => e.Name,
@@ -72,23 +73,6 @@ namespace TimeView.context.Migrations
                 emp2
              );
 
-
-            //
-            // Add Followers
-            //
-
-            Follower follower1 = new Follower { Name = "Niek Vandael", Following = new List<Employee>()  };
-            follower1.Following.Add(emp1);
-
-            Follower follower2 = new Follower { Name = "Kris Hermans", Following = new List<Employee>()  };
-            follower2.Following.Add(emp2);
-
-            context.Follower.AddOrUpdate(
-                f => f.Name,
-                follower1,
-                follower2
-             );
-            
             context.SaveChanges();
 
         }
