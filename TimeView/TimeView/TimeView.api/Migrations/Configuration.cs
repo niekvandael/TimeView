@@ -26,7 +26,7 @@ namespace TimeView.api.Migrations
                 schedule1,
                 schedule2
              );
-
+            
             //
             // Add Category
             //
@@ -42,27 +42,30 @@ namespace TimeView.api.Migrations
             category1.CategorieEntries.Add(categoryEntry2);
 
             context.Category.AddOrUpdate(category1);
-
+            
             //
             // Add companies
             //
 
-            Company comp1 = new Company { Name = "UZ Antwerpen", Id = 0 };
-            Company comp2 = new Company { Name = "UZ Leuven", Id = 1 };
+            Company comp1 = new Company { Name = "UZ Antwerpen"};
+            Company comp2 = new Company { Name = "UZ Leuven"};
             context.Company.AddOrUpdate(
              c => c.Name,
                 comp1,
                 comp2
              );
 
+            context.Company.AddOrUpdate(comp1);
+            context.Company.AddOrUpdate(comp2);
+            
             //
             // Add Employees
             //
 
-            Employee emp1 = new Employee { Name = "Chrissy Steegen", CompanyId = 0, Schedules = new List<Schedule>(), Followers = new List<Employee>() };
+            Employee emp1 = new Employee { Name = "Chrissy Steegen", Company=comp1, Schedules = new List<Schedule>(), Followers = new List<Employee>() };
             emp1.Schedules.Add(schedule1);
 
-            Employee emp2 = new Employee { Name = "Niek Vandael", CompanyId = 1, Schedules = new List<Schedule>(), Followers = new List<Employee>() };
+            Employee emp2 = new Employee { Name = "Niek Vandael", Company=comp2, Schedules = new List<Schedule>(), Followers = new List<Employee>() };
             emp2.Schedules.Add(schedule2);
 
             emp1.Followers.Add(emp2);
@@ -72,7 +75,7 @@ namespace TimeView.api.Migrations
                 emp1,
                 emp2
              );
-
+            
             context.SaveChanges();
 
         }

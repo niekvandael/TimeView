@@ -17,6 +17,7 @@ namespace TimeView.context
         public DbSet<CategoryEntry> CategoryEntry { get; set; }
 
         public TimeViewContext()
+            : base("DefaultConnection")
         {
 
         }
