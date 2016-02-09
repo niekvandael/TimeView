@@ -10,23 +10,27 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TimeView.data;
+using TimeView.data.Services;
 
 namespace TimeView.wpf
 {
-    /// <summary>
-    /// Interaction logic for Login.xaml
-    /// </summary>
-    public partial class Login : Window
+
+    public partial class EmployeesList : Page
     {
-        public Login()
+
+        public EmployeesList()
         {
             InitializeComponent();
+            this.getData();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
+        public async Task getData(){
+            Employee[] employees = await WebAPIGateway.getEmployees();
+            int a = 5;
         }
+
     }
 }

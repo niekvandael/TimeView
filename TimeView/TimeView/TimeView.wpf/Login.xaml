@@ -22,6 +22,6 @@
         <TextBlock  Grid.Column="0" Grid.Row="1" Text="Password" ></TextBlock>
         <TextBox    Grid.Column="1" Grid.Row="0"  Width="200"></TextBox>
         <PasswordBox    Grid.Column="1" Grid.Row="1" Width="200" ></PasswordBox>
-        <Button Grid.Column="0" Grid.Row="3" Content="Login"></Button>
+        <Button Grid.Column="0" Grid.Row="2" Content="Login" Height="21" VerticalAlignment="Bottom" Click="Button_Click"></Button>
     </Grid>
 </Window>

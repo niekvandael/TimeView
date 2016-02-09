@@ -19,7 +19,8 @@ namespace TimeView.context
         public TimeViewContext()
             : base("DefaultConnection")
         {
-
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;
         }
     }
 }

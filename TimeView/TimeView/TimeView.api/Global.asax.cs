@@ -20,7 +20,6 @@ namespace TimeView.api
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             GlobalConfiguration.Configuration.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
-
-        }
+      }
     }
 }
