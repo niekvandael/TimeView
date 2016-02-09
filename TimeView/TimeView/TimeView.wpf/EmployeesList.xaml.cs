@@ -32,7 +32,7 @@ namespace TimeView.wpf
         }
 
         public async Task getData(){
-            this.Employees = new ObservableCollection<Employee>(await WebAPIGateway.getEmployees());
+            this.Employees = new ObservableCollection<Employee>(await EmployeesGateway.getEmployees());
             EmployeeListView.ItemsSource = this.Employees;
         }
 

@@ -17,6 +17,19 @@ namespace TimeView.api.Controllers
     {
         private TimeViewContext db = new TimeViewContext();
 
+        [Route("{user}")]
+        [ResponseType(typeof(bool))]
+        public bool GetLogin(string username, string password) {
+            List<Employee> empl = db.Employee.ToList();
+            foreach (Employee e in empl) {
+                if (e.Username.Equals(username) && e.Password.Equals(password)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         // GET: api/Employees
         public IQueryable<Employee> GetEmployee()
         {
