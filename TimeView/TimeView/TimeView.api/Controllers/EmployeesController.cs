@@ -17,7 +17,6 @@ namespace TimeView.api.Controllers
     {
         private TimeViewContext db = new TimeViewContext();
 
-        [Route("{user}")]
         [ResponseType(typeof(bool))]
         public bool GetLogin(string username, string password) {
             List<Employee> empl = db.Employee.ToList();

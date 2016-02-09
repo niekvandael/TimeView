@@ -33,21 +33,9 @@ namespace TimeView.wpf
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            Employee[] employees = await EmployeesGateway.getEmployees();
-            bool success = false;
-
             this.Employee.Password = PasswordBox.Password;
 
-            // TODO Code should get moved to server !!
-            foreach (Employee emp in employees)
-            {
-                if (emp.Username.Equals(this.Employee.Username) && emp.Password.Equals(this.Employee.Password))
-                {
-                    success = true;
-                    break;
-                }
-            }
-            // END TODO
+            bool success = await EmployeesGateway.login(this.Employee);
 
             if (success)
             {

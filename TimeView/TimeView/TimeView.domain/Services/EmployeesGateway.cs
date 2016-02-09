@@ -70,26 +70,18 @@ namespace TimeView.data.Services
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
 
-                string url = "api/Employees/Validate";
+                string url = "api/Employees?username=" + employee.Username + "&password=" + employee.Password;
                 HttpResponseMessage response = await client.GetAsync(url);
-                
-                string serilized = JsonConvert.SerializeObject(employee);
-                var inputMessage = new HttpRequestMessage
-                {
-                    Content = new StringContent(serilized, Encoding.UTF8, "application/json")
-                };
-                inputMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage message = client.PutAsync(url, inputMessage.Content).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
-                    bool resp = await response.Content.ReadAsAsync<bool>();
-                    return resp;
+                    bool success = await response.Content.ReadAsAsync<bool>();
+                    return success;
                 }
             }
 
             return false;
         }
-    }
 
+    }
 }
