@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,12 +15,15 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TimeView.data;
 using TimeView.data.Services;
+using System.Linq;
 
 namespace TimeView.wpf
 {
 
     public partial class EmployeesList : Page
     {
+        public ObservableCollection<Employee> Employees = new ObservableCollection<Employee>();
+
 
         public EmployeesList()
         {
@@ -28,8 +32,8 @@ namespace TimeView.wpf
         }
 
         public async Task getData(){
-            Employee[] employees = await WebAPIGateway.getEmployees();
-            int a = 5;
+            this.Employees = new ObservableCollection<Employee>(await WebAPIGateway.getEmployees());
+            EmployeeListView.ItemsSource = this.Employees;
         }
 
     }

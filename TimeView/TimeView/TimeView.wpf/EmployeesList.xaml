@@ -9,8 +9,14 @@
       Title="EmployeesList">
 
     <Grid>
-        <ListView>
-            
+        <ListView ItemsSource="{Binding Employees}" Name="EmployeeListView">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock FontSize="14" FontWeight="Bold" Text="{Binding Name}"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListView>
     </Grid>
 </Page>
