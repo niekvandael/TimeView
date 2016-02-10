@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -14,6 +15,23 @@ namespace TimeView.data.Services
     public class EmployeesGateway
     {
         private static string baseAddress = "http://localhost:51150/";
+
+        public static async System.Threading.Tasks.Task<HttpResponseMessage> putEmployee(Employee employee)
+        {
+            // Get the list via WebAPI
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseAddress);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+                string url = "api/Employees/put";
+                HttpResponseMessage response = await client.PutAsJsonAsync(url, employee);
+
+                return response;
+            }
+        }
 
         public static async System.Threading.Tasks.Task<bool> getEmployee(int id)
         {

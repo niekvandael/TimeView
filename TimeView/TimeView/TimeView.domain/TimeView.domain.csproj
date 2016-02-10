@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CompaniesGateway.cs" />
     <Compile Include="Services\ScheduleGateway .cs" />
     <Compile Include="Services\EmployeesGateway.cs" />
   </ItemGroup>

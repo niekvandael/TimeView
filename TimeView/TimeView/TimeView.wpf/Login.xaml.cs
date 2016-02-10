@@ -23,31 +23,39 @@ namespace TimeView.wpf
     {
 
         public Employee Employee = new Employee();
+        public string message = "";
 
         public Login()
         {
             InitializeComponent();
 
-            this.DataContext = Employee;
+            this.DataContext = this.Employee;
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private async void Login_Click(object sender, RoutedEventArgs e)
         {
+            MessageTextBlock.Text = "";
+
             this.Employee.Password = PasswordBox.Password;
 
             Employee _empl = await EmployeesGateway.login(this.Employee);
 
             if (_empl != null)
             {
-                ScheduleList scheduleList = new ScheduleList(_empl);
-                var host = new Window();
-                host.Content = scheduleList;
+                ScheduleList window = new ScheduleList(_empl);
+                window.Show();
                 this.Close();
-                host.Show();
             } else {
-                MessageBox.Show("login failed, please try again");
+                MessageTextBlock.Text = "Incorrect username or password";
             }
             
+        }
+
+        private void Register_Click(object sender, RoutedEventArgs e)
+        {
+            Register window = new Register();
+            window.Show(); 
+            this.Close(); 
         }
     }
 }

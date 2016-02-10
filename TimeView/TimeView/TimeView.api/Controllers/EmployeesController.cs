@@ -30,7 +30,7 @@ namespace TimeView.api.Controllers
         }
 
         // GET: api/Employees
-        public IQueryable<Employee> GetEmployee()
+        public IQueryable<Employee> GetEmployees()
         {
             return db.Employee;
         }
@@ -48,21 +48,22 @@ namespace TimeView.api.Controllers
             return Ok(employee);
         }
 
-        // PUT: api/Employees/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutEmployee(int id, Employee employee)
+        // PUT: api/Employees/{Employee}
+        [ResponseType(typeof(bool))]
+        public IHttpActionResult PutEmployee(Employee employee)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != employee.Id)
-            {
-                return BadRequest();
+            foreach (Employee emp in db.Employee) {
+                if (employee.Username.Equals(emp.Username)) {
+                    return StatusCode(HttpStatusCode.Conflict);
+                }
             }
 
-            db.Entry(employee).State = EntityState.Modified;
+            db.Employee.Add(employee);
 
             try
             {
@@ -70,14 +71,7 @@ namespace TimeView.api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EmployeeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return StatusCode(HttpStatusCode.NoContent);

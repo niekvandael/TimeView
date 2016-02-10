@@ -20,6 +20,10 @@ namespace TimeView.api.Controllers
         // GET: api/Companies
         public IQueryable<Company> GetCompany()
         {
+            // Call the open data controller to retrieve (new) companies
+            OpenDataController odc = new OpenDataController();
+            odc.GetCompany();
+
             return db.Company.Include(c => c.Category);
         }
 

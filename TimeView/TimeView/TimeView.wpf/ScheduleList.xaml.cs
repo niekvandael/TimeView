@@ -17,7 +17,7 @@ using TimeView.data.Services;
 
 namespace TimeView.wpf
 {
-    public partial class ScheduleList : Page
+    public partial class ScheduleList : Window
     {
         public ObservableCollection<Schedule> Schedule = new ObservableCollection<Schedule>();
         public Employee Employee = new Employee();

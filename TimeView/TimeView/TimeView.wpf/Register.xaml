@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeView.wpf"
         mc:Ignorable="d"
-        Title="Register" Height="300" Width="350">
+        Title="Register new user" Height="200" Width="350"
+        
+      >
         <Grid DockPanel.Dock="Top">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -14,29 +16,39 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBlock  Grid.Column="0" Grid.Row="0" Text="Company"  ></TextBlock>
-            <ComboBox   Grid.Column="1" Grid.Row="0"  Width="200"></ComboBox>
+            <TextBlock  Grid.Column="0" Grid.Row="0" Text="Company"  Margin="5"></TextBlock>
+
+        <ComboBox x:Name="CompaniesCombo" 
+                  SelectedValue = "{Binding Companies}"
+                  SelectedItem = "{Binding Company}"
+                  DisplayMemberPath = "Name"
+                  Grid.Column="1" Grid.Row="0"  Width="200" Margin="5">
+        </ComboBox>
 
 
-            <TextBlock  Grid.Column="0" Grid.Row="1" Text="User"  ></TextBlock>
-            <TextBox    Grid.Column="1" Grid.Row="1"  Width="200"></TextBox>
+        <TextBlock   Grid.Column="0" Grid.Row="1" Text="User"  Margin="5"></TextBlock>
+        <TextBox    Text="{Binding Username}" Grid.Column="1" Grid.Row="1"  Width="200" Margin="5"></TextBox>
 
-            <TextBlock  Grid.Column="0" Grid.Row="2" Text="Password" ></TextBlock>
-            <PasswordBox    Grid.Column="1" Grid.Row="2" Width="200" ></PasswordBox>
+        <TextBlock  Grid.Column="0" Grid.Row="2" Text="Password" Margin="5" ></TextBlock>
+        <PasswordBox  x:Name="PasswordBox1"  Grid.Column="1" Grid.Row="2" Width="200" Margin="5"></PasswordBox>
 
-            <TextBlock  Grid.Column="0" Grid.Row="3" Text="Repeat password" ></TextBlock>
-            <PasswordBox    Grid.Column="1" Grid.Row="3" Width="200" ></PasswordBox>
+        <TextBlock  Grid.Column="0" Grid.Row="3" Text="Repeat password" Margin="5"></TextBlock>
+        <PasswordBox  x:Name="PasswordBox2"  Grid.Column="1" Grid.Row="3" Width="200" Margin="5"></PasswordBox>
 
         <DockPanel  Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2">
-            <Button DockPanel.Dock="Left" Content="Login" Width="100"></Button>
+            <Button DockPanel.Dock="Left" Content="Register" Width="100" Click="Button_Click"></Button>
             <Button HorizontalAlignment="Right" Width="100" DockPanel.Dock="Right" Content="New Company..."></Button>
         </DockPanel>
+
+        <TextBlock x:Name="MessageTextBlock" Text="" Grid.ColumnSpan="2" Foreground="red" Margin="5 2 2 5" Grid.Column="0" Grid.Row="5"></TextBlock>
+
     </Grid>
 
 </Window>

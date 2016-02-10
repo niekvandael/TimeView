@@ -5,23 +5,50 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeView.wpf"
         mc:Ignorable="d"
-        Title="Login" Height="300" Width="300">
+        Title="TimeView Login - ©2016" 
+        Width="350"
+        Height="160"
+        >
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="43*"></ColumnDefinition>
+            <ColumnDefinition Width="128*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Column="0" Grid.Row="0" Text="User"  ></TextBlock>
-        <TextBlock  Grid.Column="0" Grid.Row="1" Text="Password" ></TextBlock>
-        <TextBox Text="{Binding Username}"  Grid.Column="1" Grid.Row="0"  Width="200"></TextBox>
-        <PasswordBox x:Name="PasswordBox" Grid.Column="1" Grid.Row="1" Width="200" ></PasswordBox>
-        <Button Grid.Column="0" Grid.Row="2" Content="Login" Height="21" VerticalAlignment="Bottom" Click="Button_Click"></Button>
+        <TextBlock Margin="2 2 2 5" Grid.Column="0" Grid.Row="0" Text="User" ></TextBlock>
+        <TextBlock Margin="2 2 2 5" Grid.Column="0" Grid.Row="1" Text="Password" ></TextBlock>
+        <TextBox Margin="5 2 2 5" Text="{Binding Username}"  Grid.Column="1" Grid.Row="0" ></TextBox>
+        <PasswordBox Margin="5 2 2 5" x:Name="PasswordBox" Grid.Column="1" Grid.Row="1" ></PasswordBox>
+        <Button Margin="5,0,70,5" Grid.Column="1" Grid.Row="2" Content="Login" Height="21" VerticalAlignment="Bottom" Click="Login_Click"/>
+        <TextBlock Margin="5 2 2 5" Text="Copyright Copyright © 2016 - TimeView" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"></TextBlock>
+
+        <Button Margin="5 2 2 5" Content="Not an account yet?" Cursor="Hand"  Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Click="Register_Click">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <TextBlock TextDecorations="Underline">
+                <ContentPresenter />
+                    </TextBlock>
+                </ControlTemplate>
+            </Button.Template>
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Foreground" Value="Blue" />
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Foreground" Value="Red" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <TextBlock x:Name="MessageTextBlock" Foreground="red" Margin="50 2 2 5" Cursor="Hand"  Grid.Column="1" Grid.Row="4"></TextBlock>
     </Grid>
 </Window>
