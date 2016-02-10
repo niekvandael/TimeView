@@ -16,6 +16,24 @@ namespace TimeView.data.Services
     {
         private static string baseAddress = "http://localhost:51150/";
 
+
+        public static async System.Threading.Tasks.Task<HttpResponseMessage> putCompany(Company Company)
+        {
+            // Get the list via WebAPI
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseAddress);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+                string url = "api/Companies/put";
+                HttpResponseMessage response = await client.PutAsJsonAsync(url, Company);
+
+                return response;
+            }
+        }
+
         public static async System.Threading.Tasks.Task<Company[]> getCompanies()
         {
             // Get the list via WebAPI

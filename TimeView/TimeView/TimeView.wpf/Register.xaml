@@ -43,8 +43,8 @@
         <PasswordBox  x:Name="PasswordBox2"  Grid.Column="1" Grid.Row="3" Width="200" Margin="5"></PasswordBox>
 
         <DockPanel  Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2">
-            <Button DockPanel.Dock="Left" Content="Register" Width="100" Click="Button_Click"></Button>
-            <Button HorizontalAlignment="Right" Width="100" DockPanel.Dock="Right" Content="New Company..."></Button>
+            <Button Margin="2 2 5 2" DockPanel.Dock="Left" Content="Register" Width="100" Click="Button_Click"></Button>
+            <Button Margin="2 2 5 2" HorizontalAlignment="Right" Width="100" DockPanel.Dock="Right" Content="New Company..." Click="AddCompany_Click"></Button>
         </DockPanel>
 
         <TextBlock x:Name="MessageTextBlock" Text="" Grid.ColumnSpan="2" Foreground="red" Margin="5 2 2 5" Grid.Column="0" Grid.Row="5"></TextBlock>

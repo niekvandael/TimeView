@@ -5,10 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeView.wpf"
         mc:Ignorable="d"
-        Title="ScheduleList" Height="350" Width="750">
+        Title="Schedule" Height="275" Width="770">
 
     <Grid>
-        <ListView ItemsSource="{Binding Schedule}" Name="ScheduleListView">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <ListView Height="200" Width="740" Grid.Column="0" Grid.Row="0" ItemsSource="{Binding Schedule}" Name="ScheduleListView" Margin="5 5 5 5">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                     <StackPanel Orientation="Vertical">
@@ -24,5 +33,6 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListView>
+        <Button Grid.Row="1" Grid.Column="0" Content="New entry"></Button>
     </Grid>
 </Window>

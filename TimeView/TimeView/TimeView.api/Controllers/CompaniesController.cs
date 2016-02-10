@@ -42,19 +42,23 @@ namespace TimeView.api.Controllers
 
         // PUT: api/Companies/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCompany(int id, Company company)
+        public IHttpActionResult PutCompany(Company company)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != company.Id)
+            db.Entry(company).State = EntityState.Modified;
+
+            foreach (Company comp in db.Company)
             {
-                return BadRequest();
+                if (comp.Name.Equals(company.Name)) {
+                    return StatusCode(HttpStatusCode.Conflict);
+                }
             }
 
-            db.Entry(company).State = EntityState.Modified;
+            db.Company.Add(company);
 
             try
             {
@@ -62,14 +66,7 @@ namespace TimeView.api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CompanyExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return StatusCode(HttpStatusCode.NoContent);

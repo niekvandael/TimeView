@@ -61,10 +61,14 @@ namespace TimeView.wpf
                 if (response.StatusCode.Equals(HttpStatusCode.Conflict)){
                     MessageTextBlock.Text = "Username already exists";
                 }
-
             }
+        }
 
-
+        private void AddCompany_Click(object sender, RoutedEventArgs e)
+        {
+            Company window = new Company();
+            window.Show();
+            this.Close();
         }
     }
 }

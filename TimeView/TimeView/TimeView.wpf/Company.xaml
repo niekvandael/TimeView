@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeView.wpf"
         mc:Ignorable="d"
-        Title="Company" Height="300" Width="300">
-    <Grid>
+        Title="Add Company" Height="150" Width="340">
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -19,9 +19,19 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock  Grid.Column="0" Grid.Row="0" Text="Company"  ></TextBlock>
-        <TextBox    Grid.Column="1" Grid.Row="0"  Width="200"></TextBox>
-        <Button Grid.Column="0" Grid.Row="1" Content="Add Company"></Button>
+        <TextBlock Margin="2 2 2 2" Grid.Column="0" Grid.Row="0" Text="Company Name"  ></TextBlock>
+        <TextBox  Margin="2 2 2 2"  Text="{Binding Name}" Grid.Column="1" Grid.Row="0"  Width="200"></TextBox>
+        <TextBlock Margin="2 2 2 2" Grid.Column="0" Grid.Row="1" Text="Time template"  ></TextBlock>
+
+        <ComboBox x:Name="CategoriesCombo" 
+                  SelectedValue = "{Binding Categories}"
+                  SelectedItem = "{Binding Category}"
+                  DisplayMemberPath = "Name"
+                  Grid.Column="1" Grid.Row="1"  Width="200" Margin="5">
+        </ComboBox>
+
+        <Button Margin="2 2 2 2"  Grid.Column="0" Grid.Row="2" Content="Add Company" Click="Button_Click" Grid.ColumnSpan="2"></Button>
+        <TextBlock  x:Name="MessageTextBlock" Text="" Grid.ColumnSpan="2" Foreground="red" Margin="5 2 2 5" Grid.Column="0" Grid.Row="5"></TextBlock>
 
     </Grid>
 </Window>
