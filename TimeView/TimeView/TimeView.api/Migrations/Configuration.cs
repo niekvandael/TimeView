@@ -17,16 +17,7 @@ namespace TimeView.api.Migrations
 
         protected override void Seed(TimeView.context.TimeViewContext context)
         {
-            //
-            // Add Schedules
-            //
-            Schedule schedule1 = new Schedule { Start = DateTime.Parse("2016-01-01 07:00"), End = DateTime.Parse("2016-01-01 09:00") };
-            Schedule schedule2 = new Schedule { Start = DateTime.Parse("2016-01-02 14:00"), End = DateTime.Parse("2016-01-01 22:00") };
-            context.Schedule.AddOrUpdate(
-             s => s.Start,
-                schedule1,
-                schedule2
-             );
+           
             
             //
             // Add Category
@@ -43,6 +34,7 @@ namespace TimeView.api.Migrations
             category1.CategorieEntries.Add(categoryEntry2);
 
             context.Category.AddOrUpdate(category1);
+
             
             //
             // Add companies
@@ -63,11 +55,8 @@ namespace TimeView.api.Migrations
             // Add Employees
             //
 
-            Employee emp1 = new Employee {Username = "chrissy", Password = "chrissy",Name = "Chrissy Steegen", CompanyId = comp1.Id, Company=comp1, Schedules = new List<Schedule>(), Followers = new List<Employee>() };
-            emp1.Schedules.Add(schedule1);
-
-            Employee emp2 = new Employee { Username = "niek" , Password = "niek", Name = "Niek Vandael", CompanyId = comp2.Id, Company =comp2, Schedules = new List<Schedule>(), Followers = new List<Employee>() };
-            emp2.Schedules.Add(schedule2);
+            Employee emp1 = new Employee {Username = "chrissy", Password = "chrissy",Name = "Chrissy Steegen", CompanyId = comp1.Id, Company=comp1, Followers = new List<Employee>() };
+            Employee emp2 = new Employee { Username = "niek" , Password = "niek", Name = "Niek Vandael", CompanyId = comp2.Id, Company =comp2, Followers = new List<Employee>() };
 
             emp1.Followers.Add(emp2);
 
@@ -76,7 +65,17 @@ namespace TimeView.api.Migrations
                 emp1,
                 emp2
              );
-            
+
+            Schedule schedule1 = new Schedule { Day = DateTime.Now, EmployeeId = emp1.Id, CategoryEntry = categoryEntry1, CategoryEntryId = categoryEntry1.Id };
+            Schedule schedule2 = new Schedule { Day = DateTime.Now.AddDays(1), EmployeeId = emp1.Id, CategoryEntry = categoryEntry2, CategoryEntryId = categoryEntry2.Id };
+
+            context.Schedule.AddOrUpdate(
+                s => s.Day,
+                schedule1,
+                schedule2
+            );
+
+
             context.SaveChanges();
 
         }

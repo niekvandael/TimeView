@@ -141,8 +141,8 @@
     <Compile Include="Register.xaml.cs">
       <DependentUpon>Register.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Timesheet.xaml.cs">
-      <DependentUpon>Timesheet.xaml</DependentUpon>
+    <Compile Include="ScheduleList.xaml.cs">
+      <DependentUpon>ScheduleList.xaml</DependentUpon>
     </Compile>
     <Page Include="Category.xaml">
       <SubType>Designer</SubType>
@@ -192,7 +192,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Timesheet.xaml">
+    <Page Include="ScheduleList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

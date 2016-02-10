@@ -35,13 +35,13 @@ namespace TimeView.wpf
         {
             this.Employee.Password = PasswordBox.Password;
 
-            bool success = await EmployeesGateway.login(this.Employee);
+            Employee _empl = await EmployeesGateway.login(this.Employee);
 
-            if (success)
+            if (_empl != null)
             {
-                EmployeesList empList = new EmployeesList();
+                ScheduleList scheduleList = new ScheduleList(_empl);
                 var host = new Window();
-                host.Content = empList;
+                host.Content = scheduleList;
                 this.Close();
                 host.Show();
             } else {

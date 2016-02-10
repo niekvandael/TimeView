@@ -5,8 +5,11 @@ namespace TimeView.data
     public class Schedule
     {
         public int Id { get; set; }
-        public DateTime Start { get; set; }
-        public DateTime End { get; set; }
-        public Employee Employee { get; set; }
+        public DateTime Day { get; set; }
+
+        public int CategoryEntryId { get; set; }
+        public CategoryEntry CategoryEntry { get; set; }
+
+        public int EmployeeId { get; set; }
     }
 }

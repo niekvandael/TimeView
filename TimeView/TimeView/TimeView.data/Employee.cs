@@ -11,7 +11,6 @@ namespace TimeView.data
         public String Name { get; set; }
         public int CompanyId { get; set; }
         public Company Company { get; set; }
-        public virtual List<Schedule> Schedules { get; set; }
         public virtual List<Employee> Followers { get; set; }
 
     }

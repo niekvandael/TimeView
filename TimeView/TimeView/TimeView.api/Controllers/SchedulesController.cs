@@ -18,6 +18,12 @@ namespace TimeView.api.Controllers
         private TimeViewContext db = new TimeViewContext();
 
         // GET: api/Schedules
+        public IQueryable<Schedule> GetScheduleForEmployee(int employeeId)
+        {
+            return db.Schedule.Where(s => s.EmployeeId == employeeId).Include(s => s.CategoryEntry) ;
+        }
+
+        // GET: api/Schedules
         public IQueryable<Schedule> GetSchedule()
         {
             return db.Schedule;

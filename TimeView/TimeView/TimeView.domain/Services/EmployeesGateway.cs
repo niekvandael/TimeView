@@ -60,7 +60,7 @@ namespace TimeView.data.Services
             return null;
         }
 
-        public static async System.Threading.Tasks.Task<bool> login(Employee employee)
+        public static async System.Threading.Tasks.Task<Employee> login(Employee employee)
         {
             // Get the list via WebAPI
             using (var client = new HttpClient())
@@ -75,12 +75,12 @@ namespace TimeView.data.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    bool success = await response.Content.ReadAsAsync<bool>();
-                    return success;
+                    Employee _empl = await response.Content.ReadAsAsync<Employee>();
+                    return _empl;
                 }
             }
 
-            return false;
+            return null;
         }
 
     }
