@@ -17,6 +17,12 @@ namespace TimeView.api.Controllers
     {
         private TimeViewContext db = new TimeViewContext();
 
+        // GET: api/CategoryEntries?CategoryId=1
+        public IQueryable<CategoryEntry> GetCategoryEntriesForCategory(int CategoryId) 
+        {
+            return db.CategoryEntry.Where(c=>c.CategoryId == CategoryId);
+        }
+
         // GET: api/CategoryEntries
         public IQueryable<CategoryEntry> GetCategoryEntry()
         {

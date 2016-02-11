@@ -20,7 +20,8 @@ namespace TimeView.api.Controllers
         // GET: api/Schedules
         public IQueryable<Schedule> GetScheduleForEmployee(int employeeId)
         {
-            return db.Schedule.Where(s => s.EmployeeId == employeeId).Include(s => s.CategoryEntry) ;
+            DateTime select_from = DateTime.Now.AddDays(-7);
+            return db.Schedule.Where(s => s.EmployeeId == employeeId).Where(s => s.Day >= select_from).Include(s => s.CategoryEntry) ;
         }
 
         // GET: api/Schedules
@@ -44,17 +45,13 @@ namespace TimeView.api.Controllers
 
         // PUT: api/Schedules/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutSchedule(int id, Schedule schedule)
+        public IHttpActionResult PutSchedules(Schedule schedule)
         {
-            if (!ModelState.IsValid)
+              if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != schedule.Id)
-            {
-                return BadRequest();
-            }
 
             db.Entry(schedule).State = EntityState.Modified;
 
@@ -64,7 +61,7 @@ namespace TimeView.api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ScheduleExists(id))
+                if (!ScheduleExists(schedule.Id))
                 {
                     return NotFound();
                 }

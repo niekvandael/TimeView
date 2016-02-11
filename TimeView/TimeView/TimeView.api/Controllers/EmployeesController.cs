@@ -18,15 +18,15 @@ namespace TimeView.api.Controllers
         private TimeViewContext db = new TimeViewContext();
 
         [ResponseType(typeof(Employee))]
-        public Employee GetLogin(string username, string password) {
-            List<Employee> empl = db.Employee.ToList();
-            foreach (Employee e in empl) {
-                if (e.Username.Equals(username) && e.Password.Equals(password)) {
-                    return e;
-                }
+        public Employee GetEmployee(string username, string password) {
+            try
+            {
+                return db.Employee.Include(e => e.Company).Where(e => e.Username == username).Where(e => e.Password == password).First();
             }
-
-            return null;
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         // GET: api/Employees
@@ -39,7 +39,7 @@ namespace TimeView.api.Controllers
         [ResponseType(typeof(Employee))]
         public IHttpActionResult GetEmployee(int id)
         {
-            Employee employee = db.Employee.Find(id);
+            Employee employee = db.Employee.Include(e => e.Company).First();
             if (employee == null)
             {
                 return NotFound();
@@ -48,8 +48,8 @@ namespace TimeView.api.Controllers
             return Ok(employee);
         }
 
-        // PUT: api/Employees/{Employee}
-        [ResponseType(typeof(bool))]
+        // PUT: api/Companies/5
+        [ResponseType(typeof(void))]
         public IHttpActionResult PutEmployee(Employee employee)
         {
             if (!ModelState.IsValid)

@@ -5,34 +5,63 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeView.wpf"
         mc:Ignorable="d"
-        Title="Schedule" Height="275" Width="770">
+        Title="Schedule" Height="800" Width="770">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <ListView Height="200" Width="740" Grid.Column="0" Grid.Row="0" ItemsSource="{Binding Schedule}" Name="ScheduleListView" Margin="5 5 5 5">
+        <ListView  SelectionChanged="ListView_SelectionChanged" x:Name="ScheduleListView" Height="600" Width="740" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" ItemsSource="{Binding Schedule}" Margin="5 5 5 5" >
                 <ListBox.ItemTemplate>
-                    <DataTemplate>
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Width="100" FontSize="14" FontWeight="Bold" Text="{Binding Day, StringFormat=dddd}"></TextBlock>
-                            <TextBlock Width="300" FontSize="14" FontWeight="Bold" Text="{Binding Day, StringFormat=dd-MM-yyyy}"></TextBlock>
-                            <TextBlock FontSize="12" FontWeight="Bold" Text="{Binding CategoryEntry.Start, StringFormat=\{0:h\\:mm\}}"></TextBlock>
-                            <TextBlock FontSize="12" FontWeight="Bold" Text="-"></TextBlock>
-                            <TextBlock FontSize="12" FontWeight="Bold" Text="{Binding CategoryEntry.End, StringFormat=\{0:h\\:mm\}}"></TextBlock>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Fill="{Binding CategoryEntry.Name}" Width="16" Height="30" Margin="2 2 2 2">
+                        </Rectangle>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Width="100" FontSize="14" FontWeight="Bold" Text="{Binding Day, StringFormat=dddd}"></TextBlock>
+                                <TextBlock Width="300" FontSize="14" FontWeight="Bold" Text="{Binding Day, StringFormat=dd-MM-yyyy}"></TextBlock>
+                                <TextBlock FontSize="12" FontWeight="Bold" Text="{Binding CategoryEntry.Start, StringFormat=\{0:h\\:mm\}}"></TextBlock>
+                                <TextBlock FontSize="12" FontWeight="Bold" Text="-"></TextBlock>
+                                <TextBlock FontSize="12" FontWeight="Bold" Text="{Binding CategoryEntry.End, StringFormat=\{0:h\\:mm\}}"></TextBlock>
+                            </StackPanel>
+                            <TextBlock FontSize="12" Text="{Binding CategoryEntry.Name}"></TextBlock>
                         </StackPanel>
-                        <TextBlock FontSize="12" Text="{Binding CategoryEntry.Name}"></TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
+                    </StackPanel>
+                </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListView>
-        <Button Grid.Row="1" Grid.Column="0" Content="New entry"></Button>
+        <TextBlock Margin="5 5 5 5" Grid.Column="0" Grid.Row="1"  Text="Day:"></TextBlock>
+        <DatePicker Margin="5 5 5 5" Width="200" Text="{Binding Day, Mode=TwoWay}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1"></DatePicker>
+        <TextBlock Margin="5 5 5 5" Grid.Column="0" Grid.Row="2"  Text="Hour:"></TextBlock>
+
+        <ComboBox x:Name="CategoryEntriesCombo" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2"  Width="200" Margin="5"
+           SelectedItem ="{Binding CategoryEntry, Mode=TwoWay}"
+           IsSynchronizedWithCurrentItem="True" SelectionChanged="CategoryEntriesCombo_SelectionChanged"
+           
+        >
+
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Fill="{Binding Name}" Width="16" Height="16" Margin="0,2,5,2" />
+                        <TextBlock Text="{Binding Name}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBlock x:Name="MessageTextBlock" FontWeight="Bold" HorizontalAlignment="Right" Foreground="red" Margin="5 2 2 5" Cursor="Hand"  Grid.Column="1" Grid.Row="4"></TextBlock>
+        <Button Grid.Row ="5" Height="30" Margin="5 30 5 5" Content="New entry" Click="AddButton_Click"></Button>
+        <Button Grid.Row ="5" Grid.Column="1" HorizontalAlignment="Right" Width="200" Height="30" Margin="5 30 5 5" Content="Save" Click="SaveButton_Click"></Button>
     </Grid>
 </Window>
