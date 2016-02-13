@@ -22,9 +22,9 @@ namespace TimeView.wpf.Services
             repository.CreateSchedule(schedule);
         }
 
-        public async Task<Schedule[]> GetScheduleForEmployee(int EmployeeId)
+        public async Task<Schedule[]> GetScheduleForEmployee(Employee employee)
         {
-            return await repository.getScheduleForEmployee(EmployeeId);
+            return await repository.getScheduleForEmployee(employee.Id);
         }
 
         public void UpdateSchedule(Schedule schedule)

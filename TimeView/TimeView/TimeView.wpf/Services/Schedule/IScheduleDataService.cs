@@ -9,6 +9,6 @@ namespace TimeView.wpf.Services
 {
     public interface IScheduleDataService
     {
-        Task<Schedule[]> GetScheduleForEmployee(int EmployeeId);
+        Task<Schedule[]> GetScheduleForEmployee(Employee employee);
     }
 }

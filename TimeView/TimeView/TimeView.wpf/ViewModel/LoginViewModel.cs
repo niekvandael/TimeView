@@ -19,6 +19,7 @@ namespace TimeView.wpf.ViewModel
 
         public ICommand LoginCommand { get; set; }
 
+        private DialogService dialogService;
 
         private Employee employee = new Employee();
         public Employee Employee
@@ -38,6 +39,8 @@ namespace TimeView.wpf.ViewModel
         {
             this.employeeDataService = employeeDataService;
 
+            dialogService = new DialogService();
+
             LoadCommands();
         }
 
@@ -52,8 +55,9 @@ namespace TimeView.wpf.ViewModel
 
             if (_empl != null)
             {
-                MessageBox.Show("Login succeeded");
                 this.Employee = _empl;
+                dialogService.showDialog();
+                Messenger.Default.Send<Employee>(this.employee);
             }
             else {
                 MessageBox.Show("Login failed");

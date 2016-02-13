@@ -66,13 +66,37 @@ namespace TimeView.wpf.ViewModel
             }
         }
 
+        private Employee employee;
+        public Employee Employee
+        {
+            get
+            {
+                return employee;
+            }
+            set
+            {
+                employee = value;
+                RaisePropertyChanged("Employee");
+            }
+        }
+
         public ScheduleListViewModel(IScheduleDataService scheduleDataService, ICategoryEntryDataService categoryEntryDataService)
         {
+            // Register to events
+            Messenger.Default.Register<Employee>(this, OnEmployeeReceived);
+
+            // set services
             this.scheduleDataService = scheduleDataService;
             this.categoryEntryDataService = categoryEntryDataService;
 
-            LoadData();
+            // Load data & commands
             LoadCommands();
+        }
+
+        private void OnEmployeeReceived(Employee empl)
+        {
+            this.Employee = empl;
+            LoadData();
         }
 
         private void LoadCommands()
@@ -104,7 +128,7 @@ namespace TimeView.wpf.ViewModel
 
         private async void LoadData()
         {
-            Schedule[] schedules = await scheduleDataService.GetScheduleForEmployee(0);
+            Schedule[] schedules = await scheduleDataService.GetScheduleForEmployee(this.Employee);
             this.Schedules = schedules.ToObservableCollection();
 
             CategoryEntry[] categoryEntries = await categoryEntryDataService.GetCategoryEntriesForCompany(1);

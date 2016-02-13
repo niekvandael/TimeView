@@ -66,8 +66,8 @@ namespace TimeView.api.Migrations
                 emp2
              );
 
-            Schedule schedule1 = new Schedule { Day = DateTime.Now, EmployeeId = emp1.Id, CategoryEntry = categoryEntry1, CategoryEntryId = categoryEntry1.Id };
-            Schedule schedule2 = new Schedule { Day = DateTime.Now.AddDays(1), EmployeeId = emp1.Id, CategoryEntry = categoryEntry2, CategoryEntryId = categoryEntry2.Id };
+            Schedule schedule1 = new Schedule { Day = DateTime.Now, EmployeeId = 1, CategoryEntry = categoryEntry1, CategoryEntryId = categoryEntry1.Id };
+            Schedule schedule2 = new Schedule { Day = DateTime.Now.AddDays(1), EmployeeId = 1, CategoryEntry = categoryEntry2, CategoryEntryId = categoryEntry2.Id };
 
             context.Schedule.AddOrUpdate(
                 s => s.Day,

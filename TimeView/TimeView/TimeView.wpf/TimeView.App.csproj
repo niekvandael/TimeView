@@ -142,9 +142,11 @@
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Services\CategoryEntry\CategoryEntryDataService.cs" />
     <Compile Include="Services\CategoryEntry\ICategoryEntryDataService.cs" />
+    <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\Employee\IEmployeeDataService.cs" />
     <Compile Include="Services\Employee\EmployeeDataService.cs" />
     <Compile Include="Utility\CustomCommand.cs" />
+    <Compile Include="Utility\Messenger.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="View\ScheduleListView.xaml.cs">
