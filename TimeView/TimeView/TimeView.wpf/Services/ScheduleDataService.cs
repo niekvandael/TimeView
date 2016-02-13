@@ -22,32 +22,9 @@ namespace TimeView.wpf.Services
             repository.CreateSchedule(schedule);
         }
 
-        public List<Schedule> getScheduleForEmployee(int EmployeeId)
+        public async Task<Schedule[]> GetScheduleForEmployee(int EmployeeId)
         {
-        //    return repository.getScheduleForEmployee(EmployeeId);
-
-            // TODO TODO TODO TODO TODO TODO TODO TODO 
-            Schedule schedule1 = new Schedule
-            {
-                Id = 1,
-                CategoryEntryId = 1,
-                Day = DateTime.Now,
-                EmployeeId = 1
-            };
-
-            Schedule schedule2 = new Schedule
-            {
-                Id = 1,
-                CategoryEntryId = 1,
-                Day = DateTime.Now.AddDays(1),
-                EmployeeId = 1
-            };
-
-            List<Schedule> schedules = new List<Schedule>();
-            schedules.Add(schedule1);
-            schedules.Add(schedule2);
-
-            return schedules;
+            return await repository.getScheduleForEmployee(EmployeeId);
         }
 
         public void UpdateSchedule(Schedule schedule)

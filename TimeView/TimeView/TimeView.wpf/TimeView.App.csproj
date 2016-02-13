@@ -140,6 +140,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Services\CategoryEntryDataService.cs" />
+    <Compile Include="Services\ICategoryEntryDataService.cs" />
     <Compile Include="Utility\CustomCommand.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="View\ScheduleListView.xaml.cs">

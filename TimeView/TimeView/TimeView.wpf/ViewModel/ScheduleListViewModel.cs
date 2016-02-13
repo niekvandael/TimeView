@@ -18,9 +18,25 @@ namespace TimeView.wpf.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private IScheduleDataService scheduleDataService;
+        private ICategoryEntryDataService categoryEntryDataService;
 
         public ICommand NewCommand { get; set; }
         public ICommand SaveCommand { get; set; }
+
+        private ObservableCollection<CategoryEntry> categoryEntries;
+        public ObservableCollection<CategoryEntry> CategoryEntries
+        {
+            get
+            {
+                return this.categoryEntries;
+            }
+            set
+            {
+                this.categoryEntries = value;
+                RaisePropertyChanged("CategoryEntries");
+            }
+        }
+
 
         private ObservableCollection<Schedule> schedules;
         public ObservableCollection<Schedule> Schedules
@@ -50,9 +66,10 @@ namespace TimeView.wpf.ViewModel
             }
         }
 
-        public ScheduleListViewModel(IScheduleDataService scheduleDataService)
+        public ScheduleListViewModel(IScheduleDataService scheduleDataService, ICategoryEntryDataService categoryEntryDataService)
         {
             this.scheduleDataService = scheduleDataService;
+            this.categoryEntryDataService = categoryEntryDataService;
 
             LoadData();
             LoadCommands();
@@ -85,9 +102,14 @@ namespace TimeView.wpf.ViewModel
             return true;
         }
 
-        private void LoadData()
+        private async void LoadData()
         {
-            Schedules = scheduleDataService.getScheduleForEmployee(1).ToObservableCollection();
+            Schedule[] schedules = await scheduleDataService.GetScheduleForEmployee(0);
+            this.Schedules = schedules.ToObservableCollection();
+
+            CategoryEntry[] categoryEntries = await categoryEntryDataService.GetCategoryEntriesForCompany(1);
+            this.CategoryEntries = categoryEntries.ToObservableCollection();
+
         }
 
 

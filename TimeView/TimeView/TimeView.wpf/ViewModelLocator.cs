@@ -12,8 +12,9 @@ namespace TimeView.wpf
     public class ViewModelLocator
     {
         private static IScheduleDataService scheduleDataService = new ScheduleDataService(new ScheduleRepository());
+        private static ICategoryEntryDataService categoryEntryDataService = new CategoryEntryDataService(new CategoryEntryRepository());
 
-        private static ScheduleListViewModel scheduleListViewModel = new ScheduleListViewModel(scheduleDataService);
+        private static ScheduleListViewModel scheduleListViewModel = new ScheduleListViewModel(scheduleDataService, categoryEntryDataService);
         public static ScheduleListViewModel ScheduleListViewModel
         {
             get

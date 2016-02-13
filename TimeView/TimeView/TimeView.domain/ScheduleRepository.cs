@@ -43,8 +43,8 @@ namespace TimeView.data.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    Schedule[] schedules = await response.Content.ReadAsAsync<Schedule[]>();
-                    return schedules;
+                    Schedule[] result = await response.Content.ReadAsAsync<Schedule[]>();
+                    return result;
                 }
             }
 

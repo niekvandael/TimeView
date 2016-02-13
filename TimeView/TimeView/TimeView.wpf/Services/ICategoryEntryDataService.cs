@@ -7,8 +7,8 @@ using TimeView.data;
 
 namespace TimeView.wpf.Services
 {
-    public interface IScheduleDataService
+    public interface ICategoryEntryDataService
     {
-        Task<Schedule[]> GetScheduleForEmployee(int EmployeeId);
+        Task<CategoryEntry[]> GetCategoryEntriesForCompany(int CompanyId);
     }
 }

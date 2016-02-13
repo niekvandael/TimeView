@@ -50,17 +50,16 @@
         </ListView>
 
         <TextBlock Margin="5 5 5 5" Grid.Column="0" Grid.Row="1"  Text="Day:"></TextBlock>
-        <DatePicker Margin="5 5 5 5" Width="200" Text="{Binding SelectedSchedule.Day, Mode=OneWay}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1"></DatePicker>
+        <DatePicker Margin="5 5 5 5" Width="200" Text="{Binding SelectedSchedule.Day, Mode=TwoWay}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1"></DatePicker>
         
         
         <TextBlock Margin="5 5 5 5" Grid.Column="0" Grid.Row="2"  Text="Hour:"></TextBlock>
 
-        <ComboBox x:Name="CategoryEntriesCombo" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2"  Width="200" Margin="5"
-           SelectedItem ="{Binding CategoryEntry, Mode=TwoWay}"
-           IsSynchronizedWithCurrentItem="True"
-           
-        >
-
+        <ComboBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2"  Width="200" Margin="5"
+                  ItemsSource="{Binding CategoryEntries}"
+                  SelectedValue="{Binding SelectedSchedule.CategoryEntryId , Mode=TwoWay}"
+                  SelectedValuePath="Id"
+                  >
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -70,7 +69,7 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <TextBlock x:Name="MessageTextBlock" FontWeight="Bold" HorizontalAlignment="Right" Foreground="red" Margin="5 2 2 5" Cursor="Hand"  Grid.Column="1" Grid.Row="4"></TextBlock>
+        <TextBlock Name="MessageTextBlock" FontWeight="Bold" HorizontalAlignment="Right" Foreground="red" Margin="5 2 2 5" Cursor="Hand"  Grid.Column="1" Grid.Row="4"></TextBlock>
 
 
 

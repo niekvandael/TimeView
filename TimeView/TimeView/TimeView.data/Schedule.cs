@@ -37,14 +37,29 @@ namespace TimeView.data
         private int categoryEntryId;
         public int CategoryEntryId
         {
-            get { return this.categoryEntryId; }
+            get
+            {
+                return this.categoryEntryId;
+            }
             set
             {
                 this.categoryEntryId = value;
                 RaisePropertyChanged("CategoryEntryId");
             }
         }
-        public CategoryEntry CategoryEntry { get; set; }
+        private CategoryEntry categoryentry;
+        public CategoryEntry CategoryEntry
+        {
+            get
+            {
+                return this.categoryentry;
+            }
+            set
+            {
+                this.categoryentry = value;
+                RaisePropertyChanged("CategoryEntry");
+            }
+        }
 
         public int EmployeeId { get; set; }
 
