@@ -48,14 +48,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CategoryEntryRepository.cs" />
-    <Compile Include="ICategoryEntryRepository.cs" />
-    <Compile Include="IScheduleRepository.cs" />
+    <Compile Include="Repositories\Category\CategoryEntryRepository.cs" />
+    <Compile Include="Repositories\Category\ICategoryEntryRepository.cs" />
+    <Compile Include="Repositories\Employee\IEmployeeRepository.cs" />
+    <Compile Include="Repositories\Employee\EmployeeRepository.cs" />
+    <Compile Include="Repositories\Schedule\IScheduleRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CategoryEntriesGateway.cs" />
     <Compile Include="Services\CategoriesGateway.cs" />
     <Compile Include="Services\CompaniesGateway.cs" />
-    <Compile Include="ScheduleRepository.cs" />
+    <Compile Include="Repositories\Schedule\ScheduleRepository.cs" />
     <Compile Include="Services\EmployeesGateway.cs" />
   </ItemGroup>
   <ItemGroup>

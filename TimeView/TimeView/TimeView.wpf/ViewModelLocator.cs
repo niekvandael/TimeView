@@ -11,16 +11,23 @@ namespace TimeView.wpf
 {
     public class ViewModelLocator
     {
+
+        //
+        // Repositories
+        //
         private static IScheduleDataService scheduleDataService = new ScheduleDataService(new ScheduleRepository());
         private static ICategoryEntryDataService categoryEntryDataService = new CategoryEntryDataService(new CategoryEntryRepository());
+        private static IEmployeeDataService employeeDataService = new EmployeeDataRepository(new EmployeeRepository());
 
+
+        //
+        // ListViews
+        //
         private static ScheduleListViewModel scheduleListViewModel = new ScheduleListViewModel(scheduleDataService, categoryEntryDataService);
-        public static ScheduleListViewModel ScheduleListViewModel
-        {
-            get
-            {
-                return scheduleListViewModel;
-            }
-        }
+        public static ScheduleListViewModel ScheduleListViewModel { get { return scheduleListViewModel; } }
+
+        private static LoginViewModel loginViewModel = new LoginViewModel(employeeDataService);
+        public static LoginViewModel LoginViewModel { get { return loginViewModel; } }
+
     }
 }

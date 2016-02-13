@@ -8,8 +8,7 @@
         Title="TimeView Login - ©2016" 
         Width="350"
         Height="160"
-        >
-
+        DataContext="{Binding Source={StaticResource mainViewModelLocator},  Path=LoginViewModel}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -25,12 +24,12 @@
 
         <TextBlock Margin="2 2 2 5" Grid.Column="0" Grid.Row="0" Text="User" ></TextBlock>
         <TextBlock Margin="2 2 2 5" Grid.Column="0" Grid.Row="1" Text="Password" ></TextBlock>
-        <TextBox Margin="5 2 2 5" Text="{Binding Username}"  Grid.Column="1" Grid.Row="0" ></TextBox>
-        <PasswordBox Margin="5 2 2 5" x:Name="PasswordBox" Grid.Column="1" Grid.Row="1" ></PasswordBox>
-        <Button Margin="5,0,70,5" Grid.Column="1" Grid.Row="2" Content="Login" Height="21" VerticalAlignment="Bottom" Click="Login_Click"/>
+        <TextBox Margin="5 2 2 5" Text="{Binding Employee.Username}"  Grid.Column="1" Grid.Row="0" ></TextBox>
+        <PasswordBox Margin="5 2 2 5" Name="PasswordBox" Grid.Column="1" Grid.Row="1" PasswordChanged="PasswordBox_PasswordChanged" ></PasswordBox>
+        <Button Margin="5,0,70,5" Grid.Column="1" Grid.Row="2" Command="{Binding LoginCommand}" Content="Login" Height="21" VerticalAlignment="Bottom"/>
         <TextBlock Margin="5 2 2 5" Text="Copyright Copyright © 2016 - TimeView" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"></TextBlock>
 
-        <Button Margin="5 2 2 5" Content="Not an account yet?" Cursor="Hand"  Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Click="Register_Click">
+        <Button Margin="5 2 2 5" Content="Not an account yet?" Cursor="Hand"  Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <TextBlock TextDecorations="Underline">

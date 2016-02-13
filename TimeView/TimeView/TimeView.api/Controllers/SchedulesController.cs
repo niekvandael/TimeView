@@ -19,6 +19,7 @@ namespace TimeView.api.Controllers
         private TimeViewContext db = new TimeViewContext();
 
         // GET: api/Schedules
+        [Authorize]
         public IQueryable<Schedule> GetScheduleForEmployee(int employeeId)
         {
             DateTime select_from = DateTime.Now.AddDays(-7);

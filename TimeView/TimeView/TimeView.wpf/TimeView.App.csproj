@@ -140,17 +140,20 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Extensions\ListExtensions.cs" />
-    <Compile Include="Services\CategoryEntryDataService.cs" />
-    <Compile Include="Services\ICategoryEntryDataService.cs" />
+    <Compile Include="Services\CategoryEntry\CategoryEntryDataService.cs" />
+    <Compile Include="Services\CategoryEntry\ICategoryEntryDataService.cs" />
+    <Compile Include="Services\Employee\IEmployeeDataService.cs" />
+    <Compile Include="Services\Employee\EmployeeDataService.cs" />
     <Compile Include="Utility\CustomCommand.cs" />
     <Compile Include="ViewModelLocator.cs" />
+    <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="View\ScheduleListView.xaml.cs">
       <DependentUpon>ScheduleListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Services\IScheduleDataService.cs" />
-    <Compile Include="Services\ScheduleDataService.cs" />
+    <Compile Include="Services\Schedule\IScheduleDataService.cs" />
+    <Compile Include="Services\Schedule\ScheduleDataService.cs" />
     <Compile Include="ViewModel\ScheduleListViewModel.cs" />
-    <Page Include="Login.xaml">
+    <Page Include="View\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -158,7 +161,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Login.xaml.cs">
+    <Compile Include="View\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Page Include="View\ScheduleListView.xaml">
