@@ -42,7 +42,7 @@ namespace TimeView.wpf
 
             if (_empl != null)
             {
-                ScheduleList window = new ScheduleList(_empl);
+                ScheduleListView window = new ScheduleListView();
                 window.Show();
                 this.Close();
             } else {
@@ -53,8 +53,6 @@ namespace TimeView.wpf
 
         private void Register_Click(object sender, RoutedEventArgs e)
         {
-            Register window = new Register();
-            window.Show(); 
             this.Close(); 
         }
     }

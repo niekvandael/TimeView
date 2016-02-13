@@ -37,6 +37,10 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Expression.Blend.Sdk.1.0.2\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -135,64 +139,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="EmployeesList.xaml.cs">
-      <DependentUpon>EmployeesList.xaml</DependentUpon>
+    <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Utility\CustomCommand.cs" />
+    <Compile Include="ViewModelLocator.cs" />
+    <Compile Include="View\ScheduleListView.xaml.cs">
+      <DependentUpon>ScheduleListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Register.xaml.cs">
-      <DependentUpon>Register.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ScheduleList.xaml.cs">
-      <DependentUpon>ScheduleList.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Category.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CategoryEntry.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Company.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="EmployeesList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Compile Include="Services\IScheduleDataService.cs" />
+    <Compile Include="Services\ScheduleDataService.cs" />
+    <Compile Include="ViewModel\ScheduleListViewModel.cs" />
     <Page Include="Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Category.xaml.cs">
-      <DependentUpon>Category.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CategoryEntry.xaml.cs">
-      <DependentUpon>CategoryEntry.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Company.xaml.cs">
-      <DependentUpon>Company.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Register.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ScheduleList.xaml">
+    <Page Include="View\ScheduleListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -226,15 +193,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TimeView.data\TimeView.data.csproj">
+    <ProjectReference Include="..\TimeView.data\TimeView.Model.csproj">
       <Project>{57841a83-b2ee-45a9-98dd-1755cc81ee43}</Project>
-      <Name>TimeView.data</Name>
+      <Name>TimeView.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TimeView.domain\TimeView.domain.csproj">
+    <ProjectReference Include="..\TimeView.domain\TimeView.DAL.csproj">
       <Project>{e5997c1e-a269-4b1d-bd15-55878a8d5430}</Project>
-      <Name>TimeView.domain</Name>
+      <Name>TimeView.DAL</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

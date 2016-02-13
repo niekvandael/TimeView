@@ -1,12 +1,16 @@
-﻿<Window x:Class="TimeView.wpf.ScheduleList"
+﻿<Window x:Class="TimeView.wpf.ScheduleListView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeView.wpf"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="Schedule" Height="800" Width="770">
-
+        Title="Schedule" 
+        Height="800" 
+        Width="770"
+        DataContext="{Binding Source={StaticResource mainViewModelLocator},  Path=ScheduleListViewModel}">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -21,8 +25,11 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <ListView  SelectionChanged="ListView_SelectionChanged" x:Name="ScheduleListView" Height="600" Width="740" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" ItemsSource="{Binding Schedule}" Margin="5 5 5 5" >
-                <ListBox.ItemTemplate>
+        <ListView Name="ScheduleList"
+                  ItemsSource="{Binding Schedules}"
+                  SelectedItem="{Binding SelectedSchedule}"
+                  Height="600" Width="740" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="5 5 5 5" >
+            <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Fill="{Binding CategoryEntry.Name}" Width="16" Height="30" Margin="2 2 2 2">
@@ -39,15 +46,18 @@
                         </StackPanel>
                     </StackPanel>
                 </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListView>
+            </ListBox.ItemTemplate>
+        </ListView>
+
         <TextBlock Margin="5 5 5 5" Grid.Column="0" Grid.Row="1"  Text="Day:"></TextBlock>
-        <DatePicker Margin="5 5 5 5" Width="200" Text="{Binding Day, Mode=TwoWay}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1"></DatePicker>
+        <DatePicker Margin="5 5 5 5" Width="200" Text="{Binding SelectedSchedule.Day, Mode=OneWay}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1"></DatePicker>
+        
+        
         <TextBlock Margin="5 5 5 5" Grid.Column="0" Grid.Row="2"  Text="Hour:"></TextBlock>
 
         <ComboBox x:Name="CategoryEntriesCombo" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2"  Width="200" Margin="5"
            SelectedItem ="{Binding CategoryEntry, Mode=TwoWay}"
-           IsSynchronizedWithCurrentItem="True" SelectionChanged="CategoryEntriesCombo_SelectionChanged"
+           IsSynchronizedWithCurrentItem="True"
            
         >
 
@@ -61,7 +71,17 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
         <TextBlock x:Name="MessageTextBlock" FontWeight="Bold" HorizontalAlignment="Right" Foreground="red" Margin="5 2 2 5" Cursor="Hand"  Grid.Column="1" Grid.Row="4"></TextBlock>
-        <Button Grid.Row ="5" Height="30" Margin="5 30 5 5" Content="New entry" Click="AddButton_Click"></Button>
-        <Button Grid.Row ="5" Grid.Column="1" HorizontalAlignment="Right" Width="200" Height="30" Margin="5 30 5 5" Content="Save" Click="SaveButton_Click"></Button>
+
+
+
+        <Button Grid.Row ="5" Height="30" Margin="5 30 5 5" Content="New entry" Command="{Binding NewCommand}"></Button>
+        <Button  Grid.Row ="5" Grid.Column="1" HorizontalAlignment="Right" Width="200" Height="30" Margin="5 30 5 5" Content="Save">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:InvokeCommandAction Command="{Binding SaveCommand}"></i:InvokeCommandAction>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
+
     </Grid>
 </Window>

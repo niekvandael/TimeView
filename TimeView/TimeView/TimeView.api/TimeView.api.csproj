@@ -35,7 +35,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>App_Data\Documentation.XML</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -338,9 +339,9 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TimeView.data\TimeView.data.csproj">
+    <ProjectReference Include="..\TimeView.data\TimeView.Model.csproj">
       <Project>{57841a83-b2ee-45a9-98dd-1755cc81ee43}</Project>
-      <Name>TimeView.data</Name>
+      <Name>TimeView.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
