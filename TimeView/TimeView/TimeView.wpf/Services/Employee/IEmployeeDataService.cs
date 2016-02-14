@@ -10,5 +10,6 @@ namespace TimeView.wpf.Services
     public interface IEmployeeDataService
     {
         Task<Employee> GetEmployee(string username, string password);
+        Task<Employee> GetEmployee(Employee employee);
     }
 }

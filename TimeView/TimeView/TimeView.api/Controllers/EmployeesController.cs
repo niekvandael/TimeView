@@ -32,14 +32,17 @@ namespace TimeView.api.Controllers
         // GET: api/Employees
         public IQueryable<Employee> GetEmployees()
         {
-            return db.Employee;
+            return db.Employee.Include(e => e.Following);
         }
 
         // GET: api/Employees/5
         [ResponseType(typeof(Employee))]
         public IHttpActionResult GetEmployee(int id)
         {
-            Employee employee = db.Employee.Include(e => e.Company).First();
+            Employee employee = db.Employee
+                .Include(e => e.Following.Select(f => f.Company))
+                .Include(e => e.Following)
+                .Where(e => e.Id == id).First();
             if (employee == null)
             {
                 return NotFound();

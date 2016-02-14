@@ -55,10 +55,10 @@ namespace TimeView.api.Migrations
             // Add Employees
             //
 
-            Employee emp1 = new Employee {Username = "chrissy", Password = "chrissy",Name = "Chrissy Steegen", CompanyId = comp1.Id, Company=comp1, Followers = new List<Employee>() };
-            Employee emp2 = new Employee { Username = "niek" , Password = "niek", Name = "Niek Vandael", CompanyId = comp2.Id, Company =comp2, Followers = new List<Employee>() };
+            Employee emp1 = new Employee {Username = "chrissy", Password = "chrissy",Name = "Chrissy Steegen", CompanyId = comp1.Id, Company=comp1, Following = new List<Employee>() };
+            Employee emp2 = new Employee { Username = "niek" , Password = "niek", Name = "Niek Vandael", CompanyId = comp2.Id, Company =comp2, Following = new List<Employee>() };
 
-            emp1.Followers.Add(emp2);
+            emp2.Following.Add(emp1);
 
             context.Employee.AddOrUpdate(
              e => e.Name,

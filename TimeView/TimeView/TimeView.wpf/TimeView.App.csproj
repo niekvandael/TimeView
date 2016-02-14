@@ -139,22 +139,32 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\CompanyConverter.cs" />
+    <Compile Include="Dialogs\FollowingListViewDialog.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Services\CategoryEntry\CategoryEntryDataService.cs" />
     <Compile Include="Services\CategoryEntry\ICategoryEntryDataService.cs" />
-    <Compile Include="Services\DialogService.cs" />
+    <Compile Include="Dialogs\ScheduleListViewDialog.cs" />
     <Compile Include="Services\Employee\IEmployeeDataService.cs" />
     <Compile Include="Services\Employee\EmployeeDataService.cs" />
     <Compile Include="Utility\CustomCommand.cs" />
     <Compile Include="Utility\Messenger.cs" />
     <Compile Include="ViewModelLocator.cs" />
+    <Compile Include="ViewModel\FollowingListViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="View\FollowingListView.xaml.cs">
+      <DependentUpon>FollowingListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ScheduleListView.xaml.cs">
       <DependentUpon>ScheduleListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\Schedule\IScheduleDataService.cs" />
     <Compile Include="Services\Schedule\ScheduleDataService.cs" />
     <Compile Include="ViewModel\ScheduleListViewModel.cs" />
+    <Page Include="View\FollowingListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

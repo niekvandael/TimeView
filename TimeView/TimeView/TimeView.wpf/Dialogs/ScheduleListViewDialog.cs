@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace TimeView.wpf.Services
 {
-    public class DialogService
+    public class ScheduleListViewDialog
     {
         Window scheduleListView = null;
 

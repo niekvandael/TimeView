@@ -21,5 +21,10 @@ namespace TimeView.wpf.Services
         {
             return await repository.getEmployee(username, password);
         }
+
+        public async Task<Employee> GetEmployee(Employee employee)
+        {
+            return await repository.getEmployee(employee.Id);
+        }
     }
 }

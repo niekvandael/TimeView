@@ -29,5 +29,8 @@ namespace TimeView.wpf
         private static LoginViewModel loginViewModel = new LoginViewModel(employeeDataService);
         public static LoginViewModel LoginViewModel { get { return loginViewModel; } }
 
+        private static FollowingListViewModel followingListViewModel = new FollowingListViewModel(employeeDataService);
+        public static FollowingListViewModel FollowingListViewModel { get { return followingListViewModel; } }
+
     }
 }

@@ -10,5 +10,6 @@ namespace TimeView.domain
     public interface IEmployeeRepository
     {
         System.Threading.Tasks.Task<Employee> getEmployee(string username, string password);
+        System.Threading.Tasks.Task<Employee> getEmployee(int employeeId);
     }
 }

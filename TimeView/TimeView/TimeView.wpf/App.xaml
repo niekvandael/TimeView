@@ -2,10 +2,12 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:TimeView.wpf"
+             xmlns:converter="clr-namespace:TimeView.wpf.Converters"
              StartupUri="View/Login.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <local:ViewModelLocator x:Key="mainViewModelLocator"></local:ViewModelLocator>
+            <converter:CompanyConverter x:Key="companyConverter"></converter:CompanyConverter>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
