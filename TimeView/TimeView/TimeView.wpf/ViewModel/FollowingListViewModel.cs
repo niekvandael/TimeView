@@ -15,7 +15,7 @@ using TimeView.wpf.Utility;
 
 namespace TimeView.wpf.ViewModel
 {
-    public class FollowingListViewModel
+    public class FollowingListViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private IEmployeeDataService employeeDataService;
