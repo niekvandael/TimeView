@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using TimeView.data;
 using TimeView.wpf.Extensions;
+using TimeView.wpf.Messages;
 using TimeView.wpf.Services;
 using TimeView.wpf.Utility;
 
@@ -59,7 +60,7 @@ namespace TimeView.wpf.ViewModel
             {
                 return selectedSchedule;
             }
-             set
+            set
             {
                 selectedSchedule = value;
                 RaisePropertyChanged("SelectedSchedule");
@@ -80,10 +81,24 @@ namespace TimeView.wpf.ViewModel
             }
         }
 
+        private bool mySchedule;
+        public bool MySchedule
+        {
+            get
+            {
+                return mySchedule;
+            }
+            set
+            {
+                mySchedule = value;
+                RaisePropertyChanged("MySchedule");
+            }
+        }
+
         public ScheduleListViewModel(IScheduleDataService scheduleDataService, ICategoryEntryDataService categoryEntryDataService)
         {
             // Register to events
-            Messenger.Default.Register<Employee>(this, OnEmployeeReceived);
+            Messenger.Default.Register<LoadScheduleList>(this, OnLoadScheduleReceived);
 
             // set services
             this.scheduleDataService = scheduleDataService;
@@ -93,9 +108,11 @@ namespace TimeView.wpf.ViewModel
             LoadCommands();
         }
 
-        private void OnEmployeeReceived(Employee empl)
+        private void OnLoadScheduleReceived(LoadScheduleList loadMySheduleList)
         {
-            this.Employee = empl;
+            this.MySchedule = loadMySheduleList.MySchedule;
+
+            this.Employee = loadMySheduleList.Employee;
             LoadData();
         }
 
@@ -112,7 +129,7 @@ namespace TimeView.wpf.ViewModel
 
         private bool CanNewSchedule(object obj)
         {
-            return true;
+            return this.mySchedule;
         }
 
         private void SaveSchedule(object obj)
@@ -122,8 +139,7 @@ namespace TimeView.wpf.ViewModel
 
         private bool CanSaveSchedule(object obj)
         {
-            // TODO CHECK IF EVERYTHING IS OKIDOKI
-            return true;
+            return this.mySchedule;
         }
 
         private async void LoadData()

@@ -8,6 +8,7 @@
         <ResourceDictionary>
             <local:ViewModelLocator x:Key="mainViewModelLocator"></local:ViewModelLocator>
             <converter:CompanyConverter x:Key="companyConverter"></converter:CompanyConverter>
+            <converter:CategoryEntryHourConverter x:Key="categoryEntryHourConverter"></converter:CategoryEntryHourConverter>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using TimeView.data;
+using TimeView.wpf.Messages;
 using TimeView.wpf.Services;
 using TimeView.wpf.Utility;
 
@@ -59,7 +60,7 @@ namespace TimeView.wpf.ViewModel
 
                 followingListViewDialog.showDialog();
 
-                Messenger.Default.Send<Employee>(this.employee);
+                Messenger.Default.Send<LoginMessage>(new LoginMessage {  Employee = this.employee });
             }
             else {
                 MessageBox.Show("Login failed");

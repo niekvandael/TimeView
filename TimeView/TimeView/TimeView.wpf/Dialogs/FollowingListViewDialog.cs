@@ -13,7 +13,9 @@ namespace TimeView.wpf.Services
         Window followingListView = null;
 
         public void showDialog() {
-            followingListView = new FollowingListView();
+            if (this.followingListView == null) {
+                followingListView = new FollowingListView();
+            }
             followingListView.Show();
         }
 

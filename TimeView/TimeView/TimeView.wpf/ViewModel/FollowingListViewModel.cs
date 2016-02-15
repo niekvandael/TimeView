@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using TimeView.data;
 using TimeView.wpf.Extensions;
+using TimeView.wpf.Messages;
 using TimeView.wpf.Services;
 using TimeView.wpf.Utility;
 
@@ -70,7 +71,7 @@ namespace TimeView.wpf.ViewModel
         public FollowingListViewModel(IEmployeeDataService employeeDataService)
         {
             // Register to events
-            Messenger.Default.Register<Employee>(this, OnEmployeeReceived);
+            Messenger.Default.Register<LoginMessage>(this, OnLoginReceived);
 
             // Dialogs
             scheduleListViewDialog = new ScheduleListViewDialog();
@@ -82,9 +83,9 @@ namespace TimeView.wpf.ViewModel
             LoadCommands();
         }
 
-        private void OnEmployeeReceived(Employee empl)
+        private void OnLoginReceived(LoginMessage loginMessage)
         {
-            this.CurrentUser = empl;
+            this.CurrentUser = loginMessage.Employee;
             LoadData();
         }
 
@@ -96,7 +97,8 @@ namespace TimeView.wpf.ViewModel
 
         private void OpenSchedule(object obj)
         {
-            MessageBox.Show("Open schedule");
+            scheduleListViewDialog.showDialog(selectedEmployee.Name);
+            Messenger.Default.Send<LoadScheduleList>(new LoadScheduleList { Employee = selectedEmployee, MySchedule = false });
         }
 
         private bool CanOpenShedule(object obj)
@@ -110,8 +112,8 @@ namespace TimeView.wpf.ViewModel
 
         private void OpenMySchedule(object obj)
         {
-            scheduleListViewDialog.showDialog();
-            Messenger.Default.Send<Employee>(this.currentUser);
+            scheduleListViewDialog.showDialog("My schedule");
+            Messenger.Default.Send<LoadScheduleList>(new LoadScheduleList { Employee = currentUser, MySchedule = true});
         }
 
         private bool CanOpenMyShedule(object obj)

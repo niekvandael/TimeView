@@ -10,54 +10,67 @@
         Height="800" 
         Width="770"
         DataContext="{Binding Source={StaticResource mainViewModelLocator},  Path=ScheduleListViewModel}">
+    <Window.Resources>
+        <Style TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+    </Window.Resources>
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="5*" />
         </Grid.ColumnDefinitions>
 
         <ListView Name="ScheduleList"
                   ItemsSource="{Binding Schedules}"
                   SelectedItem="{Binding SelectedSchedule}"
-                  Height="600" Width="740" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="5 5 5 5" >
+                  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="5 5 5 5" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <Rectangle Fill="{Binding CategoryEntry.Name}" Width="16" Height="30" Margin="2 2 2 2">
-                        </Rectangle>
-                        <StackPanel Orientation="Vertical">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Width="100" FontSize="14" FontWeight="Bold" Text="{Binding Day, StringFormat=dddd}"></TextBlock>
-                                <TextBlock Width="300" FontSize="14" FontWeight="Bold" Text="{Binding Day, StringFormat=dd-MM-yyyy}"></TextBlock>
-                                <TextBlock FontSize="12" FontWeight="Bold" Text="{Binding CategoryEntry.Start, StringFormat=\{0:h\\:mm\}}"></TextBlock>
-                                <TextBlock FontSize="12" FontWeight="Bold" Text="-"></TextBlock>
-                                <TextBlock FontSize="12" FontWeight="Bold" Text="{Binding CategoryEntry.End, StringFormat=\{0:h\\:mm\}}"></TextBlock>
-                            </StackPanel>
-                            <TextBlock FontSize="12" Text="{Binding CategoryEntry.Name}"></TextBlock>
-                        </StackPanel>
-                    </StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="5*" />
+                                <ColumnDefinition Width="5*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            
+                            <Rectangle Grid.Column="0" Grid.Row="0" Fill="{Binding CategoryEntry.Name}" Margin="2 2 2 2"></Rectangle>
+                            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" FontSize="14" FontWeight="Bold" Text="{Binding Day, StringFormat=dddd}"></TextBlock>
+                            <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" FontSize="14" FontWeight="Bold" Text="{Binding Day, StringFormat=dd-MM-yyyy}"></TextBlock>
+                            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Right" FontSize="14" FontWeight="Bold" Text="{Binding CategoryEntry, Converter={StaticResource categoryEntryHourConverter}}" ></TextBlock>
+
+                            <TextBlock Grid.Column="0" Grid.Row="1" FontSize="12" Text="{Binding CategoryEntry.Name}"></TextBlock>
+                        </Grid>
+                        
+
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListView>
 
-        <TextBlock Margin="5 5 5 5" Grid.Column="0" Grid.Row="1"  Text="Day:"></TextBlock>
-        <DatePicker Margin="5 5 5 5" Width="200" Text="{Binding SelectedSchedule.Day, Mode=TwoWay}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1"></DatePicker>
-        
-        
-        <TextBlock Margin="5 5 5 5" Grid.Column="0" Grid.Row="2"  Text="Hour:"></TextBlock>
+        <TextBlock Margin="10" FontSize="20" Grid.Column="0" Grid.Row="1"  Text="Day:"></TextBlock>
+        <DatePicker Margin="5"  Width="200" Text="{Binding SelectedSchedule.Day, Mode=TwoWay}"  Height="30" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1"></DatePicker>
 
-        <ComboBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2"  Width="200" Margin="5"
-                  ItemsSource="{Binding CategoryEntries}"
-                  SelectedValue="{Binding SelectedSchedule.CategoryEntryId , Mode=TwoWay}"
+
+        <TextBlock Margin="10" FontSize="20" Grid.Column="0" Grid.Row="2"  Text="Hour:"></TextBlock>
+
+        <ComboBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2"  Width="200" Height="30" Margin="5"
+                  ItemsSource="{Binding CategoryEntries, Mode=OneWay}"
+                  SelectedValue="{Binding SelectedSchedule.CategoryEntryId , Mode=OneWay}"
                   SelectedValuePath="Id"
                   >
             <ComboBox.ItemTemplate>
@@ -73,14 +86,8 @@
 
 
 
-        <Button Grid.Row ="5" Height="30" Margin="5 30 5 5" Content="New entry" Command="{Binding NewCommand}"></Button>
-        <Button  Grid.Row ="5" Grid.Column="1" HorizontalAlignment="Right" Width="200" Height="30" Margin="5 30 5 5" Content="Save">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Click">
-                    <i:InvokeCommandAction Command="{Binding SaveCommand}"></i:InvokeCommandAction>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </Button>
+        <Button Command="{Binding NewCommand}"  Grid.Row ="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left"  Width="200" Height="30" Margin="5" Content="New entry"></Button>
+        <Button Command="{Binding SaveCommand}" Grid.Row ="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Width="200" Height="30" Margin="5" Content="Save"></Button>
 
     </Grid>
 </Window>

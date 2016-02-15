@@ -140,8 +140,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\CompanyConverter.cs" />
+    <Compile Include="Converters\HourConverter.cs" />
     <Compile Include="Dialogs\FollowingListViewDialog.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Messages\LoginMessage.cs" />
+    <Compile Include="Messages\LoadScheduleList.cs" />
     <Compile Include="Services\CategoryEntry\CategoryEntryDataService.cs" />
     <Compile Include="Services\CategoryEntry\ICategoryEntryDataService.cs" />
     <Compile Include="Dialogs\ScheduleListViewDialog.cs" />

@@ -27,8 +27,8 @@ namespace TimeView.api.Migrations
             //
             // Add Category entries
             //
-            CategoryEntry categoryEntry1 = new CategoryEntry { Category = category1, Name = "gray", Start = TimeSpan.Parse("09:00"), End = TimeSpan.Parse("17:00") };
-            CategoryEntry categoryEntry2 = new CategoryEntry { Category = category1, Name = "green", Start = TimeSpan.Parse("17:00"), End = TimeSpan.Parse("22:00") };
+            CategoryEntry categoryEntry1 = new CategoryEntry { Category = category1, Name = "gray", Start = DateTime.Parse("09:00"), End = DateTime.Parse("17:00") };
+            CategoryEntry categoryEntry2 = new CategoryEntry { Category = category1, Name = "green", Start = DateTime.Parse("17:00"), End = DateTime.Parse("22:00") };
 
             category1.CategorieEntries.Add(categoryEntry1);
             category1.CategorieEntries.Add(categoryEntry2);

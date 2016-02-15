@@ -7,8 +7,8 @@ namespace TimeView.data
         public int Id { get; set; }
 
         public string Name { get; set; }
-        public TimeSpan Start { get; set; }
-        public TimeSpan End { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
 
         public int CategoryId { get; set; }
         public Category Category { get; set; }

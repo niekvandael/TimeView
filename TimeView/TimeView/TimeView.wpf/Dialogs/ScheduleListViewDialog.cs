@@ -10,10 +10,18 @@ namespace TimeView.wpf.Services
     public class ScheduleListViewDialog
     {
         Window scheduleListView = null;
+        Boolean isOpen = false;
 
-        public void showDialog() {
+        public void showDialog(string Title) {
+            if (isOpen) {
+                this.CloseDialog();
+            }
+
             scheduleListView = new ScheduleListView();
+            scheduleListView.Title = Title;
+
             scheduleListView.Show();
+            isOpen = true;
         }
 
         public void CloseDialog()
@@ -21,6 +29,7 @@ namespace TimeView.wpf.Services
             if (this.scheduleListView != null)
             {
                 scheduleListView.Close();
+                isOpen = false;
             }
         }
     }
