@@ -68,6 +68,34 @@ namespace TimeView.wpf.ViewModel
             }
         }
 
+        private String message;
+        public String Message
+        {
+            get
+            {
+                return message;
+            }
+            set
+            {
+                message = value;
+                RaisePropertyChanged("Message");
+            }
+        }
+
+        private String messageColor;
+        public String MessageColor
+        {
+            get
+            {
+                return messageColor;
+            }
+            set
+            {
+                messageColor = value;
+                RaisePropertyChanged("MessageColor");
+            }
+        }
+
         private Employee employee;
         public Employee Employee
         {
@@ -149,10 +177,28 @@ namespace TimeView.wpf.ViewModel
             return true;
         }
 
+        private void ClearMessage() {
+            this.Message = "";
+        }
 
         private void SaveSchedule(object obj)
         {
-            scheduleDataService.SaveSchedules(this.Schedules.ToList());
+            this.ClearMessage();
+            scheduleDataService.SaveSchedules(this.Schedules.ToList(), SaveCallback);
+        }
+
+        private bool SaveCallback(bool success) {
+            if (success)
+            {
+                this.MessageColor = "green";
+                this.Message = "Save successfull";
+                this.LoadScheduleList();
+            }
+            else {
+                this.MessageColor = "red";
+                this.Message = "Save failed";
+            }
+            return true;
         }
 
         private bool CanSaveSchedule(object obj)
@@ -180,7 +226,7 @@ namespace TimeView.wpf.ViewModel
             DateTime nextDay = DateTime.Now.AddDays(1);
             foreach (Schedule schedule in this.Schedules)
             {
-                if (schedule.Day > nextDay) {
+                if (schedule.Day >= nextDay) {
                     nextDay = schedule.Day.AddDays(1);
                 }
             }

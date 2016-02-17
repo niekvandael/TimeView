@@ -22,7 +22,7 @@ namespace TimeView.api.Controllers
         public IQueryable<Schedule> GetScheduleForEmployee(int employeeId)
         {
             DateTime select_from = DateTime.Now.AddDays(-7);
-            return db.Schedule.Where(s => s.EmployeeId == employeeId).Where(s => s.Day >= select_from).Include(s => s.CategoryEntry) ;
+            return db.Schedule.Where(s => s.EmployeeId == employeeId).Where(s => s.Day >= select_from).Include(s => s.CategoryEntry).OrderBy(s=>s.Day) ;
         }
 
         // GET: api/Schedules
@@ -98,8 +98,14 @@ namespace TimeView.api.Controllers
                 }
 
             }
-
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
             return Ok(schedules);
         }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TimeView.wpf"
         mc:Ignorable="d"
         Title="TimeView Login - ©2016" 
-        Width="350"
+        Width="400"
         Height="160"
         DataContext="{Binding Source={StaticResource mainViewModelLocator},  Path=LoginViewModel}">
     <Grid>
@@ -29,7 +29,7 @@
         <Button Margin="5,0,70,5" Grid.Column="1" Grid.Row="2" Command="{Binding LoginCommand}" Content="Login" Height="21" VerticalAlignment="Bottom"/>
         <TextBlock Margin="5 2 2 5" Text="Copyright © 2016 - TimeView" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"></TextBlock>
 
-        <Button Margin="5 2 2 5" Content="Not an account yet?" Cursor="Hand"  Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2">
+        <Button Margin="5 2 2 5" Content="Not an account yet?" Cursor="Hand"  Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Command="{Binding CreateAccount}">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <TextBlock TextDecorations="Underline">
@@ -48,6 +48,6 @@
                 </Style>
             </Button.Style>
         </Button>
-        <TextBlock x:Name="MessageTextBlock" Foreground="red" Margin="50 2 2 5" Cursor="Hand"  Grid.Column="1" Grid.Row="4"></TextBlock>
+        <TextBlock Name="MessageTextBlock" Text="{Binding Message, Mode=OneWay}" Foreground="red" Margin="50 2 2 5" Cursor="Hand"  Grid.Column="1" Grid.Row="4"></TextBlock>
     </Grid>
 </Window>

@@ -61,17 +61,16 @@ namespace TimeView.context
                 .HasColumnAnnotation(
                     IndexAnnotation.AnnotationName,
                     new IndexAnnotation(
-                        new IndexAttribute("UniqueConstraintDay", 1) { IsUnique = true }));
-
+                        new IndexAttribute("IndexEmployeeIdDay", 1) { IsUnique = true, Order = 1 }));
 
             modelBuilder
                 .Entity<Schedule>()
-                .Property(s => s.Id)
+                .Property(s => s.EmployeeId)
                 .IsRequired()
                 .HasColumnAnnotation(
                     IndexAnnotation.AnnotationName,
                     new IndexAnnotation(
-                        new IndexAttribute("UniqueConstraintDay", 2) { IsUnique = true }));
+                        new IndexAttribute("IndexEmployeeIdDay", 2) { IsUnique = true, Order = 2 }));
         }
     }
 }

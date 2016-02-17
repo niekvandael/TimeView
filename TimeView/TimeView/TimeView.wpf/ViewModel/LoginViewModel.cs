@@ -19,8 +19,23 @@ namespace TimeView.wpf.ViewModel
         private IEmployeeDataService employeeDataService;
 
         public ICommand LoginCommand { get; set; }
-
+        public ICommand CreateAccount { get; set; }
         private FollowingListViewDialog followingListViewDialog;
+
+        private String message;
+        public String Message
+        {
+            get
+            {
+                return message;
+            }
+            set
+            {
+                message = value;
+                RaisePropertyChanged("Message");
+            }
+        }
+
 
         private Employee employee = new Employee();
         public Employee Employee
@@ -48,6 +63,17 @@ namespace TimeView.wpf.ViewModel
         private void LoadCommands()
         {
             LoginCommand = new CustomCommand(LoginAction, CanLogin);
+            CreateAccount = new CustomCommand(CreateAccountAction, CanCreateAccount);
+        }
+
+        private void CreateAccountAction(object obj)
+        {
+            this.Message = "Send email to niek.vandael@student.pxl.be";
+        }
+
+        private bool CanCreateAccount(object obj)
+        {
+            return true;
         }
 
         private async void LoginAction(object obj)
@@ -60,16 +86,17 @@ namespace TimeView.wpf.ViewModel
 
                 followingListViewDialog.showDialog();
 
-                Messenger.Default.Send<LoginMessage>(new LoginMessage {  Employee = this.employee });
+                Messenger.Default.Send<LoginMessage>(new LoginMessage { Employee = this.employee });
             }
             else {
-                MessageBox.Show("Login failed");
+                this.Message = "Incorrect username or password";
             }
         }
 
         private bool CanLogin(object obj)
         {
-            if (Employee.Username != null && Employee.Username != "" && Employee.Password != null && Employee.Password != "") {
+            if (Employee.Username != null && Employee.Username != "" && Employee.Password != null && Employee.Password != "")
+            {
                 return true;
             }
             return false;

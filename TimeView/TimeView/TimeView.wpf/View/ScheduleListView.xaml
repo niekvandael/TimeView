@@ -15,7 +15,6 @@
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         </Style>
     </Window.Resources>
-    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
@@ -86,12 +85,10 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <TextBlock Name="MessageTextBlock" FontWeight="Bold" HorizontalAlignment="Right" Foreground="red" Margin="5 2 2 5" Cursor="Hand"  Grid.Column="1" Grid.Row="4"></TextBlock>
 
-
-
-        <Button Command="{Binding NewCommand}"  Grid.Row ="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left"  Width="200" Height="30" Margin="5" Content="New entry"></Button>
-        <Button Command="{Binding SaveCommand}" Grid.Row ="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Width="200" Height="30" Margin="5" Content="Save"></Button>
+        <TextBlock TextAlignment="Center"       Grid.Row ="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="200" Height="30" Margin="5" FontSize="20" Text="{Binding Message}" Foreground="{Binding MessageColor}" Cursor="Hand"></TextBlock>
+        <Button Command="{Binding NewCommand}"  Grid.Row ="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left"   Width="200" Height="30" Margin="5" Content="New entry"></Button>
+        <Button Command="{Binding SaveCommand}" Grid.Row ="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right"  Width="200" Height="30" Margin="5" Content="Save"></Button>
 
     </Grid>
 </Window>

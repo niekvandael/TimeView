@@ -12,6 +12,6 @@ namespace TimeView.wpf.Services
         Task<Schedule[]> GetScheduleForEmployee(Employee employee);
         void UpdateSchedule(Schedule schedule);
         void CreateSchedule(Schedule schedule);
-        void SaveSchedules(List<Schedule> schedules);
+        void SaveSchedules(List<Schedule> schedules, Func<bool,bool> callback);
     }
 }
