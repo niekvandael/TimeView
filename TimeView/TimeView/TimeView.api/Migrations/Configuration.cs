@@ -33,37 +33,52 @@ namespace TimeView.api.Migrations
             category1.CategorieEntries.Add(categoryEntry1);
             category1.CategorieEntries.Add(categoryEntry2);
 
-            context.Category.AddOrUpdate(category1);
+            context.Category.AddOrUpdate(
+            c => c.Name,
+                category1
+             );
 
-            
             //
             // Add companies
             //
 
-            Company comp1 = new Company { Name = "UZ Antwerpen"};
-            Company comp2 = new Company { Name = "UZ Leuven"};
+            Company comp1 = new Company { Name = "UZ Antwerpen", Employees = new List<Employee>()};
+            Company comp2 = new Company { Name = "UZ Leuven", Employees = new List<Employee>() };
             context.Company.AddOrUpdate(
              c => c.Name,
                 comp1,
                 comp2
              );
 
-            context.Company.AddOrUpdate(comp1);
-            context.Company.AddOrUpdate(comp2);
+            context.Company.AddOrUpdate(
+            c => c.Name,
+                comp1,
+                comp2
+             );
             
             //
             // Add Employees
             //
 
-            Employee emp1 = new Employee {Username = "chrissy", Password = "chrissy",Name = "Chrissy Steegen", CompanyId = comp1.Id, Company=comp1, Following = new List<Employee>() };
-            Employee emp2 = new Employee { Username = "niek" , Password = "niek", Name = "Niek Vandael", CompanyId = comp2.Id, Company =comp2, Following = new List<Employee>() };
+            Employee emp1 = new Employee {Username = "chrissy", Password = "chrissy",Name = "Chrissy Steegen", CompanyId = comp1.Id, Company=comp1, Following = new List<Employee>() , Follower = new List<Employee>()};
+            Employee emp2 = new Employee { Username = "niek" , Password = "niek", Name = "Niek Vandael", CompanyId = comp2.Id, Company =comp2, Following = new List<Employee>(), Follower = new List<Employee>() };
 
             emp2.Following.Add(emp1);
+            emp1.Follower.Add(emp2);
+
+            comp1.Employees.Add(emp1);
+            comp2.Employees.Add(emp2);
 
             context.Employee.AddOrUpdate(
              e => e.Name,
                 emp1,
                 emp2
+             );
+
+            context.Employee.AddOrUpdate(
+             e => e.Name,
+                emp2,
+                emp1
              );
 
             Schedule schedule1 = new Schedule { Day = DateTime.Now, EmployeeId = 1, CategoryEntry = categoryEntry1, CategoryEntryId = categoryEntry1.Id };

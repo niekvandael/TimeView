@@ -27,6 +27,11 @@ namespace TimeView.wpf.Services
             return await repository.getScheduleForEmployee(employee.Id);
         }
 
+        public void SaveSchedules(List<Schedule> schedules)
+        {
+            repository.SaveSchedules(schedules);
+        }
+
         public void UpdateSchedule(Schedule schedule)
         {
             repository.UpdateSchedule(schedule);

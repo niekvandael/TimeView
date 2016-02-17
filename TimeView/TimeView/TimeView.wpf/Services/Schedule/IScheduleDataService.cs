@@ -10,5 +10,8 @@ namespace TimeView.wpf.Services
     public interface IScheduleDataService
     {
         Task<Schedule[]> GetScheduleForEmployee(Employee employee);
+        void UpdateSchedule(Schedule schedule);
+        void CreateSchedule(Schedule schedule);
+        void SaveSchedules(List<Schedule> schedules);
     }
 }

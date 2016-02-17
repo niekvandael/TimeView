@@ -12,6 +12,10 @@ namespace TimeView.wpf.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
+            if (value == null) {
+                return "N/A";
+            }
+
             CategoryEntry categoryEntry = (CategoryEntry) value;
             return categoryEntry.Start.ToString("hh:mm tt") + " - " + categoryEntry.End.ToString("hh:mm tt");
         }

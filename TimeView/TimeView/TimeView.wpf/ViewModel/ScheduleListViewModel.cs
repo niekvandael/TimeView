@@ -23,7 +23,8 @@ namespace TimeView.wpf.ViewModel
 
         public ICommand NewCommand { get; set; }
         public ICommand SaveCommand { get; set; }
-
+        public ICommand SelectionChangedCommand { get; set; }
+        
         private ObservableCollection<CategoryEntry> categoryEntries;
         public ObservableCollection<CategoryEntry> CategoryEntries
         {
@@ -120,11 +121,12 @@ namespace TimeView.wpf.ViewModel
         {
             NewCommand = new CustomCommand(NewSchedule, CanNewSchedule);
             SaveCommand = new CustomCommand(SaveSchedule, CanSaveSchedule);
+            SelectionChangedCommand = new CustomCommand(SelectionChanged, CanChangeSelection);
         }
 
         private void NewSchedule(object obj)
         {
-            MessageBox.Show("new schedule");
+            this.Schedules.Add(new Schedule { EmployeeId = this.employee.Id, Id = -1, Day = getNextDay() });
         }
 
         private bool CanNewSchedule(object obj)
@@ -132,9 +134,25 @@ namespace TimeView.wpf.ViewModel
             return this.mySchedule;
         }
 
+        private void SelectionChanged(object obj)
+        {
+            foreach (CategoryEntry categoryEntry in this.categoryEntries)
+            {
+                if (this.selectedSchedule != null && (this.selectedSchedule.CategoryEntryId == categoryEntry.Id)){
+                    this.SelectedSchedule.CategoryEntry = categoryEntry;
+                }
+            }
+        }
+
+        private bool CanChangeSelection(object obj)
+        {
+            return true;
+        }
+
+
         private void SaveSchedule(object obj)
         {
-            MessageBox.Show("save schedule");
+            scheduleDataService.SaveSchedules(this.Schedules.ToList());
         }
 
         private bool CanSaveSchedule(object obj)
@@ -142,16 +160,33 @@ namespace TimeView.wpf.ViewModel
             return this.mySchedule;
         }
 
-        private async void LoadData()
+        private void LoadData()
         {
-            Schedule[] schedules = await scheduleDataService.GetScheduleForEmployee(this.Employee);
-            this.Schedules = schedules.ToObservableCollection();
-
-            CategoryEntry[] categoryEntries = await categoryEntryDataService.GetCategoryEntriesForCompany(1);
-            this.CategoryEntries = categoryEntries.ToObservableCollection();
-
+            this.LoadScheduleList();
+            this.LoadCategoryEntries();
         }
 
+        private async void LoadScheduleList() {
+            Schedule[] schedules = await scheduleDataService.GetScheduleForEmployee(this.Employee);
+            this.Schedules = schedules.ToObservableCollection();
+        }
+
+        private async void LoadCategoryEntries() {
+            CategoryEntry[] categoryEntries = await categoryEntryDataService.GetCategoryEntriesForCompany(1);
+            this.CategoryEntries = categoryEntries.ToObservableCollection();
+        }
+
+        private DateTime getNextDay() {
+            DateTime nextDay = DateTime.Now.AddDays(1);
+            foreach (Schedule schedule in this.Schedules)
+            {
+                if (schedule.Day > nextDay) {
+                    nextDay = schedule.Day.AddDays(1);
+                }
+            }
+
+            return nextDay;
+        }
 
         private void RaisePropertyChanged(string propertyName)
         {

@@ -15,6 +15,21 @@ namespace TimeView.data.Services
 
         private string baseAddress = "http://localhost:51150/";
 
+
+       async void IScheduleRepository.SaveSchedules(List<Schedule> schedules)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseAddress);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+                string url = "api/Schedules/post";
+                HttpResponseMessage response = await client.PostAsJsonAsync(url, schedules);
+            }
+        }
+
         async void IScheduleRepository.CreateSchedule(Schedule schedule)
         {
             using (var client = new HttpClient())

@@ -77,17 +77,31 @@ namespace TimeView.api.Controllers
 
         // POST: api/Schedules
         [ResponseType(typeof(Schedule))]
-        public IHttpActionResult PostSchedule(Schedule schedule)
+        public IHttpActionResult PostSchedule(List<Schedule> schedules)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Schedule.Add(schedule);
+            foreach (Schedule schedule in schedules)
+            {
+                schedule.CategoryEntry = null; // Omit add/update of FK
+
+                if (schedule.Id == -1)
+                {
+                    db.Schedule.Add(schedule);
+                    db.Entry(schedule).State = EntityState.Added;
+                }
+                else {
+                    db.Entry(schedule).State = EntityState.Modified;
+                }
+
+            }
+
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = schedule.Id }, schedule);
+            return Ok(schedules);
         }
 
         // DELETE: api/Schedules/5

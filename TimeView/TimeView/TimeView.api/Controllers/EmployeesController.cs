@@ -21,7 +21,11 @@ namespace TimeView.api.Controllers
         public Employee GetEmployee(string username, string password) {
             try
             {
-                return db.Employee.Include(e => e.Company).Where(e => e.Username == username).Where(e => e.Password == password).First();
+                Employee employee = db.Employee.Include(e => e.Company).Where(e => e.Username == username).Where(e => e.Password == password).First();
+
+                employee.Company.Employees = null;
+
+                return employee;
             }
             catch (Exception)
             {
@@ -43,6 +47,17 @@ namespace TimeView.api.Controllers
                 .Include(e => e.Following.Select(f => f.Company))
                 .Include(e => e.Following)
                 .Where(e => e.Id == id).First();
+
+// Avoid loops
+
+            for (int i = 0; i < employee.Following.Count; i++)
+            {
+                employee.Following[i].Follower = null;
+                employee.Following[i].Company.Employees = null;
+            }
+
+// End avoid loops
+
             if (employee == null)
             {
                 return NotFound();

@@ -12,5 +12,6 @@ namespace TimeView.domain
         System.Threading.Tasks.Task<Schedule[]> getScheduleForEmployee(int EmployeeId);
         void CreateSchedule(Schedule schedule);
         void UpdateSchedule(Schedule schedule);
+        void SaveSchedules(List<Schedule> schedules);
     }
 }

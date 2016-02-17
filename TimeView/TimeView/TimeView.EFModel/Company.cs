@@ -10,8 +10,5 @@ namespace TimeView.data
 
         public int CategoryId { get; set; }
         public Category Category { get; set; }
-
-        public virtual List<Employee> Employees { get; set; }
-
     }
 }
