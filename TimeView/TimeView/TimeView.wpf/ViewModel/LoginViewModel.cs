@@ -83,7 +83,7 @@ namespace TimeView.wpf.ViewModel
             if (_empl != null)
             {
                 this.Employee = _empl;
-
+                Application.Current.MainWindow.Hide();
                 followingListViewDialog.showDialog();
 
                 Messenger.Default.Send<LoginMessage>(new LoginMessage { Employee = this.employee });

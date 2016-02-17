@@ -226,7 +226,7 @@ namespace TimeView.wpf.ViewModel
             DateTime nextDay = DateTime.Now.AddDays(1);
             foreach (Schedule schedule in this.Schedules)
             {
-                if (schedule.Day >= nextDay) {
+                if (schedule.Day.Date >= nextDay.Date) {
                     nextDay = schedule.Day.AddDays(1);
                 }
             }
