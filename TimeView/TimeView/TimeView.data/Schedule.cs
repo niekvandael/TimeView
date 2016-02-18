@@ -72,5 +72,23 @@ namespace TimeView.data
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        public override bool Equals(object obj)
+        {
+            Schedule test = obj as Schedule;
+            if (test == null)
+            {
+                return false;
+            }
+            return Id == test.Id &&
+                Day.Date == test.Day.Date &&
+                CategoryEntryId == test.CategoryEntryId &&
+                EmployeeId == test.EmployeeId;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
     }
 }

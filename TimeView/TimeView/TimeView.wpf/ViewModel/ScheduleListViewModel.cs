@@ -206,31 +206,34 @@ namespace TimeView.wpf.ViewModel
             return this.mySchedule;
         }
 
-        private void LoadData()
+        public void LoadData()
         {
             this.LoadScheduleList();
             this.LoadCategoryEntries();
         }
 
-        private async void LoadScheduleList() {
+        public async void LoadScheduleList() {
             Schedule[] schedules = await scheduleDataService.GetScheduleForEmployee(this.Employee);
             this.Schedules = schedules.ToObservableCollection();
         }
 
-        private async void LoadCategoryEntries() {
+        public async void LoadCategoryEntries() {
             CategoryEntry[] categoryEntries = await categoryEntryDataService.GetCategoryEntriesForCompany(1);
             this.CategoryEntries = categoryEntries.ToObservableCollection();
         }
 
-        private DateTime getNextDay() {
+        public DateTime getNextDay() {
             DateTime nextDay = DateTime.Now.AddDays(1);
-            foreach (Schedule schedule in this.Schedules)
+            if (this.Schedules != null)
             {
-                if (schedule.Day.Date >= nextDay.Date) {
-                    nextDay = schedule.Day.AddDays(1);
+                foreach (Schedule schedule in this.Schedules)
+                {
+                    if (schedule.Day.Date >= nextDay.Date)
+                    {
+                        nextDay = schedule.Day.AddDays(1);
+                    }
                 }
             }
-
             return nextDay;
         }
 

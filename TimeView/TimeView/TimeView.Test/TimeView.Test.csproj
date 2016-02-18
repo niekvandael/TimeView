@@ -51,12 +51,17 @@
   </Choose>
   <ItemGroup>
     <Compile Include="LoginViewModelTest.cs" />
+    <Compile Include="Mocks\DataServices\MockCategoryEntryDataService.cs" />
     <Compile Include="Mocks\DataServices\MockEmployeeDataService.cs" />
+    <Compile Include="Mocks\DataServices\MockScheduleDataService.cs" />
     <Compile Include="Mocks\Dialogs\MockLoginViewDialog.cs" />
     <Compile Include="Mocks\Dialogs\MockScheduleListViewDialog.cs" />
     <Compile Include="FollowingListViewModelTests.cs" />
+    <Compile Include="Mocks\Repositories\MockCategoryEntryRepository.cs" />
     <Compile Include="Mocks\Repositories\MockEmployeeRepository.cs" />
+    <Compile Include="Mocks\Repositories\MockScheduleRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScheduleListViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TimeView.data\TimeView.Model.csproj">
