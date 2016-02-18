@@ -14,7 +14,7 @@ using TimeView.wpf.ViewModel;
 namespace TimeView.Test
 {
     [TestClass]
-    public class LoginTest
+    public class LoginViewModelTest
     {
         private IEmployeeDataService employeeDataService;
         private IViewDialog scheduleListViewDialog;

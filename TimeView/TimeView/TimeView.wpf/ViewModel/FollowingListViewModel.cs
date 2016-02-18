@@ -69,13 +69,13 @@ namespace TimeView.wpf.ViewModel
             }
         }
 
-        public FollowingListViewModel(IEmployeeDataService employeeDataService)
+        public FollowingListViewModel(IEmployeeDataService employeeDataService, IViewDialog scheduleListViewDialog)
         {
             // Register to events
             Messenger.Default.Register<LoginMessage>(this, OnLoginReceived);
 
             // Dialogs
-            scheduleListViewDialog = new ScheduleListViewDialog();
+            this.scheduleListViewDialog = scheduleListViewDialog;
 
             // set services
             this.employeeDataService = employeeDataService;
@@ -122,7 +122,7 @@ namespace TimeView.wpf.ViewModel
             return true;
         }
 
-        private async void LoadData()
+        public async void LoadData()
         {
             CurrentUser = await employeeDataService.GetEmployee(currentUser);
             Employees = CurrentUser.Following.ToObservableCollection();

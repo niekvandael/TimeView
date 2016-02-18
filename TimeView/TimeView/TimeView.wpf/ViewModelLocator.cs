@@ -25,6 +25,7 @@ namespace TimeView.wpf
         //
         private static IViewDialog followingListViewDialog = new FollowingListViewDialog();
         private static IViewDialog loginViewDialog = new LoginViewDialog();
+        private static IViewDialog scheduleListViewDialog = new ScheduleListViewDialog();
 
         //
         // ListViews
@@ -35,7 +36,7 @@ namespace TimeView.wpf
         private static LoginViewModel loginViewModel = new LoginViewModel(employeeDataService, followingListViewDialog, loginViewDialog);
         public static LoginViewModel LoginViewModel { get { return loginViewModel; } }
 
-        private static FollowingListViewModel followingListViewModel = new FollowingListViewModel(employeeDataService);
+        private static FollowingListViewModel followingListViewModel = new FollowingListViewModel(employeeDataService, scheduleListViewDialog);
         public static FollowingListViewModel FollowingListViewModel { get { return followingListViewModel; } }
 
     }
