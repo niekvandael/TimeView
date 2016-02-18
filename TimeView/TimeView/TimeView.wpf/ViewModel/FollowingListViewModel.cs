@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using TimeView.data;
+using TimeView.wpf.Dialogs;
 using TimeView.wpf.Extensions;
 using TimeView.wpf.Messages;
 using TimeView.wpf.Services;
@@ -24,7 +25,7 @@ namespace TimeView.wpf.ViewModel
         public ICommand OpenCommand { get; set; }
         public ICommand OpenMyCommand { get; set; }
 
-        ScheduleListViewDialog scheduleListViewDialog;
+        private IViewDialog scheduleListViewDialog;
 
         private ObservableCollection<Employee> employees;
         public ObservableCollection<Employee> Employees
@@ -97,7 +98,7 @@ namespace TimeView.wpf.ViewModel
 
         private void OpenSchedule(object obj)
         {
-            scheduleListViewDialog.showDialog(selectedEmployee.Name);
+            scheduleListViewDialog.ShowDialog(selectedEmployee.Name);
             Messenger.Default.Send<LoadScheduleList>(new LoadScheduleList { Employee = selectedEmployee, MySchedule = false });
         }
 
@@ -112,7 +113,7 @@ namespace TimeView.wpf.ViewModel
 
         private void OpenMySchedule(object obj)
         {
-            scheduleListViewDialog.showDialog("My schedule");
+            scheduleListViewDialog.ShowDialog("My schedule");
             Messenger.Default.Send<LoadScheduleList>(new LoadScheduleList { Employee = currentUser, MySchedule = true});
         }
 

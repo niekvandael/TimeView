@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using TimeView.wpf.Dialogs;
 
 namespace TimeView.wpf.Services
 {
-    public class ScheduleListViewDialog
+    public class ScheduleListViewDialog : IViewDialog
     {
         Window scheduleListView = null;
         Boolean isOpen = false;
 
-        public void showDialog(string Title) {
+        public void ShowDialog(string Title) {
             if (isOpen) {
                 this.CloseDialog();
             }

@@ -141,7 +141,9 @@
     </ApplicationDefinition>
     <Compile Include="Converters\CompanyConverter.cs" />
     <Compile Include="Converters\HourConverter.cs" />
+    <Compile Include="Dialogs\LoginViewDialog.cs" />
     <Compile Include="Dialogs\FollowingListViewDialog.cs" />
+    <Compile Include="Dialogs\IViewDialog.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Messages\LoginMessage.cs" />
     <Compile Include="Messages\LoadScheduleList.cs" />

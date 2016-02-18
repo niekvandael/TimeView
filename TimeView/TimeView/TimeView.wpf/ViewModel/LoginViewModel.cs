@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using TimeView.data;
+using TimeView.wpf.Dialogs;
 using TimeView.wpf.Messages;
 using TimeView.wpf.Services;
 using TimeView.wpf.Utility;
@@ -20,7 +21,9 @@ namespace TimeView.wpf.ViewModel
 
         public ICommand LoginCommand { get; set; }
         public ICommand CreateAccount { get; set; }
-        private FollowingListViewDialog followingListViewDialog;
+
+        private IViewDialog followingListViewDialog;
+        private IViewDialog loginViewDialog;
 
         private String message;
         public String Message
@@ -51,11 +54,11 @@ namespace TimeView.wpf.ViewModel
             }
         }
 
-        public LoginViewModel(IEmployeeDataService employeeDataService)
+        public LoginViewModel(IEmployeeDataService employeeDataService, IViewDialog followingListViewDialog, IViewDialog loginViewDialog)
         {
             this.employeeDataService = employeeDataService;
-
-            followingListViewDialog = new FollowingListViewDialog();
+            this.followingListViewDialog = followingListViewDialog;
+            this.loginViewDialog = loginViewDialog;
 
             LoadCommands();
         }
@@ -76,15 +79,19 @@ namespace TimeView.wpf.ViewModel
             return true;
         }
 
-        private async void LoginAction(object obj)
+        private void LoginAction(object obj)
         {
-            Employee _empl = await employeeDataService.GetEmployee(this.Employee.Username, this.Employee.Password);
+            this.doLogin(this.Employee.Username, this.Employee.Password);
+        }
+
+        public async void doLogin(String username, String password) {
+            Employee _empl = await employeeDataService.GetEmployee(username, password);
 
             if (_empl != null)
             {
                 this.Employee = _empl;
-                Application.Current.MainWindow.Hide();
-                followingListViewDialog.showDialog();
+                loginViewDialog.CloseDialog();
+                followingListViewDialog.ShowDialog("People you are following");
 
                 Messenger.Default.Send<LoginMessage>(new LoginMessage { Employee = this.employee });
             }
