@@ -1,22 +1,16 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
-using System.Web;
-using TimeView.domain;
 using System.Threading.Tasks;
+using TimeView.domain;
 
 namespace TimeView.data.Services
 {
     public class CategoryEntryRepository : ICategoryEntryRepository
     {
+        private readonly string baseAddress = "http://localhost:51150/";
 
-        private string baseAddress = "http://localhost:51150/";
-
-        async System.Threading.Tasks.Task<CategoryEntry[]> ICategoryEntryRepository.getCategoryEntriesForCompany(int CompanyId)
+        async Task<CategoryEntry[]> ICategoryEntryRepository.GetCategoryEntriesForCompany(int companyId)
         {
             using (var client = new HttpClient())
             {
@@ -24,13 +18,13 @@ namespace TimeView.data.Services
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                string url = "api/CategoryEntries?EmployeeId=" + CompanyId;
+                var url = "api/CategoryEntries?EmployeeId=" + companyId;
 
-                HttpResponseMessage response = await client.GetAsync(url);
+                var response = await client.GetAsync(url);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    CategoryEntry[] result = await response.Content.ReadAsAsync<CategoryEntry[]>();
+                    var result = await response.Content.ReadAsAsync<CategoryEntry[]>();
                     return result;
                 }
             }

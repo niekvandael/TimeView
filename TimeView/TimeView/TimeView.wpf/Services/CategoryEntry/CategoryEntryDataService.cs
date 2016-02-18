@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using TimeView.data;
 using TimeView.domain;
 
@@ -10,16 +6,16 @@ namespace TimeView.wpf.Services
 {
     public class CategoryEntryDataService : ICategoryEntryDataService
     {
-        ICategoryEntryRepository repository;
+        private readonly ICategoryEntryRepository _repository;
 
         public CategoryEntryDataService(ICategoryEntryRepository repository)
         {
-            this.repository = repository;
+            _repository = repository;
         }
 
-        public async Task<CategoryEntry[]> GetCategoryEntriesForCompany(int CompanyId)
+        public async Task<CategoryEntry[]> GetCategoryEntriesForCompany(int companyId)
         {
-            return await repository.getCategoryEntriesForCompany(CompanyId);
+            return await _repository.GetCategoryEntriesForCompany(companyId);
         }
     }
 }

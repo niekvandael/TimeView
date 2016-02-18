@@ -15,16 +15,16 @@ namespace TimeView.data
 
         public override bool Equals(object obj)
         {
-            CategoryEntry test = obj as CategoryEntry;
+            var test = obj as CategoryEntry;
             if (test == null)
             {
                 return false;
             }
             return Id == test.Id &&
-                Name == test.Name &&
-                Start.Date == test.Start.Date &&
-                End.Date == test.End.Date &&
-                CategoryId == test.CategoryId;
+                   Name == test.Name &&
+                   Start.Date == test.Start.Date &&
+                   End.Date == test.End.Date &&
+                   CategoryId == test.CategoryId;
         }
 
         public override int GetHashCode()

@@ -10,8 +10,8 @@
         DataContext="{Binding Source={StaticResource mainViewModelLocator},  Path=FollowingListViewModel}">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -20,19 +20,22 @@
         </Grid.ColumnDefinitions>
 
         <ListView Name="FollowingList" Grid.ColumnSpan="2"
-               ItemsSource="{Binding Employees}"
+                  ItemsSource="{Binding Employees}"
                   SelectedItem="{Binding SelectedEmployee}"
                   Grid.Column="0" Grid.Row="0" Margin="5 5 5 5">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin ="2 2 2 2 " FontSize="14" FontWeight="Bold" Text="{Binding Name}" />
-                        <TextBlock Margin ="2 2 2 2 " FontSize="14" FontWeight="Bold" Text="{Binding Company.Name, Converter={StaticResource companyConverter}}" />
+                        <TextBlock Margin="2 2 2 2 " FontSize="14" FontWeight="Bold" Text="{Binding Name}" />
+                        <TextBlock Margin="2 2 2 2 " FontSize="14" FontWeight="Bold"
+                                   Text="{Binding Company.Name, Converter={StaticResource companyConverter}}" />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListView>
-        <Button Grid.Column="0" Grid.Row="1" Command="{Binding OpenCommand}" Width="120" Height="40" Content="Open" HorizontalAlignment="Left" Margin="5 5 5 5"></Button>
-        <Button Grid.Column="1" Grid.Row="1" Command="{Binding OpenMyCommand}" Width="120" Height="40" Content="Open my schedule" HorizontalAlignment="Right" Margin="5 5 5 5"></Button>
+        <Button Grid.Column="0" Grid.Row="1" Command="{Binding OpenCommand}" Width="120" Height="40" Content="Open"
+                HorizontalAlignment="Left" Margin="5 5 5 5" />
+        <Button Grid.Column="1" Grid.Row="1" Command="{Binding OpenMyCommand}" Width="120" Height="40"
+                Content="Open my schedule" HorizontalAlignment="Right" Margin="5 5 5 5" />
     </Grid>
 </Window>

@@ -1,21 +1,17 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
-using System.Web;
+using System.Threading.Tasks;
 using TimeView.domain;
 
 namespace TimeView.data.Services
 {
     public class ScheduleRepository : IScheduleRepository
     {
+        private readonly string baseAddress = "http://localhost:51150/";
 
-        private string baseAddress = "http://localhost:51150/";
-
-       async void IScheduleRepository.SaveSchedules(List<Schedule> schedules, Func<bool, bool> callback)
+        async void IScheduleRepository.SaveSchedules(List<Schedule> schedules, Func<bool, bool> callback)
         {
             using (var client = new HttpClient())
             {
@@ -24,8 +20,8 @@ namespace TimeView.data.Services
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
 
-                string url = "api/Schedules/post";
-                HttpResponseMessage response = await client.PostAsJsonAsync(url, schedules);
+                var url = "api/Schedules/post";
+                var response = await client.PostAsJsonAsync(url, schedules);
 
                 callback(response.IsSuccessStatusCode);
             }
@@ -40,12 +36,12 @@ namespace TimeView.data.Services
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
 
-                string url = "api/Schedules/post";
-                HttpResponseMessage response = await client.PostAsJsonAsync(url, schedule);
+                var url = "api/Schedules/post";
+                await client.PostAsJsonAsync(url, schedule);
             }
         }
 
-        async System.Threading.Tasks.Task<Schedule[]> IScheduleRepository.getScheduleForEmployee(int EmployeeId)
+        async Task<Schedule[]> IScheduleRepository.GetScheduleForEmployee(int employeeId)
         {
             using (var client = new HttpClient())
             {
@@ -53,13 +49,13 @@ namespace TimeView.data.Services
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                string url = "api/Schedules?EmployeeId=" + EmployeeId;
+                var url = "api/Schedules?EmployeeId=" + employeeId;
 
-                HttpResponseMessage response = await client.GetAsync(url);
+                var response = await client.GetAsync(url);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    Schedule[] result = await response.Content.ReadAsAsync<Schedule[]>();
+                    var result = await response.Content.ReadAsAsync<Schedule[]>();
                     return result;
                 }
             }
@@ -76,8 +72,8 @@ namespace TimeView.data.Services
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
 
-                string url = "api/Schedules/put";
-                HttpResponseMessage response = await client.PutAsJsonAsync(url, schedule);
+                var url = "api/Schedules/put";
+                await client.PutAsJsonAsync(url, schedule);
             }
         }
     }

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using Owin;
+using TimeView.api;
 
-[assembly: OwinStartup(typeof(TimeView.api.Startup))]
+[assembly: OwinStartup(typeof (Startup))]
 
 namespace TimeView.api
 {

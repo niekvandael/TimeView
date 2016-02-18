@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:TimeView.wpf"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="Schedule" 
-        Height="800" 
+        Title="Schedule"
+        Height="800"
         Width="770"
         DataContext="{Binding Source={StaticResource mainViewModelLocator},  Path=ScheduleListViewModel}">
     <Window.Resources>
@@ -17,11 +17,11 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -32,48 +32,53 @@
         <ListView Name="ScheduleList"
                   ItemsSource="{Binding Schedules}"
                   SelectedItem="{Binding SelectedSchedule, Mode=TwoWay}"
-                  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="5 5 5 5" >
+                  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="5 5 5 5">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="2*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="5*" />
-                                <ColumnDefinition Width="5*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            
-                            <Rectangle Grid.Column="0" Grid.Row="0" Fill="{Binding CategoryEntry.Name}" Margin="2 2 2 2"></Rectangle>
-                            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" FontSize="14" FontWeight="Bold" Text="{Binding Day, StringFormat=dddd}"></TextBlock>
-                            <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" FontSize="14" FontWeight="Bold" Text="{Binding Day, StringFormat=dd-MM-yyyy}"></TextBlock>
-                            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Right" FontSize="14" FontWeight="Bold" Text="{Binding CategoryEntry, Converter={StaticResource categoryEntryHourConverter}}" ></TextBlock>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="5*" />
+                            <ColumnDefinition Width="5*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="0" Grid.Row="1" FontSize="12" Text="{Binding CategoryEntry.Name}"></TextBlock>
-                        </Grid>
-                        
+                        <Rectangle Grid.Column="0" Grid.Row="0" Fill="{Binding CategoryEntry.Name}" Margin="2 2 2 2" />
+                        <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" FontSize="14"
+                                   FontWeight="Bold" Text="{Binding Day, StringFormat=dddd}" />
+                        <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" FontSize="14"
+                                   FontWeight="Bold" Text="{Binding Day, StringFormat=dd-MM-yyyy}" />
+                        <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Right" FontSize="14"
+                                   FontWeight="Bold"
+                                   Text="{Binding CategoryEntry, Converter={StaticResource categoryEntryHourConverter}}" />
+
+                        <TextBlock Grid.Column="0" Grid.Row="1" FontSize="12" Text="{Binding CategoryEntry.Name}" />
+                    </Grid>
+
 
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListView>
 
-        <TextBlock Margin="10" FontSize="20" Grid.Column="0" Grid.Row="1"  Text="Day:"></TextBlock>
-        <DatePicker Margin="5"  Width="200" Text="{Binding SelectedSchedule.Day, Mode=TwoWay}"  Height="30" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1"></DatePicker>
+        <TextBlock Margin="10" FontSize="20" Grid.Column="0" Grid.Row="1" Text="Day:" />
+        <DatePicker Margin="5" Width="200" Text="{Binding SelectedSchedule.Day, Mode=TwoWay}" Height="30"
+                    HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" />
 
 
-        <TextBlock Margin="10" FontSize="20" Grid.Column="0" Grid.Row="2"  Text="Hour:"></TextBlock>
+        <TextBlock Margin="10" FontSize="20" Grid.Column="0" Grid.Row="2" Text="Hour:" />
 
-        <ComboBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2"  Width="200" Height="30" Margin="5"
+        <ComboBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" Width="200" Height="30" Margin="5"
                   ItemsSource="{Binding CategoryEntries, Mode=OneWay}"
                   SelectedValue="{Binding SelectedSchedule.CategoryEntryId , Mode=TwoWay}"
                   SelectedValuePath="Id">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}"/>
+                    <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
             <ComboBox.ItemTemplate>
@@ -86,9 +91,13 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
 
-        <TextBlock TextAlignment="Center"       Grid.Row ="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="200" Height="30" Margin="5" FontSize="20" Text="{Binding Message}" Foreground="{Binding MessageColor}" Cursor="Hand"></TextBlock>
-        <Button Command="{Binding NewCommand}"  Grid.Row ="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left"   Width="200" Height="30" Margin="5" Content="New entry"></Button>
-        <Button Command="{Binding SaveCommand}" Grid.Row ="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right"  Width="200" Height="30" Margin="5" Content="Save"></Button>
+        <TextBlock TextAlignment="Center" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center"
+                   Width="200" Height="30" Margin="5" FontSize="20" Text="{Binding Message}"
+                   Foreground="{Binding MessageColor}" Cursor="Hand" />
+        <Button Command="{Binding NewCommand}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                HorizontalAlignment="Left" Width="200" Height="30" Margin="5" Content="New entry" />
+        <Button Command="{Binding SaveCommand}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                HorizontalAlignment="Right" Width="200" Height="30" Margin="5" Content="Save" />
 
     </Grid>
 </Window>

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using TimeView.context;
@@ -15,12 +11,12 @@ namespace TimeView.api.Controllers
 {
     public class CategoryEntriesController : ApiController
     {
-        private TimeViewContext db = new TimeViewContext();
+        private readonly TimeViewContext db = new TimeViewContext();
 
         // GET: api/CategoryEntries?CategoryId=1
-        public IQueryable<CategoryEntry> GetCategoryEntriesForCategory(int CategoryId) 
+        public IQueryable<CategoryEntry> GetCategoryEntriesForCategory(int CategoryId)
         {
-            return db.CategoryEntry.Where(c=>c.CategoryId == CategoryId);
+            return db.CategoryEntry.Where(c => c.CategoryId == CategoryId);
         }
 
         // GET: api/CategoryEntries
@@ -30,10 +26,10 @@ namespace TimeView.api.Controllers
         }
 
         // GET: api/CategoryEntries/5
-        [ResponseType(typeof(CategoryEntry))]
+        [ResponseType(typeof (CategoryEntry))]
         public IHttpActionResult GetCategoryEntry(int id)
         {
-            CategoryEntry categoryEntry = db.CategoryEntry.Find(id);
+            var categoryEntry = db.CategoryEntry.Find(id);
             if (categoryEntry == null)
             {
                 return NotFound();
@@ -43,7 +39,7 @@ namespace TimeView.api.Controllers
         }
 
         // PUT: api/CategoryEntries/5
-        [ResponseType(typeof(void))]
+        [ResponseType(typeof (void))]
         public IHttpActionResult PutCategoryEntry(int id, CategoryEntry categoryEntry)
         {
             if (!ModelState.IsValid)
@@ -68,17 +64,14 @@ namespace TimeView.api.Controllers
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/CategoryEntries
-        [ResponseType(typeof(CategoryEntry))]
+        [ResponseType(typeof (CategoryEntry))]
         public IHttpActionResult PostCategoryEntry(CategoryEntry categoryEntry)
         {
             if (!ModelState.IsValid)
@@ -89,14 +82,14 @@ namespace TimeView.api.Controllers
             db.CategoryEntry.Add(categoryEntry);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = categoryEntry.Id }, categoryEntry);
+            return CreatedAtRoute("DefaultApi", new {id = categoryEntry.Id}, categoryEntry);
         }
 
         // DELETE: api/CategoryEntries/5
-        [ResponseType(typeof(CategoryEntry))]
+        [ResponseType(typeof (CategoryEntry))]
         public IHttpActionResult DeleteCategoryEntry(int id)
         {
-            CategoryEntry categoryEntry = db.CategoryEntry.Find(id);
+            var categoryEntry = db.CategoryEntry.Find(id);
             if (categoryEntry == null)
             {
                 return NotFound();

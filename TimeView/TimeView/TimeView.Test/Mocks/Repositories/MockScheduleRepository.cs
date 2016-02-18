@@ -1,29 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using TimeView.data;
 using TimeView.domain;
 
 namespace TimeView.Test.Mocks.Repositories
 {
-    class MockScheduleRepository : IScheduleRepository
+    internal class MockScheduleRepository : IScheduleRepository
     {
         public void CreateSchedule(Schedule schedule)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Schedule[]> getScheduleForEmployee(int EmployeeId)
+        public Task<Schedule[]> GetScheduleForEmployee(int employeeId)
         {
-            List<Schedule> schedule = new List<Schedule>();
+            var schedule = new List<Schedule>();
 
-            Schedule schedule1 = new Schedule
+            var schedule1 = new Schedule
             {
                 Id = 1,
                 CategoryEntryId = 1,
-                CategoryEntry = new CategoryEntry {
+                CategoryEntry = new CategoryEntry
+                {
                     Id = 1,
                     CategoryId = 1,
                     Start = DateTime.Parse("09:00"),
@@ -31,9 +30,9 @@ namespace TimeView.Test.Mocks.Repositories
                     Name = "gray"
                 },
                 Day = DateTime.Now,
-                EmployeeId = EmployeeId
+                EmployeeId = employeeId
             };
-            Schedule schedule2 = new Schedule
+            var schedule2 = new Schedule
             {
                 Id = 2,
                 CategoryEntryId = 2,
@@ -46,7 +45,7 @@ namespace TimeView.Test.Mocks.Repositories
                     Name = "gray"
                 },
                 Day = DateTime.Now.AddDays(1),
-                EmployeeId = EmployeeId
+                EmployeeId = employeeId
             };
 
             schedule.Add(schedule1);

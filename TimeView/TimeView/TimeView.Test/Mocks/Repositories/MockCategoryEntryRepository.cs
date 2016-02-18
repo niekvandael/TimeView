@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using TimeView.data;
 using TimeView.domain;
 
 namespace TimeView.Test.Mocks.Repositories
 {
-    class MockCategoryEntryRepository : ICategoryEntryRepository
+    internal class MockCategoryEntryRepository : ICategoryEntryRepository
     {
-        public Task<CategoryEntry[]> getCategoryEntriesForCompany(int CompanyId)
+        public Task<CategoryEntry[]> GetCategoryEntriesForCompany(int companyId)
         {
-            List<CategoryEntry> categoryEntries = new List<CategoryEntry>();
+            var categoryEntries = new List<CategoryEntry>();
 
-            CategoryEntry categoryEntry1 = new CategoryEntry
+            var categoryEntry1 = new CategoryEntry
             {
                 Id = 1,
                 CategoryId = 1,
@@ -23,7 +21,7 @@ namespace TimeView.Test.Mocks.Repositories
                 Name = "gray"
             };
 
-            CategoryEntry categoryEntry2 = new CategoryEntry
+            var categoryEntry2 = new CategoryEntry
             {
                 Id = 2,
                 CategoryId = 1,
@@ -37,6 +35,5 @@ namespace TimeView.Test.Mocks.Repositories
 
             return Task.FromResult(categoryEntries.ToArray());
         }
-
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TimeView.wpf.Dialogs;
+﻿using TimeView.wpf.Dialogs;
 
 namespace TimeView.Test.Mocks.Dialogs
 {
@@ -11,12 +6,10 @@ namespace TimeView.Test.Mocks.Dialogs
     {
         public void CloseDialog()
         {
-            
         }
 
-        public void ShowDialog(string Title)
+        public void ShowDialog(string title)
         {
-            
         }
     }
 }

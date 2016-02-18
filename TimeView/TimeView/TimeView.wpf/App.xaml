@@ -6,9 +6,9 @@
              StartupUri="View/Login.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <local:ViewModelLocator x:Key="mainViewModelLocator"></local:ViewModelLocator>
-            <converter:CompanyConverter x:Key="companyConverter"></converter:CompanyConverter>
-            <converter:CategoryEntryHourConverter x:Key="categoryEntryHourConverter"></converter:CategoryEntryHourConverter>
+            <local:ViewModelLocator x:Key="mainViewModelLocator" />
+            <converter:CompanyConverter x:Key="companyConverter" />
+            <converter:CategoryEntryHourConverter x:Key="categoryEntryHourConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

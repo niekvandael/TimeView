@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using TimeView.context;
@@ -15,13 +12,18 @@ namespace TimeView.api.Controllers
 {
     public class EmployeesController : ApiController
     {
-        private TimeViewContext db = new TimeViewContext();
+        private readonly TimeViewContext db = new TimeViewContext();
 
-        [ResponseType(typeof(Employee))]
-        public Employee GetEmployee(string username, string password) {
+        [ResponseType(typeof (Employee))]
+        public Employee GetEmployee(string username, string password)
+        {
             try
             {
-                Employee employee = db.Employee.Include(e => e.Company).Where(e => e.Username == username).Where(e => e.Password == password).First();
+                var employee =
+                    db.Employee.Include(e => e.Company)
+                        .Where(e => e.Username == username)
+                        .Where(e => e.Password == password)
+                        .First();
 
                 employee.Company.Employees = null;
 
@@ -40,17 +42,17 @@ namespace TimeView.api.Controllers
         }
 
         // GET: api/Employees/5
-        [ResponseType(typeof(Employee))]
+        [ResponseType(typeof (Employee))]
         public IHttpActionResult GetEmployee(int id)
         {
-            Employee employee = db.Employee
+            var employee = db.Employee
                 .Include(e => e.Following.Select(f => f.Company))
                 .Include(e => e.Following)
                 .Where(e => e.Id == id).First();
 
 // Avoid loops
 
-            for (int i = 0; i < employee.Following.Count; i++)
+            for (var i = 0; i < employee.Following.Count; i++)
             {
                 employee.Following[i].Follower = null;
                 employee.Following[i].Company.Employees = null;
@@ -67,7 +69,7 @@ namespace TimeView.api.Controllers
         }
 
         // PUT: api/Companies/5
-        [ResponseType(typeof(void))]
+        [ResponseType(typeof (void))]
         public IHttpActionResult PutEmployee(Employee employee)
         {
             if (!ModelState.IsValid)
@@ -75,8 +77,10 @@ namespace TimeView.api.Controllers
                 return BadRequest(ModelState);
             }
 
-            foreach (Employee emp in db.Employee) {
-                if (employee.Username.Equals(emp.Username)) {
+            foreach (var emp in db.Employee)
+            {
+                if (employee.Username.Equals(emp.Username))
+                {
                     return StatusCode(HttpStatusCode.Conflict);
                 }
             }
@@ -96,7 +100,7 @@ namespace TimeView.api.Controllers
         }
 
         // POST: api/Employees
-        [ResponseType(typeof(Employee))]
+        [ResponseType(typeof (Employee))]
         public IHttpActionResult PostEmployee(Employee employee)
         {
             if (!ModelState.IsValid)
@@ -107,14 +111,14 @@ namespace TimeView.api.Controllers
             db.Employee.Add(employee);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = employee.Id }, employee);
+            return CreatedAtRoute("DefaultApi", new {id = employee.Id}, employee);
         }
 
         // DELETE: api/Employees/5
-        [ResponseType(typeof(Employee))]
+        [ResponseType(typeof (Employee))]
         public IHttpActionResult DeleteEmployee(int id)
         {
-            Employee employee = db.Employee.Find(id);
+            var employee = db.Employee.Find(id);
             if (employee == null)
             {
                 return NotFound();

@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
 
 namespace TimeView.data
 {
     public class Employee
     {
         public int Id { get; set; }
-        public String Username { get; set; }
-        public String Password { get; set; }
-        public String Name { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Name { get; set; }
 
         public int CompanyId { get; set; }
         public Company Company { get; set; }
@@ -19,16 +17,16 @@ namespace TimeView.data
 
         public override bool Equals(object obj)
         {
-            Employee test = obj as Employee;
+            var test = obj as Employee;
             if (test == null)
             {
                 return false;
             }
             return Id == test.Id &&
-                Username == test.Username &&
-                Password == test.Password &&
-                Name == test.Name &&
-                CompanyId == test.CompanyId;
+                   Username == test.Username &&
+                   Password == test.Password &&
+                   Name == test.Name &&
+                   CompanyId == test.CompanyId;
         }
 
         public override int GetHashCode()

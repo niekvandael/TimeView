@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using TimeView.data;
 using TimeView.wpf.Extensions;
@@ -17,131 +13,111 @@ namespace TimeView.wpf.ViewModel
 {
     public class ScheduleListViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        private IScheduleDataService scheduleDataService;
-        private ICategoryEntryDataService categoryEntryDataService;
+        private ObservableCollection<CategoryEntry> _categoryEntries;
+        private readonly ICategoryEntryDataService _categoryEntryDataService;
+        private Employee _employee;
+        private string _message;
+        private string _messageColor;
+        private bool _mySchedule;
+        private readonly IScheduleDataService _scheduleDataService;
+        private ObservableCollection<Schedule> _schedules;
+        private Schedule _selectedSchedule;
 
-        public ICommand NewCommand { get; set; }
-        public ICommand SaveCommand { get; set; }
-        public ICommand SelectionChangedCommand { get; set; }
-        
-        private ObservableCollection<CategoryEntry> categoryEntries;
-        public ObservableCollection<CategoryEntry> CategoryEntries
-        {
-            get
-            {
-                return this.categoryEntries;
-            }
-            set
-            {
-                this.categoryEntries = value;
-                RaisePropertyChanged("CategoryEntries");
-            }
-        }
-
-
-        private ObservableCollection<Schedule> schedules;
-        public ObservableCollection<Schedule> Schedules
-        {
-            get
-            {
-                return this.schedules;
-            }
-            set
-            {
-                this.schedules = value;
-                RaisePropertyChanged("Schedules");
-            }
-        }
-
-        private Schedule selectedSchedule;
-        public Schedule SelectedSchedule
-        {
-            get
-            {
-                return selectedSchedule;
-            }
-            set
-            {
-                selectedSchedule = value;
-                RaisePropertyChanged("SelectedSchedule");
-            }
-        }
-
-        private String message;
-        public String Message
-        {
-            get
-            {
-                return message;
-            }
-            set
-            {
-                message = value;
-                RaisePropertyChanged("Message");
-            }
-        }
-
-        private String messageColor;
-        public String MessageColor
-        {
-            get
-            {
-                return messageColor;
-            }
-            set
-            {
-                messageColor = value;
-                RaisePropertyChanged("MessageColor");
-            }
-        }
-
-        private Employee employee;
-        public Employee Employee
-        {
-            get
-            {
-                return employee;
-            }
-            set
-            {
-                employee = value;
-                RaisePropertyChanged("Employee");
-            }
-        }
-
-        private bool mySchedule;
-        public bool MySchedule
-        {
-            get
-            {
-                return mySchedule;
-            }
-            set
-            {
-                mySchedule = value;
-                RaisePropertyChanged("MySchedule");
-            }
-        }
-
-        public ScheduleListViewModel(IScheduleDataService scheduleDataService, ICategoryEntryDataService categoryEntryDataService)
+        public ScheduleListViewModel(IScheduleDataService scheduleDataService,
+            ICategoryEntryDataService categoryEntryDataService)
         {
             // Register to events
             Messenger.Default.Register<LoadScheduleList>(this, OnLoadScheduleReceived);
 
             // set services
-            this.scheduleDataService = scheduleDataService;
-            this.categoryEntryDataService = categoryEntryDataService;
+            _scheduleDataService = scheduleDataService;
+            _categoryEntryDataService = categoryEntryDataService;
 
             // Load data & commands
             LoadCommands();
         }
 
+        public ICommand NewCommand { get; set; }
+        public ICommand SaveCommand { get; set; }
+        public ICommand SelectionChangedCommand { get; set; }
+
+        public ObservableCollection<CategoryEntry> CategoryEntries
+        {
+            get { return _categoryEntries; }
+            set
+            {
+                _categoryEntries = value;
+                RaisePropertyChanged("CategoryEntries");
+            }
+        }
+
+        public ObservableCollection<Schedule> Schedules
+        {
+            get { return _schedules; }
+            set
+            {
+                _schedules = value;
+                RaisePropertyChanged("Schedules");
+            }
+        }
+
+        public Schedule SelectedSchedule
+        {
+            get { return _selectedSchedule; }
+            set
+            {
+                _selectedSchedule = value;
+                RaisePropertyChanged("SelectedSchedule");
+            }
+        }
+
+        public string Message
+        {
+            get { return _message; }
+            set
+            {
+                _message = value;
+                RaisePropertyChanged("Message");
+            }
+        }
+
+        public string MessageColor
+        {
+            get { return _messageColor; }
+            set
+            {
+                _messageColor = value;
+                RaisePropertyChanged("MessageColor");
+            }
+        }
+
+        public Employee Employee
+        {
+            get { return _employee; }
+            set
+            {
+                _employee = value;
+                RaisePropertyChanged("Employee");
+            }
+        }
+
+        public bool MySchedule
+        {
+            get { return _mySchedule; }
+            set
+            {
+                _mySchedule = value;
+                RaisePropertyChanged("MySchedule");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private void OnLoadScheduleReceived(LoadScheduleList loadMySheduleList)
         {
-            this.MySchedule = loadMySheduleList.MySchedule;
+            MySchedule = loadMySheduleList.MySchedule;
 
-            this.Employee = loadMySheduleList.Employee;
+            Employee = loadMySheduleList.Employee;
             LoadData();
         }
 
@@ -154,20 +130,21 @@ namespace TimeView.wpf.ViewModel
 
         private void NewSchedule(object obj)
         {
-            this.Schedules.Add(new Schedule { EmployeeId = this.employee.Id, Id = -1, Day = getNextDay() });
+            Schedules.Add(new Schedule {EmployeeId = _employee.Id, Id = -1, Day = GetNextDay()});
         }
 
         private bool CanNewSchedule(object obj)
         {
-            return this.mySchedule;
+            return _mySchedule;
         }
 
         private void SelectionChanged(object obj)
         {
-            foreach (CategoryEntry categoryEntry in this.categoryEntries)
+            foreach (var categoryEntry in _categoryEntries)
             {
-                if (this.selectedSchedule != null && (this.selectedSchedule.CategoryEntryId == categoryEntry.Id)){
-                    this.SelectedSchedule.CategoryEntry = categoryEntry;
+                if (_selectedSchedule != null && (_selectedSchedule.CategoryEntryId == categoryEntry.Id))
+                {
+                    SelectedSchedule.CategoryEntry = categoryEntry;
                 }
             }
         }
@@ -177,56 +154,62 @@ namespace TimeView.wpf.ViewModel
             return true;
         }
 
-        private void ClearMessage() {
-            this.Message = "";
+        private void ClearMessage()
+        {
+            Message = "";
         }
 
         private void SaveSchedule(object obj)
         {
-            this.ClearMessage();
-            scheduleDataService.SaveSchedules(this.Schedules.ToList(), SaveCallback);
+            ClearMessage();
+            _scheduleDataService.SaveSchedules(Schedules.ToList(), SaveCallback);
         }
 
-        private bool SaveCallback(bool success) {
+        private bool SaveCallback(bool success)
+        {
             if (success)
             {
-                this.MessageColor = "green";
-                this.Message = "Save successfull";
-                this.LoadScheduleList();
+                MessageColor = "green";
+                Message = "Save successfull";
+                LoadScheduleList();
             }
-            else {
-                this.MessageColor = "red";
-                this.Message = "Save failed";
+            else
+            {
+                MessageColor = "red";
+                Message = "Save failed";
             }
             return true;
         }
 
         private bool CanSaveSchedule(object obj)
         {
-            return this.mySchedule;
+            return _mySchedule;
         }
 
         public void LoadData()
         {
-            this.LoadScheduleList();
-            this.LoadCategoryEntries();
+            LoadScheduleList();
+            LoadCategoryEntries();
         }
 
-        public async void LoadScheduleList() {
-            Schedule[] schedules = await scheduleDataService.GetScheduleForEmployee(this.Employee);
-            this.Schedules = schedules.ToObservableCollection();
+        public async void LoadScheduleList()
+        {
+            var schedules = await _scheduleDataService.GetScheduleForEmployee(Employee);
+            Schedules = schedules.ToObservableCollection();
         }
 
-        public async void LoadCategoryEntries() {
-            CategoryEntry[] categoryEntries = await categoryEntryDataService.GetCategoryEntriesForCompany(1);
-            this.CategoryEntries = categoryEntries.ToObservableCollection();
+        public async void LoadCategoryEntries()
+        {
+            var categoryEntries = await _categoryEntryDataService.GetCategoryEntriesForCompany(1);
+            CategoryEntries = categoryEntries.ToObservableCollection();
         }
 
-        public DateTime getNextDay() {
-            DateTime nextDay = DateTime.Now.AddDays(1);
-            if (this.Schedules != null)
+        public DateTime GetNextDay()
+        {
+            var nextDay = DateTime.Now.AddDays(1);
+            if (Schedules != null)
             {
-                foreach (Schedule schedule in this.Schedules)
+                foreach (var schedule in Schedules)
                 {
                     if (schedule.Day.Date >= nextDay.Date)
                     {

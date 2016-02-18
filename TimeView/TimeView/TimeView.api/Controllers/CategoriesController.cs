@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using TimeView.context;
@@ -15,7 +11,7 @@ namespace TimeView.api.Controllers
 {
     public class CategoriesController : ApiController
     {
-        private TimeViewContext db = new TimeViewContext();
+        private readonly TimeViewContext db = new TimeViewContext();
 
         // GET: api/Categories
         public IQueryable<Category> GetCategory()
@@ -24,10 +20,10 @@ namespace TimeView.api.Controllers
         }
 
         // GET: api/Categories/5
-        [ResponseType(typeof(Category))]
+        [ResponseType(typeof (Category))]
         public IHttpActionResult GetCategory(int id)
         {
-            Category category = db.Category.Find(id);
+            var category = db.Category.Find(id);
             if (category == null)
             {
                 return NotFound();
@@ -37,7 +33,7 @@ namespace TimeView.api.Controllers
         }
 
         // PUT: api/Categories/5
-        [ResponseType(typeof(void))]
+        [ResponseType(typeof (void))]
         public IHttpActionResult PutCategory(int id, Category category)
         {
             if (!ModelState.IsValid)
@@ -62,17 +58,14 @@ namespace TimeView.api.Controllers
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/Categories
-        [ResponseType(typeof(Category))]
+        [ResponseType(typeof (Category))]
         public IHttpActionResult PostCategory(Category category)
         {
             if (!ModelState.IsValid)
@@ -83,14 +76,14 @@ namespace TimeView.api.Controllers
             db.Category.Add(category);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = category.Id }, category);
+            return CreatedAtRoute("DefaultApi", new {id = category.Id}, category);
         }
 
         // DELETE: api/Categories/5
-        [ResponseType(typeof(Category))]
+        [ResponseType(typeof (Category))]
         public IHttpActionResult DeleteCategory(int id)
         {
-            Category category = db.Category.Find(id);
+            var category = db.Category.Find(id);
             if (category == null)
             {
                 return NotFound();

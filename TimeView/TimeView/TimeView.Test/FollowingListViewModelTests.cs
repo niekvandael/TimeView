@@ -1,12 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TimeView.data;
-using TimeView.Test.Mocks;
+using TimeView.Test.Mocks.DataServices;
 using TimeView.Test.Mocks.Dialogs;
 using TimeView.wpf.Dialogs;
 using TimeView.wpf.Services;
@@ -17,31 +12,31 @@ namespace TimeView.Test
     [TestClass]
     public class FollowingListViewModelTests
     {
-        private IEmployeeDataService employeeDataService;
-        private IViewDialog scheduleListViewDialog;
+        private IEmployeeDataService _employeeDataService;
+        private IViewDialog _scheduleListViewDialog;
 
         private FollowingListViewModel GetViewModel()
         {
-            return new FollowingListViewModel(this.employeeDataService, this.scheduleListViewDialog);
+            return new FollowingListViewModel(_employeeDataService, _scheduleListViewDialog);
         }
 
         [TestInitialize]
         public void Init()
         {
-            employeeDataService = new MockEmployeeDataService();
-            scheduleListViewDialog = new MockScheduleListViewDialog();
+            _employeeDataService = new MockEmployeeDataService();
+            _scheduleListViewDialog = new MockScheduleListViewDialog();
         }
 
         [TestMethod]
         public void LoadAllFollowings()
         {
             //Arrange
-            ObservableCollection<Employee> following = null;
-            var expectedEmployees = employeeDataService.GetEmployee(new Employee { Id = 1 }).Result.Following;
+            ObservableCollection<Employee> following;
+            var expectedEmployees = _employeeDataService.GetEmployee(new Employee {Id = 1}).Result.Following;
 
             //act
             var viewModel = GetViewModel();
-            viewModel.CurrentUser = employeeDataService.GetEmployee(new Employee { Id = 1 }).Result;
+            viewModel.CurrentUser = _employeeDataService.GetEmployee(new Employee {Id = 1}).Result;
             viewModel.LoadData();
 
             following = viewModel.Employees;

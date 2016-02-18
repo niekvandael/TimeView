@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using TimeView.data;
 using TimeView.wpf.Dialogs;
@@ -16,52 +11,46 @@ namespace TimeView.wpf.ViewModel
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        private IEmployeeDataService employeeDataService;
+        private Employee _employee = new Employee();
+        private readonly IEmployeeDataService _employeeDataService;
+        private readonly IViewDialog _followingListViewDialog;
+        private readonly IViewDialog _loginViewDialog;
+        private string _message;
+
+        public LoginViewModel(IEmployeeDataService employeeDataService, IViewDialog followingListViewDialog,
+            IViewDialog loginViewDialog)
+        {
+            _employeeDataService = employeeDataService;
+            _followingListViewDialog = followingListViewDialog;
+            _loginViewDialog = loginViewDialog;
+
+            LoadCommands();
+        }
 
         public ICommand LoginCommand { get; set; }
         public ICommand CreateAccount { get; set; }
 
-        private IViewDialog followingListViewDialog;
-        private IViewDialog loginViewDialog;
-
-        private String message;
-        public String Message
+        public string Message
         {
-            get
-            {
-                return message;
-            }
+            get { return _message; }
             set
             {
-                message = value;
+                _message = value;
                 RaisePropertyChanged("Message");
             }
         }
 
-
-        private Employee employee = new Employee();
         public Employee Employee
         {
-            get
-            {
-                return employee;
-            }
+            get { return _employee; }
             set
             {
-                employee = value;
+                _employee = value;
                 RaisePropertyChanged("Employee");
             }
         }
 
-        public LoginViewModel(IEmployeeDataService employeeDataService, IViewDialog followingListViewDialog, IViewDialog loginViewDialog)
-        {
-            this.employeeDataService = employeeDataService;
-            this.followingListViewDialog = followingListViewDialog;
-            this.loginViewDialog = loginViewDialog;
-
-            LoadCommands();
-        }
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void LoadCommands()
         {
@@ -71,7 +60,7 @@ namespace TimeView.wpf.ViewModel
 
         private void CreateAccountAction(object obj)
         {
-            this.Message = "Send email to niek.vandael@student.pxl.be";
+            Message = "Send email to niek.vandael@student.pxl.be";
         }
 
         private bool CanCreateAccount(object obj)
@@ -81,28 +70,31 @@ namespace TimeView.wpf.ViewModel
 
         private void LoginAction(object obj)
         {
-            this.doLogin(this.Employee.Username, this.Employee.Password);
+            DoLogin(Employee.Username, Employee.Password);
         }
 
-        public async void doLogin(String username, String password) {
-            Employee _empl = await employeeDataService.GetEmployee(username, password);
+        public async void DoLogin(string username, string password)
+        {
+            var empl = await _employeeDataService.GetEmployee(username, password);
 
-            if (_empl != null)
+            if (empl == null)
             {
-                this.Employee = _empl;
-                loginViewDialog.CloseDialog();
-                followingListViewDialog.ShowDialog("People you are following");
-
-                Messenger.Default.Send<LoginMessage>(new LoginMessage { Employee = this.employee });
+                Message = "Incorrect username or password";
             }
-            else {
-                this.Message = "Incorrect username or password";
+            else
+            {
+                Employee = empl;
+                _loginViewDialog.CloseDialog();
+                _followingListViewDialog.ShowDialog("People you are following");
+
+                Messenger.Default.Send(new LoginMessage {Employee = _employee});
             }
         }
 
         private bool CanLogin(object obj)
         {
-            if (Employee.Username != null && Employee.Username != "" && Employee.Password != null && Employee.Password != "")
+            if (!string.IsNullOrEmpty(Employee.Username) &&
+                !String.IsNullOrEmpty(Employee.Password))
             {
                 return true;
             }

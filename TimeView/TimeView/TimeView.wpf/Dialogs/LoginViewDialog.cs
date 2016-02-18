@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using TimeView.wpf.Dialogs;
-using TimeView.wpf.View;
 
 namespace TimeView.wpf.Services
 {
     public class LoginViewDialog : IViewDialog
     {
-        Window window = null;
+        private Window _window;
 
-        public void ShowDialog(String Title) {
-            window = new Login();
-            window.Title = Title;
+        public void ShowDialog(string Title)
+        {
+            _window = new Login();
+            _window.Title = Title;
         }
 
         public void CloseDialog()

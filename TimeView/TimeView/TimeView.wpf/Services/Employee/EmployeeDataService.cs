@@ -1,30 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using TimeView.data;
 using TimeView.domain;
 
 namespace TimeView.wpf.Services
 {
-    class EmployeeDataRepository : IEmployeeDataService
+    internal class EmployeeDataRepository : IEmployeeDataService
     {
-        IEmployeeRepository repository;
+        private readonly IEmployeeRepository _repository;
 
         public EmployeeDataRepository(IEmployeeRepository repository)
         {
-            this.repository = repository;
+            _repository = repository;
         }
 
         public async Task<Employee> GetEmployee(string username, string password)
         {
-            return await repository.getEmployee(username, password);
+            return await _repository.GetEmployee(username, password);
         }
 
         public async Task<Employee> GetEmployee(Employee employee)
         {
-            return await repository.getEmployee(employee.Id);
+            return await _repository.GetEmployee(employee.Id);
         }
     }
 }

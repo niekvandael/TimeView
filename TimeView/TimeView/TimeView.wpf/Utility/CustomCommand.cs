@@ -1,44 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace TimeView.wpf.Utility
 {
     public class CustomCommand : ICommand
     {
+        private readonly Predicate<object> _canExecute;
 
-        private Action<object> execute;
-        private Predicate<object> canExecute;
+        private readonly Action<object> _execute;
 
         public CustomCommand(Action<object> execute, Predicate<object> canExecute)
         {
-            this.execute = execute;
-            this.canExecute = canExecute;
+            _execute = execute;
+            _canExecute = canExecute;
         }
 
-        public bool CanExecute(object parameter) {
-            bool b = canExecute == null ? true : canExecute(parameter);
+        public bool CanExecute(object parameter)
+        {
+            var b = _canExecute == null ? true : _canExecute(parameter);
             return b;
         }
 
         public event EventHandler CanExecuteChanged
         {
-            add
-            {
-                CommandManager.RequerySuggested += value;
-            }
-            remove
-            {
-                CommandManager.RequerySuggested -= value;
-            }
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
         }
 
         public void Execute(object parameter)
         {
-            execute(parameter);
+            _execute(parameter);
         }
     }
 }

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using TimeView.context;
@@ -15,23 +11,23 @@ namespace TimeView.api.Controllers
 {
     public class CompaniesController : ApiController
     {
-        private TimeViewContext db = new TimeViewContext();
+        private readonly TimeViewContext db = new TimeViewContext();
 
         // GET: api/Companies
         public IQueryable<Company> GetCompany()
         {
             // Call the open data controller to retrieve (new) companies
-            OpenDataController odc = new OpenDataController();
+            var odc = new OpenDataController();
             odc.GetCompany();
 
             return db.Company.Include(c => c.Category);
         }
 
         // GET: api/Companies/5
-        [ResponseType(typeof(Company))]
+        [ResponseType(typeof (Company))]
         public IHttpActionResult GetCompany(int id)
         {
-            Company company = db.Company.Find(id);
+            var company = db.Company.Find(id);
             if (company == null)
             {
                 return NotFound();
@@ -41,7 +37,7 @@ namespace TimeView.api.Controllers
         }
 
         // PUT: api/Companies/5
-        [ResponseType(typeof(void))]
+        [ResponseType(typeof (void))]
         public IHttpActionResult PutCompany(Company company)
         {
             if (!ModelState.IsValid)
@@ -51,9 +47,10 @@ namespace TimeView.api.Controllers
 
             db.Entry(company).State = EntityState.Modified;
 
-            foreach (Company comp in db.Company)
+            foreach (var comp in db.Company)
             {
-                if (comp.Name.Equals(company.Name)) {
+                if (comp.Name.Equals(company.Name))
+                {
                     return StatusCode(HttpStatusCode.Conflict);
                 }
             }
@@ -73,7 +70,7 @@ namespace TimeView.api.Controllers
         }
 
         // POST: api/Companies
-        [ResponseType(typeof(Company))]
+        [ResponseType(typeof (Company))]
         public IHttpActionResult PostCompany(Company company)
         {
             if (!ModelState.IsValid)
@@ -84,14 +81,14 @@ namespace TimeView.api.Controllers
             db.Company.Add(company);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = company.Id }, company);
+            return CreatedAtRoute("DefaultApi", new {id = company.Id}, company);
         }
 
         // DELETE: api/Companies/5
-        [ResponseType(typeof(Company))]
+        [ResponseType(typeof (Company))]
         public IHttpActionResult DeleteCompany(int id)
         {
-            Company company = db.Company.Find(id);
+            var company = db.Company.Find(id);
             if (company == null)
             {
                 return NotFound();

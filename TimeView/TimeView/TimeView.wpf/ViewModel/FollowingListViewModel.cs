@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region
+
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using TimeView.data;
 using TimeView.wpf.Dialogs;
@@ -14,60 +10,17 @@ using TimeView.wpf.Messages;
 using TimeView.wpf.Services;
 using TimeView.wpf.Utility;
 
+#endregion
 
 namespace TimeView.wpf.ViewModel
 {
     public class FollowingListViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        private IEmployeeDataService employeeDataService;
-
-        public ICommand OpenCommand { get; set; }
-        public ICommand OpenMyCommand { get; set; }
-
-        private IViewDialog scheduleListViewDialog;
-
-        private ObservableCollection<Employee> employees;
-        public ObservableCollection<Employee> Employees
-        {
-            get
-            {
-                return this.employees;
-            }
-            set
-            {
-                this.employees = value;
-                RaisePropertyChanged("Employees");
-            }
-        }
-
-        private Employee selectedEmployee;
-        public Employee SelectedEmployee
-        {
-            get
-            {
-                return selectedEmployee;
-            }
-            set
-            {
-                selectedEmployee = value;
-                RaisePropertyChanged("SelectedEmployee");
-            }
-        }
-
-        private Employee currentUser;
-        public Employee CurrentUser
-        {
-            get
-            {
-                return currentUser;
-            }
-            set
-            {
-                currentUser = value;
-                RaisePropertyChanged("CurrentUser");
-            }
-        }
+        private readonly IEmployeeDataService _employeeDataService;
+        private readonly IViewDialog _scheduleListViewDialog;
+        private Employee _currentUser;
+        private ObservableCollection<Employee> _employees;
+        private Employee _selectedEmployee;
 
         public FollowingListViewModel(IEmployeeDataService employeeDataService, IViewDialog scheduleListViewDialog)
         {
@@ -75,18 +28,53 @@ namespace TimeView.wpf.ViewModel
             Messenger.Default.Register<LoginMessage>(this, OnLoginReceived);
 
             // Dialogs
-            this.scheduleListViewDialog = scheduleListViewDialog;
+            _scheduleListViewDialog = scheduleListViewDialog;
 
             // set services
-            this.employeeDataService = employeeDataService;
+            _employeeDataService = employeeDataService;
 
             // Load data & commands
             LoadCommands();
         }
 
+        public ICommand OpenCommand { get; set; }
+        public ICommand OpenMyCommand { get; set; }
+
+        public ObservableCollection<Employee> Employees
+        {
+            get { return _employees; }
+            set
+            {
+                _employees = value;
+                RaisePropertyChanged("Employees");
+            }
+        }
+
+        public Employee SelectedEmployee
+        {
+            get { return _selectedEmployee; }
+            set
+            {
+                _selectedEmployee = value;
+                RaisePropertyChanged("SelectedEmployee");
+            }
+        }
+
+        public Employee CurrentUser
+        {
+            get { return _currentUser; }
+            set
+            {
+                _currentUser = value;
+                RaisePropertyChanged("CurrentUser");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private void OnLoginReceived(LoginMessage loginMessage)
         {
-            this.CurrentUser = loginMessage.Employee;
+            CurrentUser = loginMessage.Employee;
             LoadData();
         }
 
@@ -98,13 +86,13 @@ namespace TimeView.wpf.ViewModel
 
         private void OpenSchedule(object obj)
         {
-            scheduleListViewDialog.ShowDialog(selectedEmployee.Name);
-            Messenger.Default.Send<LoadScheduleList>(new LoadScheduleList { Employee = selectedEmployee, MySchedule = false });
+            _scheduleListViewDialog.ShowDialog(_selectedEmployee.Name);
+            Messenger.Default.Send(new LoadScheduleList {Employee = _selectedEmployee, MySchedule = false});
         }
 
         private bool CanOpenShedule(object obj)
         {
-            if (this.selectedEmployee != null)
+            if (_selectedEmployee != null)
             {
                 return true;
             }
@@ -113,8 +101,8 @@ namespace TimeView.wpf.ViewModel
 
         private void OpenMySchedule(object obj)
         {
-            scheduleListViewDialog.ShowDialog("My schedule");
-            Messenger.Default.Send<LoadScheduleList>(new LoadScheduleList { Employee = currentUser, MySchedule = true});
+            _scheduleListViewDialog.ShowDialog("My schedule");
+            Messenger.Default.Send(new LoadScheduleList {Employee = _currentUser, MySchedule = true});
         }
 
         private bool CanOpenMyShedule(object obj)
@@ -124,7 +112,7 @@ namespace TimeView.wpf.ViewModel
 
         public async void LoadData()
         {
-            CurrentUser = await employeeDataService.GetEmployee(currentUser);
+            CurrentUser = await _employeeDataService.GetEmployee(_currentUser);
             Employees = CurrentUser.Following.ToObservableCollection();
         }
 

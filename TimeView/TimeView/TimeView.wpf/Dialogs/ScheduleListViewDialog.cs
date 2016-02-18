@@ -1,36 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using TimeView.wpf.Dialogs;
 
 namespace TimeView.wpf.Services
 {
     public class ScheduleListViewDialog : IViewDialog
     {
-        Window scheduleListView = null;
-        Boolean isOpen = false;
+        private bool _isOpen;
+        private Window _window;
 
-        public void ShowDialog(string Title) {
-            if (isOpen) {
-                this.CloseDialog();
+        public void ShowDialog(string title)
+        {
+            if (_isOpen)
+            {
+                CloseDialog();
             }
 
-            scheduleListView = new ScheduleListView();
-            scheduleListView.Title = Title;
+            _window = new ScheduleListView();
+            _window.Title = title;
 
-            scheduleListView.Show();
-            isOpen = true;
+            _window.Show();
+            _isOpen = true;
         }
 
         public void CloseDialog()
         {
-            if (this.scheduleListView != null)
+            if (_window != null)
             {
-                scheduleListView.Close();
-                isOpen = false;
+                _window.Close();
+                _isOpen = false;
             }
         }
     }

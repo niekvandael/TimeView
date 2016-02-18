@@ -5,13 +5,17 @@ namespace TimeView.data
 {
     public class Schedule : INotifyPropertyChanged
     {
+        private CategoryEntry categoryentry;
+
+        private int categoryEntryId;
+
+
+        private DateTime day;
         private int id;
+
         public int Id
         {
-            get
-            {
-                return this.id;
-            }
+            get { return id; }
             set
             {
                 id = value;
@@ -19,14 +23,9 @@ namespace TimeView.data
             }
         }
 
-
-        private DateTime day;
         public DateTime Day
         {
-            get
-            {
-                return this.day;
-            }
+            get { return day; }
             set
             {
                 day = value;
@@ -34,29 +33,22 @@ namespace TimeView.data
             }
         }
 
-        private int categoryEntryId;
         public int CategoryEntryId
         {
-            get
-            {
-                return this.categoryEntryId;
-            }
+            get { return categoryEntryId; }
             set
             {
-                this.categoryEntryId = value;
+                categoryEntryId = value;
                 RaisePropertyChanged("CategoryEntryId");
             }
         }
-        private CategoryEntry categoryentry;
+
         public CategoryEntry CategoryEntry
         {
-            get
-            {
-                return this.categoryentry;
-            }
+            get { return categoryentry; }
             set
             {
-                this.categoryentry = value;
+                categoryentry = value;
                 RaisePropertyChanged("CategoryEntry");
             }
         }
@@ -75,15 +67,15 @@ namespace TimeView.data
 
         public override bool Equals(object obj)
         {
-            Schedule test = obj as Schedule;
+            var test = obj as Schedule;
             if (test == null)
             {
                 return false;
             }
             return Id == test.Id &&
-                Day.Date == test.Day.Date &&
-                CategoryEntryId == test.CategoryEntryId &&
-                EmployeeId == test.EmployeeId;
+                   Day.Date == test.Day.Date &&
+                   CategoryEntryId == test.CategoryEntryId &&
+                   EmployeeId == test.EmployeeId;
         }
 
         public override int GetHashCode()

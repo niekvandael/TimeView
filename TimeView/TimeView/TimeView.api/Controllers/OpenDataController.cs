@@ -1,14 +1,10 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Newtonsoft.Json;
 using TimeView.context;
 using TimeView.data;
 
@@ -16,10 +12,10 @@ namespace TimeView.api.Controllers
 {
     public class OpenDataController : ApiController
     {
-        private TimeView.context.TimeViewContext db = new TimeViewContext();
+        private readonly TimeViewContext db = new TimeViewContext();
 
         /// <summary>
-        /// Returns an individual Product.
+        ///     Returns an individual Product.
         /// </summary>
         /// <returns></returns>
         public IQueryable<Company> GetCompany()
@@ -28,26 +24,34 @@ namespace TimeView.api.Controllers
             // Defaults
             //
 
-            string hospitals_url = "http://opendata.brussel.be/api/records/1.0/search/?dataset=openbare-ziekenhuizen";
-            string retirementhomes_url = "http://opendata.brussel.be/api/records/1.0/search/?dataset=rusthuizen-voor-ouderen";
-            int defaultCategoryId = 1;
+            var hospitals_url = "http://opendata.brussel.be/api/records/1.0/search/?dataset=openbare-ziekenhuizen";
+            var retirementhomes_url =
+                "http://opendata.brussel.be/api/records/1.0/search/?dataset=rusthuizen-voor-ouderen";
+            var defaultCategoryId = 1;
 
 
             //
             // Hospitals
             //
-            string json = "";
-            using (WebClient wc = new WebClient())
+            var json = "";
+            using (var wc = new WebClient())
             {
                 json = wc.DownloadString(hospitals_url);
             }
 
-            Hospital hospitals = JsonConvert.DeserializeObject<Hospital>(json);
+            var hospitals = JsonConvert.DeserializeObject<Hospital>(json);
 
-            foreach (Record hospital in hospitals.records) {
-                Company company = new Company { Name = hospital.fields.naam , CategoryId=defaultCategoryId, Category=db.Category.Find(defaultCategoryId) };
-                Company exists = db.Company.Where(c => c.Name == hospital.fields.naam).FirstOrDefault();
-                if (exists == null) {
+            foreach (var hospital in hospitals.records)
+            {
+                var company = new Company
+                {
+                    Name = hospital.fields.naam,
+                    CategoryId = defaultCategoryId,
+                    Category = db.Category.Find(defaultCategoryId)
+                };
+                var exists = db.Company.Where(c => c.Name == hospital.fields.naam).FirstOrDefault();
+                if (exists == null)
+                {
                     db.Company.Add(company);
                 }
             }
@@ -57,16 +61,21 @@ namespace TimeView.api.Controllers
             //
 
             json = "";
-            using (WebClient wc = new WebClient())
+            using (var wc = new WebClient())
             {
                 json = wc.DownloadString(retirementhomes_url);
             }
 
-            Hospital retirementHomes = JsonConvert.DeserializeObject<Hospital>(json);
-            foreach (Record retirementHome in retirementHomes.records)
+            var retirementHomes = JsonConvert.DeserializeObject<Hospital>(json);
+            foreach (var retirementHome in retirementHomes.records)
             {
-                Company company = new Company { Name = retirementHome.fields.naam, CategoryId = defaultCategoryId, Category = db.Category.Find(defaultCategoryId) };
-                Company exists = db.Company.Where(c => c.Name == retirementHome.fields.naam).FirstOrDefault();
+                var company = new Company
+                {
+                    Name = retirementHome.fields.naam,
+                    CategoryId = defaultCategoryId,
+                    Category = db.Category.Find(defaultCategoryId)
+                };
+                var exists = db.Company.Where(c => c.Name == retirementHome.fields.naam).FirstOrDefault();
                 if (exists == null)
                 {
                     db.Company.Add(company);
@@ -74,17 +83,16 @@ namespace TimeView.api.Controllers
             }
 
 
-
             db.SaveChanges();
             return db.Company;
         }
 
-       
+
         // GET: api/OpenData/5
-        [ResponseType(typeof(Company))]
+        [ResponseType(typeof (Company))]
         public IHttpActionResult GetCompany(int id)
         {
-            Company company = db.Company.Find(id);
+            var company = db.Company.Find(id);
             if (company == null)
             {
                 return NotFound();
@@ -94,7 +102,7 @@ namespace TimeView.api.Controllers
         }
 
         // PUT: api/OpenData/5
-        [ResponseType(typeof(void))]
+        [ResponseType(typeof (void))]
         public IHttpActionResult PutCompany(int id, Company company)
         {
             if (!ModelState.IsValid)
@@ -119,17 +127,14 @@ namespace TimeView.api.Controllers
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/OpenData
-        [ResponseType(typeof(Company))]
+        [ResponseType(typeof (Company))]
         public IHttpActionResult PostCompany(Company company)
         {
             if (!ModelState.IsValid)
@@ -140,14 +145,14 @@ namespace TimeView.api.Controllers
             db.Company.Add(company);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = company.Id }, company);
+            return CreatedAtRoute("DefaultApi", new {id = company.Id}, company);
         }
 
         // DELETE: api/OpenData/5
-        [ResponseType(typeof(Company))]
+        [ResponseType(typeof (Company))]
         public IHttpActionResult DeleteCompany(int id)
         {
-            Company company = db.Company.Find(id);
+            var company = db.Company.Find(id);
             if (company == null)
             {
                 return NotFound();

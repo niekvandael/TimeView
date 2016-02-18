@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using TimeView.data;
 using TimeView.Test.Mocks.Repositories;
 using TimeView.wpf.Services;
 
 namespace TimeView.Test.Mocks.DataServices
 {
-    class MockCategoryEntryDataService : ICategoryEntryDataService
+    internal class MockCategoryEntryDataService : ICategoryEntryDataService
     {
-        private MockCategoryEntryRepository repository = new MockCategoryEntryRepository();
+        private readonly MockCategoryEntryRepository _repository = new MockCategoryEntryRepository();
 
-        public Task<CategoryEntry[]> GetCategoryEntriesForCompany(int CompanyId)
+        public Task<CategoryEntry[]> GetCategoryEntriesForCompany(int companyId)
         {
-            return repository.getCategoryEntriesForCompany(CompanyId);
+            return _repository.GetCategoryEntriesForCompany(companyId);
         }
     }
 }

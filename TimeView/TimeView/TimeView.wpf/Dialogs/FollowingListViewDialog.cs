@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using TimeView.wpf.Dialogs;
 using TimeView.wpf.View;
 
@@ -11,21 +6,23 @@ namespace TimeView.wpf.Services
 {
     public class FollowingListViewDialog : IViewDialog
     {
-        Window followingListView = null;
+        private Window _followingListView;
 
-        public void ShowDialog(String Title) {
-            if (this.followingListView == null) {
-                followingListView = new FollowingListView();
-                followingListView.Title = Title;
+        public void ShowDialog(string title)
+        {
+            if (_followingListView == null)
+            {
+                _followingListView = new FollowingListView();
+                _followingListView.Title = title;
             }
-            followingListView.Show();
+            _followingListView.Show();
         }
 
         public void CloseDialog()
         {
-            if (this.followingListView != null)
+            if (_followingListView != null)
             {
-                followingListView.Close();
+                _followingListView.Close();
             }
         }
     }

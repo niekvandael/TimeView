@@ -5,35 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeView.wpf"
         mc:Ignorable="d"
-        Title="TimeView Login - ©2016" 
+        Title="TimeView Login - ©2016"
         Width="400"
         Height="160"
         DataContext="{Binding Source={StaticResource mainViewModelLocator},  Path=LoginViewModel}">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="43*"></ColumnDefinition>
-            <ColumnDefinition Width="128*"></ColumnDefinition>
+            <ColumnDefinition Width="43*" />
+            <ColumnDefinition Width="128*" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Margin="2 2 2 5" Grid.Column="0" Grid.Row="0" Text="User" ></TextBlock>
-        <TextBlock Margin="2 2 2 5" Grid.Column="0" Grid.Row="1" Text="Password" ></TextBlock>
-        <TextBox Margin="5 2 2 5" Text="{Binding Employee.Username}"  Grid.Column="1" Grid.Row="0" ></TextBox>
-        <PasswordBox Margin="5 2 2 5" Name="PasswordBox" Grid.Column="1" Grid.Row="1" PasswordChanged="PasswordBox_PasswordChanged" ></PasswordBox>
-        <Button Margin="5,0,70,5" Grid.Column="1" Grid.Row="2" Command="{Binding LoginCommand}" Content="Login" Height="21" VerticalAlignment="Bottom"/>
-        <TextBlock Margin="5 2 2 5" Text="Copyright © 2016 - TimeView" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"></TextBlock>
+        <TextBlock Margin="2 2 2 5" Grid.Column="0" Grid.Row="0" Text="User" />
+        <TextBlock Margin="2 2 2 5" Grid.Column="0" Grid.Row="1" Text="Password" />
+        <TextBox Margin="5 2 2 5" Text="{Binding Employee.Username}" Grid.Column="1" Grid.Row="0" />
+        <PasswordBox Margin="5 2 2 5" Name="PasswordBox" Grid.Column="1" Grid.Row="1"
+                     PasswordChanged="PasswordBox_PasswordChanged" />
+        <Button Margin="5,0,70,5" Grid.Column="1" Grid.Row="2" Command="{Binding LoginCommand}" Content="Login"
+                Height="21" VerticalAlignment="Bottom" />
+        <TextBlock Margin="5 2 2 5" Text="Copyright © 2016 - TimeView" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" />
 
-        <Button Margin="5 2 2 5" Content="Not an account yet?" Cursor="Hand"  Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Command="{Binding CreateAccount}">
+        <Button Margin="5 2 2 5" Content="Not an account yet?" Cursor="Hand" Grid.Column="0" Grid.Row="4"
+                Grid.ColumnSpan="2" Command="{Binding CreateAccount}">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <TextBlock TextDecorations="Underline">
-                <ContentPresenter />
+                        <ContentPresenter />
                     </TextBlock>
                 </ControlTemplate>
             </Button.Template>
@@ -48,6 +51,7 @@
                 </Style>
             </Button.Style>
         </Button>
-        <TextBlock Name="MessageTextBlock" Text="{Binding Message, Mode=OneWay}" Foreground="red" Margin="50 2 2 5" Cursor="Hand"  Grid.Column="1" Grid.Row="4"></TextBlock>
+        <TextBlock Name="MessageTextBlock" Text="{Binding Message, Mode=OneWay}" Foreground="red" Margin="50 2 2 5"
+                   Cursor="Hand" Grid.Column="1" Grid.Row="4" />
     </Grid>
 </Window>

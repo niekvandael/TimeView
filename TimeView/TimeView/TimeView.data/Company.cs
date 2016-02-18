@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace TimeView.data
 {
@@ -12,6 +11,5 @@ namespace TimeView.data
         public Category Category { get; set; }
 
         public virtual List<Employee> Employees { get; set; }
-
     }
 }

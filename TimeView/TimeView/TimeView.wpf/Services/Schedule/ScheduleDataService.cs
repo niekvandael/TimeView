@@ -1,35 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using TimeView.data;
 using TimeView.domain;
 
 namespace TimeView.wpf.Services
 {
-    class ScheduleDataService : IScheduleDataService
+    internal class ScheduleDataService : IScheduleDataService
     {
-        IScheduleRepository repository;
+        private readonly IScheduleRepository _repository;
 
         public ScheduleDataService(IScheduleRepository repository)
         {
-            this.repository = repository;
-        }
-
-        public void CreateSchedule(Schedule schedule)
-        {
-            repository.CreateSchedule(schedule);
+            _repository = repository;
         }
 
         public async Task<Schedule[]> GetScheduleForEmployee(Employee employee)
         {
-            return await repository.getScheduleForEmployee(employee.Id);
+            return await _repository.GetScheduleForEmployee(employee.Id);
         }
 
         public void UpdateSchedule(Schedule schedule)
         {
-            repository.UpdateSchedule(schedule);
+            _repository.UpdateSchedule(schedule);
         }
 
         void IScheduleDataService.CreateSchedule(Schedule schedule)
@@ -39,7 +32,12 @@ namespace TimeView.wpf.Services
 
         void IScheduleDataService.SaveSchedules(List<Schedule> schedules, Func<bool, bool> callback)
         {
-            repository.SaveSchedules(schedules, callback);
+            _repository.SaveSchedules(schedules, callback);
+        }
+
+        public void CreateSchedule(Schedule schedule)
+        {
+            _repository.CreateSchedule(schedule);
         }
     }
 }
