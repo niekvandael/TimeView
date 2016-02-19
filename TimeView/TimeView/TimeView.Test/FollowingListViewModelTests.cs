@@ -14,10 +14,11 @@ namespace TimeView.Test
     {
         private IEmployeeDataService _employeeDataService;
         private IViewDialog _scheduleListViewDialog;
+        private IViewDialog _openDataListViewDialog;
 
         private FollowingListViewModel GetViewModel()
         {
-            return new FollowingListViewModel(_employeeDataService, _scheduleListViewDialog);
+            return new FollowingListViewModel(_employeeDataService, _scheduleListViewDialog, _openDataListViewDialog);
         }
 
         [TestInitialize]
@@ -25,6 +26,7 @@ namespace TimeView.Test
         {
             _employeeDataService = new MockEmployeeDataService();
             _scheduleListViewDialog = new MockScheduleListViewDialog();
+            _openDataListViewDialog = new MockOpenDataListViewDialog();
         }
 
         [TestMethod]

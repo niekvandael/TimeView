@@ -15,10 +15,10 @@ namespace TimeView.api.Controllers
         private readonly TimeViewContext db = new TimeViewContext();
 
         /// <summary>
-        ///     Returns an individual Product.
+        ///     Returns all companies (after retrieving from opendata)
         /// </summary>
         /// <returns></returns>
-        public IQueryable<Company> GetCompany()
+        public IQueryable<Company> GetCompanies()
         {
             //
             // Defaults

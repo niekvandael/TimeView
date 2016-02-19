@@ -55,6 +55,7 @@
     <Compile Include="Mocks\DataServices\MockEmployeeDataService.cs" />
     <Compile Include="Mocks\DataServices\MockScheduleDataService.cs" />
     <Compile Include="Mocks\Dialogs\MockLoginViewDialog.cs" />
+    <Compile Include="Mocks\Dialogs\MockOpenDataListViewDialog.cs" />
     <Compile Include="Mocks\Dialogs\MockScheduleListViewDialog.cs" />
     <Compile Include="FollowingListViewModelTests.cs" />
     <Compile Include="Mocks\Repositories\MockCategoryEntryRepository.cs" />

@@ -10,33 +10,25 @@ namespace TimeView.wpf
         //
         // Repositories
         //
-        private static readonly IScheduleDataService scheduleDataService =
-            new ScheduleDataService(new ScheduleRepository());
-
-        private static readonly ICategoryEntryDataService categoryEntryDataService =
-            new CategoryEntryDataService(new CategoryEntryRepository());
-
-        private static readonly IEmployeeDataService employeeDataService =
-            new EmployeeDataRepository(new EmployeeRepository());
+        private static readonly IScheduleDataService ScheduleDataService = new ScheduleDataService(new ScheduleRepository());
+        private static readonly ICategoryEntryDataService CategoryEntryDataService = new CategoryEntryDataService(new CategoryEntryRepository());
+        private static readonly IEmployeeDataService EmployeeDataService = new EmployeeDataService(new EmployeeRepository());
+        private static readonly IOpenDataDataService OpenDataDataService = new OpenDataDataService(new OpenDataRepository());
 
         //
         // Dialogs
         //
-        private static readonly IViewDialog followingListViewDialog = new FollowingListViewDialog();
-        private static readonly IViewDialog loginViewDialog = new LoginViewDialog();
-        private static readonly IViewDialog scheduleListViewDialog = new ScheduleListViewDialog();
+        private static readonly IViewDialog FollowingListViewDialog = new FollowingListViewDialog();
+        private static readonly IViewDialog LoginViewDialog = new LoginViewDialog();
+        private static readonly IViewDialog ScheduleListViewDialog = new ScheduleListViewDialog();
+        private static readonly IViewDialog OpenDataListViewDialog = new OpenDataListViewDialog();
 
         //
         // ListViews
         //
-
-        public static ScheduleListViewModel ScheduleListViewModel { get; } =
-            new ScheduleListViewModel(scheduleDataService, categoryEntryDataService);
-
-        public static LoginViewModel LoginViewModel { get; } = new LoginViewModel(employeeDataService,
-            followingListViewDialog, loginViewDialog);
-
-        public static FollowingListViewModel FollowingListViewModel { get; } =
-            new FollowingListViewModel(employeeDataService, scheduleListViewDialog);
+        public static ScheduleListViewModel ScheduleListViewModel { get; } = new ScheduleListViewModel(ScheduleDataService, CategoryEntryDataService);
+        public static LoginViewModel LoginViewModel { get; } = new LoginViewModel(EmployeeDataService, FollowingListViewDialog, LoginViewDialog);
+        public static FollowingListViewModel FollowingListViewModel { get; } = new FollowingListViewModel(EmployeeDataService, ScheduleListViewDialog, OpenDataListViewDialog);
+        public static OpenDataListViewModel OpenDataListViewModel { get; } = new OpenDataListViewModel(OpenDataDataService);
     }
 }

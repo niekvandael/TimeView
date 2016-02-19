@@ -59,8 +59,6 @@
 
                         <TextBlock Grid.Column="0" Grid.Row="1" FontSize="12" Text="{Binding CategoryEntry.Name}" />
                     </Grid>
-
-
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListView>

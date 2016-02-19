@@ -2,7 +2,9 @@
 
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using TimeView.data;
 using TimeView.wpf.Dialogs;
 using TimeView.wpf.Extensions;
@@ -18,17 +20,19 @@ namespace TimeView.wpf.ViewModel
     {
         private readonly IEmployeeDataService _employeeDataService;
         private readonly IViewDialog _scheduleListViewDialog;
+        private readonly IViewDialog _openDataListViewDialog;
         private Employee _currentUser;
         private ObservableCollection<Employee> _employees;
         private Employee _selectedEmployee;
 
-        public FollowingListViewModel(IEmployeeDataService employeeDataService, IViewDialog scheduleListViewDialog)
+        public FollowingListViewModel(IEmployeeDataService employeeDataService, IViewDialog scheduleListViewDialog, IViewDialog openDataListViewDialog)
         {
             // Register to events
             Messenger.Default.Register<LoginMessage>(this, OnLoginReceived);
 
             // Dialogs
             _scheduleListViewDialog = scheduleListViewDialog;
+            _openDataListViewDialog = openDataListViewDialog;
 
             // set services
             _employeeDataService = employeeDataService;
@@ -39,6 +43,8 @@ namespace TimeView.wpf.ViewModel
 
         public ICommand OpenCommand { get; set; }
         public ICommand OpenMyCommand { get; set; }
+        public ICommand AboutCommand { get; set; }
+        public ICommand OpenDataCommand { get; set; }
 
         public ObservableCollection<Employee> Employees
         {
@@ -82,6 +88,24 @@ namespace TimeView.wpf.ViewModel
         {
             OpenCommand = new CustomCommand(OpenSchedule, CanOpenShedule);
             OpenMyCommand = new CustomCommand(OpenMySchedule, CanOpenMyShedule);
+
+            OpenDataCommand = new CustomCommand(OpenOpenData, CanAlwaysOpen);
+            AboutCommand = new CustomCommand(OpenAbout, CanAlwaysOpen);
+        }
+
+        private void OpenAbout(object obj)
+        {
+            MessageBox.Show("Created by Niek Vandael for PXL");
+        }
+
+        private bool CanAlwaysOpen(object obj)
+        {
+            return true;
+        }
+
+        private void OpenOpenData(object obj)
+        {
+            _openDataListViewDialog.ShowDialog("Open Data");
         }
 
         private void OpenSchedule(object obj)

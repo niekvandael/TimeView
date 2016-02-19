@@ -10,6 +10,7 @@
         DataContext="{Binding Source={StaticResource mainViewModelLocator},  Path=FollowingListViewModel}">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
             <RowDefinition Height="2*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -19,10 +20,19 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <ListView Name="FollowingList" Grid.ColumnSpan="2"
+            <DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                <Menu DockPanel.Dock="Top">
+                    <MenuItem Header="_File">
+                        <MenuItem Header="_About" Command="{Binding AboutCommand}"/>
+                    <MenuItem Header="_Open data"  Command="{Binding OpenDataCommand}"/>
+                    </MenuItem>
+                </Menu>
+            </DockPanel>
+
+            <ListView Name="FollowingList" Grid.ColumnSpan="2"
                   ItemsSource="{Binding Employees}"
                   SelectedItem="{Binding SelectedEmployee}"
-                  Grid.Column="0" Grid.Row="0" Margin="5 5 5 5">
+                  Grid.Column="0" Grid.Row="1" Margin="5 5 5 5">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -33,9 +43,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListView>
-        <Button Grid.Column="0" Grid.Row="1" Command="{Binding OpenCommand}" Width="120" Height="40" Content="Open"
+        <Button Grid.Column="0" Grid.Row="2" Command="{Binding OpenCommand}" Width="120" Height="40" Content="Open"
                 HorizontalAlignment="Left" Margin="5 5 5 5" />
-        <Button Grid.Column="1" Grid.Row="1" Command="{Binding OpenMyCommand}" Width="120" Height="40"
+        <Button Grid.Column="1" Grid.Row="2" Command="{Binding OpenMyCommand}" Width="120" Height="40"
                 Content="Open my schedule" HorizontalAlignment="Right" Margin="5 5 5 5" />
     </Grid>
 </Window>

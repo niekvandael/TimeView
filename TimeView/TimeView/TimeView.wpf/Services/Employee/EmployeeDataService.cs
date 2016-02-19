@@ -4,11 +4,11 @@ using TimeView.domain;
 
 namespace TimeView.wpf.Services
 {
-    internal class EmployeeDataRepository : IEmployeeDataService
+    internal class EmployeeDataService : IEmployeeDataService
     {
         private readonly IEmployeeRepository _repository;
 
-        public EmployeeDataRepository(IEmployeeRepository repository)
+        public EmployeeDataService(IEmployeeRepository repository)
         {
             _repository = repository;
         }
