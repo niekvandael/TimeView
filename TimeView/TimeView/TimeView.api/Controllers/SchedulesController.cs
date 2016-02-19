@@ -18,10 +18,10 @@ namespace TimeView.api.Controllers
         // GET: api/Schedules
         public IQueryable<Schedule> GetScheduleForEmployee(int employeeId)
         {
-            var select_from = DateTime.Now.AddDays(-7);
+            var selectFrom = DateTime.Now.AddDays(-7);
             return
                 db.Schedule.Where(s => s.EmployeeId == employeeId)
-                    .Where(s => s.Day >= select_from)
+                    .Where(s => s.Day >= selectFrom)
                     .Include(s => s.CategoryEntry)
                     .OrderBy(s => s.Day);
         }

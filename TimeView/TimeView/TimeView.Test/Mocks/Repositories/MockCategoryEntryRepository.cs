@@ -27,7 +27,7 @@ namespace TimeView.Test.Mocks.Repositories
                 CategoryId = 1,
                 Start = DateTime.Parse("14:00"),
                 End = DateTime.Parse("22:00"),
-                Name = "gray"
+                Name = "green"
             };
 
             categoryEntries.Add(categoryEntry1);

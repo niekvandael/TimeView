@@ -60,11 +60,6 @@ namespace TimeView.api.Controllers
 
 // End avoid loops
 
-            if (employee == null)
-            {
-                return NotFound();
-            }
-
             return Ok(employee);
         }
 
