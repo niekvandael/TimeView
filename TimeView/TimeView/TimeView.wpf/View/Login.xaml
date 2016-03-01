@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com" 
         xmlns:local="clr-namespace:TimeView.wpf"
         mc:Ignorable="d"
         Title="TimeView Login - ©2016"
@@ -27,8 +28,12 @@
         <TextBox Margin="5 2 2 5" Text="{Binding Employee.Username}" Grid.Column="1" Grid.Row="0" />
         <PasswordBox Margin="5 2 2 5" Name="PasswordBox" Grid.Column="1" Grid.Row="1"
                      PasswordChanged="PasswordBox_PasswordChanged" />
-        <Button Margin="5,0,70,5" Grid.Column="1" Grid.Row="2" Command="{Binding LoginCommand}" Content="Login"
-                Height="21" VerticalAlignment="Bottom" />
+
+        <StackPanel Margin="5 0 0 0" Grid.Column="1" Grid.Row="2" Orientation="Horizontal" Height="25">
+            <Button Width="50" Command="{Binding LoginCommand}" Content="Login" Height="21"/>
+            <Image gif:ImageBehavior.AnimatedSource="../Images/Loading.gif" Visibility="{Binding Loading}" Height="20" Width="20" Margin="10 0 0 0"/>
+
+        </StackPanel>
         <TextBlock Margin="5 2 2 5" Text="Copyright © 2016 - TimeView" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" />
 
         <Button Margin="5 2 2 5" Content="Not an account yet?" Cursor="Hand" Grid.Column="0" Grid.Row="4"

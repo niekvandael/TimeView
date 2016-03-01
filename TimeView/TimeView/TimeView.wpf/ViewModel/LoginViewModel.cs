@@ -16,6 +16,7 @@ namespace TimeView.wpf.ViewModel
         private readonly IViewDialog _followingListViewDialog;
         private readonly IViewDialog _loginViewDialog;
         private string _message;
+        private string _loading = "Hidden";
 
         public LoginViewModel(IEmployeeDataService employeeDataService, IViewDialog followingListViewDialog,
             IViewDialog loginViewDialog)
@@ -37,6 +38,16 @@ namespace TimeView.wpf.ViewModel
             {
                 _message = value;
                 RaisePropertyChanged("Message");
+            }
+        }
+
+        public string Loading
+        {
+            get { return _loading; }
+            set
+            {
+                _loading = value;
+                RaisePropertyChanged("Loading");
             }
         }
 
@@ -70,6 +81,7 @@ namespace TimeView.wpf.ViewModel
 
         private void LoginAction(object obj)
         {
+            Loading = "Visible";
             DoLogin(Employee.Username, Employee.Password);
         }
 
