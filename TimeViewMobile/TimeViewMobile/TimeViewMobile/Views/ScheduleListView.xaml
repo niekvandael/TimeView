@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TimeViewMobile.Views.ScheduleListView"
+             Title="Schedules"
+             >
+  <ContentView>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="50" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <Label FontSize="20" Text="{Binding SelectedEmployee.Name}"  HorizontalOptions="Center" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0"></Label>
+
+      <ListView Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Schedules}">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <StackLayout Orientation="Horizontal">
+                <BoxView Color="{Binding CategoryEntry.Name}" HeightRequest="50" WidthRequest="50"></BoxView>
+              <Label Font="Medium" Text="{Binding CategoryEntry.Name}"/>  
+              <Label Font="Medium" Text="{Binding Day, StringFormat='{}{0:dd-MM-yyyy}'} }"/>
+              </StackLayout>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+
+
+    </Grid>
+  </ContentView>
+
+
+</ContentPage>

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TimeViewMobile.Views.FollowingListView"
+             xmlns:local="clr-namespace:TimeViewMobile;assembly=TimeViewMobile"
+             Title ="Following"
+             >
+
+  <ContentView>
+
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="50" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <Label FontSize="20" Text="{Binding CurrentUser.Name}"  HorizontalOptions="Center" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0"></Label>
+
+      <ListView Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" x:Name="listView"
+                     ItemsSource="{Binding Employees}"
+                     SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}"
+                >
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ImageCell Text="{Binding Name}" ImageSource="{Binding ImageSource}"/>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+
+
+    </Grid>
+  </ContentView>
+
+</ContentPage>
