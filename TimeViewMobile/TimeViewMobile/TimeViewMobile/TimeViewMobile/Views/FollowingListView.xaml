@@ -4,10 +4,10 @@
              x:Class="TimeViewMobile.Views.FollowingListView"
              xmlns:local="clr-namespace:TimeViewMobile;assembly=TimeViewMobile"
              Title ="Following"
+             Icon="hamburger.png"
              >
 
   <ContentView>
-
     <Grid>
       <Grid.RowDefinitions>
         <RowDefinition Height="50" />
@@ -31,9 +31,6 @@
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
-
-
     </Grid>
   </ContentView>
-
 </ContentPage>

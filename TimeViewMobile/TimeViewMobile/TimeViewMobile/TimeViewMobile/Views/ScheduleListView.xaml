@@ -2,8 +2,16 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TimeViewMobile.Views.ScheduleListView"
+             xmlns:converter="clr-namespace:TimeViewMobile.Converters;assembly=TimeViewMobile"
              Title="Schedules"
              >
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <converter:CategoryEntryHourConverter x:Key="CategoryEntryHourConverter" />
+      <converter:ColorConverter x:Key="ColorConverter" />
+    </ResourceDictionary>
+
+  </ContentPage.Resources>
   <ContentView>
     <Grid>
       <Grid.RowDefinitions>
@@ -21,17 +29,18 @@
       <ListView Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Schedules}">
         <ListView.ItemTemplate>
           <DataTemplate>
-            <ViewCell>
+            <ViewCell >
               <StackLayout Orientation="Horizontal">
-                <BoxView Color="{Binding CategoryEntry.Name}" HeightRequest="50" WidthRequest="50"></BoxView>
-              <Label Font="Medium" Text="{Binding CategoryEntry.Name}"/>  
-              <Label Font="Medium" Text="{Binding Day, StringFormat='{}{0:dd-MM-yyyy}'} }"/>
+                <BoxView WidthRequest="25" HeightRequest="5" Color="{Binding CategoryEntry.Name, Converter={StaticResource ColorConverter}" />
+                <StackLayout Orientation="Vertical">
+                  <Label XAlign="Start" Font="Large" Text="{Binding Day, StringFormat='{}{0:dd-MM-yyyy}'} }"/>
+                  <Label XAlign="End" Font="Small" Text="{Binding CategoryEntry, Converter={StaticResource CategoryEntryHourConverter}"/>
+                </StackLayout>
               </StackLayout>
             </ViewCell>
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
-
 
     </Grid>
   </ContentView>

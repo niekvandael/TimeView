@@ -36,6 +36,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Converters\CategoryEntryHourConverter.cs" />
+    <Compile Include="Converters\ColorConverter.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Messages\DetailMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

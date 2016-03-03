@@ -96,6 +96,7 @@
     <Content Include="Properties\AndroidManifest.xml" />
     <AndroidResource Include="Resources\drawable\people.png" />
     <AndroidResource Include="Resources\drawable\reminder.png" />
+    <AndroidResource Include="Resources\drawable\hamburger.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TimeViewMobile\TimeViewMobile.csproj">

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using TimeView.data;
+using TimeViewMobile.Messages;
 using Xamarin.Forms;
 
 namespace TimeViewMobile.Views
@@ -23,6 +24,8 @@ namespace TimeViewMobile.Views
             this.Master = master;
             this.Detail = detail;
 
+            this.Master.Title = "Master";
+            this.Detail.Title = "Detail";
 
             // Initialize
             InitializeComponent();
@@ -39,6 +42,7 @@ namespace TimeViewMobile.Views
 
         void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
+            masterPage.ListView.SelectedItem = null;
             IsPresented = false;
         }
     }
