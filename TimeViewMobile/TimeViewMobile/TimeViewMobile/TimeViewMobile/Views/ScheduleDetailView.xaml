@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TimeViewMobile.Views.ScheduleDetailView"
+             >
+  <Label Text="{Binding MainText}" VerticalOptions="Center" HorizontalOptions="Center" />
+  <Label Text="Detail page"></Label>
+
+  <Grid>
+    <ContentView>
+      <StackLayout Orientation="Vertical">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+          </Grid.RowDefinitions>
+
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+
+          <Label FontSize="20" Text="{Binding SelectedEmployee.Name}"  HorizontalOptions="Center" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0"></Label>
+          
+          <Label FontSize="20" Text="Date" Grid.Row="2" Grid.Column="0"/>
+          <DatePicker Date="{Binding Schedule.Day}" Grid.Row="2" Grid.Column="1" Format="ddd dd-MM-yyyy"></DatePicker>
+
+          <Label FontSize="20" Text="Time" Grid.Row="3" Grid.Column="0"/>
+          <Picker x:Name="CategoryEntryPicker"  Grid.Row="3" Grid.Column="1" />
+        
+        </Grid>
+        <Label Text="{Binding Message}" TextColor="Red"></Label>
+        <Button VerticalOptions="EndAndExpand" Text="Save" Command="{Binding SaveCommand}"></Button>
+      </StackLayout>
+    </ContentView>
+    
+  </Grid>
+  
+</ContentPage>

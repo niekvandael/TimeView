@@ -5,10 +5,12 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using TimeView.data;
 using TimeView.wpf.Services;
 using TimeViewMobile.Extensions;
 using TimeViewMobile.Messages;
+using TimeViewMobile.Views;
 using Xamarin.Forms;
 
 namespace TimeViewMobile.ViewModels
@@ -18,12 +20,16 @@ namespace TimeViewMobile.ViewModels
         private readonly IScheduleDataService _scheduleDataService;
         private readonly IEmployeeDataService _employeeDataService;
 
+        public ICommand NewCommand { get; set; }
+        public ICommand EditCommand { get; set; }
+
         public ScheduleListViewModel(IScheduleDataService scheduleDataService, IEmployeeDataService employeeDataService)
         {
             // Register to events
             MessagingCenter.Subscribe<DetailMessage, Employee>(this, "LoadScheduleForUser", (sender, arg) => {
                 this.SelectedEmployee = arg;
                 LoadData();
+                Editable = sender.MySchedule;
             });
 
             // Dialogs
@@ -34,6 +40,7 @@ namespace TimeViewMobile.ViewModels
 
             // Load data & commands
             this.Schedules = new ObservableCollection<Schedule>();
+            LoadCommands();
         }
 
         private String _title = "Schedule for ...";
@@ -44,6 +51,17 @@ namespace TimeViewMobile.ViewModels
             {
                 _title = value;
                 RaisePropertyChanged("Title");
+            }
+        }
+
+        private bool _editable;
+        public bool Editable
+        {
+            get { return _editable; }
+            set
+            {
+                _editable = value;
+                RaisePropertyChanged("Editable");
             }
         }
 
@@ -58,6 +76,21 @@ namespace TimeViewMobile.ViewModels
             }
         }
 
+        private Schedule _selectedSchedule;
+        public Schedule SelectedSchedule
+        {
+            get { return _selectedSchedule; }
+            set
+            {
+                _selectedSchedule = value;
+                RaisePropertyChanged("SelectedSchedule");
+
+                if (this.CanNewOrEditAction()) {
+                    this.EditAction();
+                }
+            }
+        }
+
         private Employee _selectedEmployee;
         public Employee SelectedEmployee
         {
@@ -69,23 +102,36 @@ namespace TimeViewMobile.ViewModels
             }
         }
 
-      
-        public event PropertyChangedEventHandler PropertyChanged;
-
+     
         public async void LoadData()
         {
             // Hardcoded userid because of lack of time to implement settings screen
             SelectedEmployee = await _employeeDataService.GetEmployee(_selectedEmployee);
             var schedules = await _scheduleDataService.GetScheduleForEmployee(SelectedEmployee);
             Schedules = schedules.ToObservableCollection();
-
-            foreach (Schedule schedule in Schedules)
-            {
-                schedule.CategoryEntry.Name = char.ToUpper(schedule.CategoryEntry.Name[0]) + schedule.CategoryEntry.Name.Substring(1).ToString();
-            }
         }
 
+        private void LoadCommands() {
+            this.NewCommand = new Command(NewAction, CanNewOrEditAction);
+            this.EditCommand = new Command(EditAction);
+        }
 
+        private void EditAction()
+        {
+            // Message to open the detail screen
+            MessagingCenter.Send<LoadDetailMessage>(new LoadDetailMessage { IsScheduleDetail=true, Schedule = this.SelectedSchedule}, "LoadScheduleDetailView");
+        }
+
+        private void NewAction() {
+            // Message to open the detail screen
+            MessagingCenter.Send<LoadDetailMessage>(new LoadDetailMessage { IsScheduleDetail = true, Schedule = new Schedule { Id = -1 } }, "LoadScheduleDetailView");
+        }
+
+        private bool CanNewOrEditAction() {
+            return _editable;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
         private void RaisePropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)

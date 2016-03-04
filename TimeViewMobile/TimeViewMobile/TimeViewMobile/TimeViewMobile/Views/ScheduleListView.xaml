@@ -8,42 +8,46 @@
   <ContentPage.Resources>
     <ResourceDictionary>
       <converter:CategoryEntryHourConverter x:Key="CategoryEntryHourConverter" />
+      <converter:TodayBackgroundConverter x:Key="TodayBackgroundConverter" />
       <converter:ColorConverter x:Key="ColorConverter" />
     </ResourceDictionary>
 
   </ContentPage.Resources>
   <ContentView>
-    <Grid>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="50" />
-        <RowDefinition Height="*" />
-      </Grid.RowDefinitions>
+    <StackLayout Orientation="Vertical">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="50" />
+          <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="*" />
-        <ColumnDefinition Width="*" />
-      </Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-      <Label FontSize="20" Text="{Binding SelectedEmployee.Name}"  HorizontalOptions="Center" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0"></Label>
+        <Label FontSize="20" Text="{Binding SelectedEmployee.Name}"  HorizontalOptions="Center" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0"></Label>
 
-      <ListView Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Schedules}">
-        <ListView.ItemTemplate>
-          <DataTemplate>
-            <ViewCell >
-              <StackLayout Orientation="Horizontal">
-                <BoxView WidthRequest="25" HeightRequest="5" Color="{Binding CategoryEntry.Name, Converter={StaticResource ColorConverter}" />
-                <StackLayout Orientation="Vertical">
-                  <Label XAlign="Start" Font="Large" Text="{Binding Day, StringFormat='{}{0:dd-MM-yyyy}'} }"/>
-                  <Label XAlign="End" Font="Small" Text="{Binding CategoryEntry, Converter={StaticResource CategoryEntryHourConverter}"/>
+        <ListView Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" 
+                  ItemsSource="{Binding Schedules}"
+                  SelectedItem="{Binding SelectedSchedule, Mode=TwoWay}"
+                  >
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell>
+                <StackLayout Orientation="Horizontal" BackgroundColor="{Binding Day, Converter={StaticResource TodayBackgroundConverter}">
+                  <BoxView WidthRequest="25" HeightRequest="5" Color="{Binding CategoryEntry.Name, Converter={StaticResource ColorConverter}" />
+                  <StackLayout Orientation="Vertical">
+                    <Label XAlign="Start" Font="Large" Text="{Binding Day, StringFormat='{}{0:ddd dd-MM-yyyy}'} }"/>
+                    <Label XAlign="End" Font="Small" Text="{Binding CategoryEntry, Converter={StaticResource CategoryEntryHourConverter}"/>
+                  </StackLayout>
                 </StackLayout>
-              </StackLayout>
-            </ViewCell>
-          </DataTemplate>
-        </ListView.ItemTemplate>
-      </ListView>
-
-    </Grid>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+      </Grid>
+      <Button IsEnabled="{Binding Editable}" VerticalOptions="EndAndExpand" Text="New Entry" Command="{Binding NewCommand}"></Button>
+    </StackLayout>
   </ContentView>
-
-
 </ContentPage>

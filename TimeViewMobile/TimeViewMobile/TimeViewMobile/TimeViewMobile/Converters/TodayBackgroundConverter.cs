@@ -6,22 +6,19 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace TimeViewMobile.Converters 
+namespace TimeViewMobile.Converters
 {
-    class ColorConverter : IValueConverter
+    class TodayBackgroundConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            switch ((string)value)
+            if (((DateTime)value).Date == DateTime.Today.Date)
             {
-                case "green":
-                    return Color.Green;
-                case "gray":
-                    return Color.Gray;
-                case "ghite":
-                    return Color.White;
-                default:
-                    return Color.Transparent;
+                return Color.Gray;
+            }
+            else
+            {
+                return Color.Transparent;
             }
         }
 

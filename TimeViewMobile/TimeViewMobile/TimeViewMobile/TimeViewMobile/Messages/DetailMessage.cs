@@ -8,5 +8,6 @@ namespace TimeViewMobile.Messages
 {
     class DetailMessage
     {
+        public bool MySchedule { get; set; }
     }
 }

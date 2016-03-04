@@ -88,7 +88,12 @@ namespace TimeViewMobile.ViewModels
             if (item != null)
             {
                 // Send a message to update detail
-                MessagingCenter.Send<DetailMessage, Employee>(new DetailMessage(), "LoadScheduleForUser", item);
+                Boolean mySchedule = false;
+                if (item.Id == this.CurrentUser.Id) {
+                    mySchedule = true;
+                }
+
+                MessagingCenter.Send<DetailMessage, Employee>(new DetailMessage { MySchedule = mySchedule }, "LoadScheduleForUser", item);
             }
         }
 
