@@ -28,7 +28,7 @@
 
         <Label FontSize="20" Text="{Binding SelectedEmployee.Name}"  HorizontalOptions="Center" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0"></Label>
 
-        <ListView Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" 
+        <ListView Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" x:Name="ScheduleList"
                   ItemsSource="{Binding Schedules}"
                   SelectedItem="{Binding SelectedSchedule, Mode=TwoWay}"
                   >

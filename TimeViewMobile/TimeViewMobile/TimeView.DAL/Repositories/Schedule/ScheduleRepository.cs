@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using TimeView.data;
 
@@ -21,9 +24,20 @@ namespace TimeView.DAL.Repositories.Schedule
 
 
                 var url = "api/Schedules/post";
-                var response = await client.PostAsJsonAsync(url, schedules);
 
-                callback(response.IsSuccessStatusCode);
+                try
+                {
+                    string json = JsonConvert.SerializeObject(schedules);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = null;
+                    response = await client.PostAsync(url, content);
+                }
+                catch (Exception e)
+                {
+                    callback(false);
+                }
+
+                callback(true);
             }
         }
 

@@ -73,6 +73,7 @@ namespace TimeViewMobile.ViewModels
         {
             if (success)
             {
+                MessagingCenter.Send(new LoadScheduleList(), "LoadScheduleList");
                 MessagingCenter.Send<LoadDetailMessage>(new LoadDetailMessage { IsScheduleList = true }, "LoadScheduleDetailView");
             }
             else {

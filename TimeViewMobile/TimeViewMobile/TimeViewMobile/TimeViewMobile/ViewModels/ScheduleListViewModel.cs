@@ -32,6 +32,16 @@ namespace TimeViewMobile.ViewModels
                 Editable = sender.MySchedule;
             });
 
+            MessagingCenter.Subscribe<LoadScheduleList>(this, "LoadScheduleList", (sender) => {
+                this._selectedSchedule = null;
+                LoadData();
+            });
+
+            MessagingCenter.Subscribe<ScheduleListTabbed>(this, "ScheduleListTabbed", (sender) => {
+                this.SelectedSchedule = sender.Schedule;
+                this.EditAction();
+            });
+
             // Dialogs
 
             // set services
@@ -84,10 +94,6 @@ namespace TimeViewMobile.ViewModels
             {
                 _selectedSchedule = value;
                 RaisePropertyChanged("SelectedSchedule");
-
-                if (this.CanNewOrEditAction()) {
-                    this.EditAction();
-                }
             }
         }
 
@@ -119,7 +125,7 @@ namespace TimeViewMobile.ViewModels
         private void EditAction()
         {
             // Message to open the detail screen
-            MessagingCenter.Send<LoadDetailMessage>(new LoadDetailMessage { IsScheduleDetail=true, Schedule = this.SelectedSchedule}, "LoadScheduleDetailView");
+            MessagingCenter.Send<LoadDetailMessage>(new LoadDetailMessage { IsScheduleDetail = true, Schedule = this.SelectedSchedule }, "LoadScheduleDetailView");
         }
 
         private void NewAction() {
