@@ -54,16 +54,35 @@ namespace TimeViewMobile.ViewModels
 
         // Binding to picker not yet available in Xamarin
         private void SetItemInCategoryEntryPicker() {
+            if (_schedule.CategoryEntry == null)
+            {
+                return; // New Instance
+            }
             for (int i = 0; i < _categoryEntryPicker.Items.Count; i++)
             {
-                if (_categoryEntryPicker.Items[i].Equals(Schedule.CategoryEntry.Name)) {
+                if (_categoryEntryPicker.Items[i].Equals(_schedule.CategoryEntry.Name)) {
                     _categoryEntryPicker.SelectedIndex = i;
                 }
             }
         }
 
+        // Binding to picker not yet available in Xamarin
+        private void GetItemFromCategoryEntryPicker() {
+            var selection = _categoryEntryPicker.Items[_categoryEntryPicker.SelectedIndex];
+
+            foreach (CategoryEntry categoryEntry in CategoryEntries)
+            {
+                if (categoryEntry.Name.Equals(selection)) {
+                    Schedule.CategoryEntryId = categoryEntry.Id;
+                }
+            }
+
+        }
+
         private void SaveAction() {
             List<Schedule> SchedulesToUpdate = new List<Schedule>();
+            // No binding on CategoryEntryPicker: it is not supported
+            GetItemFromCategoryEntryPicker();
             SchedulesToUpdate.Add(Schedule);
 
             this._scheduleDataService.SaveSchedules(SchedulesToUpdate, SaveCallback);

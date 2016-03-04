@@ -130,7 +130,7 @@ namespace TimeViewMobile.ViewModels
 
         private void NewAction() {
             // Message to open the detail screen
-            MessagingCenter.Send<LoadDetailMessage>(new LoadDetailMessage { IsScheduleDetail = true, Schedule = new Schedule { Id = -1 } }, "LoadScheduleDetailView");
+            MessagingCenter.Send<LoadDetailMessage>(new LoadDetailMessage { IsScheduleDetail = true, Schedule = new Schedule { Day = DateTime.Today, Id = -1, EmployeeId = SelectedEmployee.Id} }, "LoadScheduleDetailView");
         }
 
         private bool CanNewOrEditAction() {
