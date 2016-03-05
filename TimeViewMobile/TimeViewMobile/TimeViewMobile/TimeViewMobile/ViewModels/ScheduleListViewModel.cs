@@ -39,7 +39,9 @@ namespace TimeViewMobile.ViewModels
 
             MessagingCenter.Subscribe<ScheduleListTabbed>(this, "ScheduleListTabbed", (sender) => {
                 this.SelectedSchedule = sender.Schedule;
-                this.EditAction();
+                if (this.Editable) {
+                    this.EditAction();
+                }
             });
 
             // Dialogs

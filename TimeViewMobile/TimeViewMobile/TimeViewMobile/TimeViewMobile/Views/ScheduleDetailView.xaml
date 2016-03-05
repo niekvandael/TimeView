@@ -33,7 +33,7 @@
         
         </Grid>
         <Label Text="{Binding Message}" TextColor="Red"></Label>
-        <Button VerticalOptions="EndAndExpand" Text="Save" Command="{Binding SaveCommand}"></Button>
+        <Button VerticalOptions="EndAndExpand" FontSize="25" Text="Save" Command="{Binding SaveCommand}"></Button>
       </StackLayout>
     </ContentView>
     

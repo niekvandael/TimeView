@@ -47,7 +47,7 @@
           </ListView.ItemTemplate>
         </ListView>
       </Grid>
-      <Button IsEnabled="{Binding Editable}" VerticalOptions="EndAndExpand" Text="New Entry" Command="{Binding NewCommand}"></Button>
+      <Button IsEnabled="{Binding Editable}" VerticalOptions="EndAndExpand" FontSize="25" Text="+" Command="{Binding NewCommand}"></Button>
     </StackLayout>
   </ContentView>
 </ContentPage>
