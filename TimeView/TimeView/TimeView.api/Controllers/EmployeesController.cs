@@ -108,16 +108,16 @@ namespace TimeView.api.Controllers
             {
                 return BadRequest(ModelState);
             }
-/*
-            Employee emp = db.Employee.Find(e => e.Username = employee.Username);
 
-            if (emp != null) {
+            var _found = db.Employee.Where(e => e.Username == employee.Username).First();
+
+            if (_found != null) {
                 IHttpActionResult response;
                 HttpResponseMessage responseMsg = new HttpResponseMessage(HttpStatusCode.Ambiguous);
                 response = ResponseMessage(responseMsg);
                 return response;
             }
-*/
+
 
             String salt = GetSalt().ToString();
             employee.Password = salt + sha256(salt + employee.Password);
