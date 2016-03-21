@@ -98,22 +98,13 @@ namespace TimeView.api.Controllers
         }
 
         // POST: api/Employees
-        [ResponseType(typeof(Employee))]
-        public IHttpActionResult PostEmployee(Employee employee)
+        public IQueryable<Employee> PostEmployee(Employee employee)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var _found = db.Employee.Where(e => e.Username == employee.Username).First();
 
             if (_found != null)
             {
-                IHttpActionResult response;
-                HttpResponseMessage responseMsg = new HttpResponseMessage(HttpStatusCode.Ambiguous);
-                response = ResponseMessage(responseMsg);
-                return response;
+                return null;
             }
 
             // 128 salt characters
@@ -124,10 +115,7 @@ namespace TimeView.api.Controllers
             }
             catch (Exception)
             {
-                IHttpActionResult response;
-                HttpResponseMessage responseMsg = new HttpResponseMessage(HttpStatusCode.Conflict);
-                response = ResponseMessage(responseMsg);
-                return response;
+                return null;
             }
 
             // Temp data
@@ -135,20 +123,15 @@ namespace TimeView.api.Controllers
 
             try
             {
-
                 db.Employee.Add(employee);
                 db.SaveChanges();
             }
             catch (Exception)
             {
-                IHttpActionResult response;
-                HttpResponseMessage responseMsg = new HttpResponseMessage(HttpStatusCode.GatewayTimeout);
-                response = ResponseMessage(responseMsg);
-                return response;
+                return null;
             }
 
-
-            return CreatedAtRoute("DefaultApi", new { id = employee.Id }, employee);
+            return db.Employee.Where(e => e.Username == employee.Username);
         }
 
         // DELETE: api/Employees/5
