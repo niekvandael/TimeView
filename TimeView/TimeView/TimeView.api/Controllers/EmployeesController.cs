@@ -108,7 +108,6 @@ namespace TimeView.api.Controllers
             catch (Exception)
             {
                 // No found
-                throw;
             }
 
             if (_found.Id != -1)

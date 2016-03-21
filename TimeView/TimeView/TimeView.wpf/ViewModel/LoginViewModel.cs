@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Text;
 using System.Windows.Input;
 using TimeView.data;
+using TimeView.data.Services;
 using TimeView.wpf.Dialogs;
 using TimeView.wpf.Messages;
 using TimeView.wpf.Services;

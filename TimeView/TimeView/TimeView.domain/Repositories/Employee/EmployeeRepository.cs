@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using TimeView.domain;
 
@@ -8,7 +11,7 @@ namespace TimeView.data.Services
 {
     public class EmployeeRepository : IEmployeeRepository
     {
-        private readonly string baseAddress = "http://timeview.azurewebsites.net/";
+        private readonly string baseAddress = "http://localhost:51150/";
 
 
         async Task<Employee> IEmployeeRepository.GetEmployee(string username, string password)
@@ -53,6 +56,37 @@ namespace TimeView.data.Services
             }
 
             return null;
+        }
+
+        public async Task<data.Employee> CreateEmployee(TimeView.data.Employee employee)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseAddress);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+                var url = "api/Employees/post";
+                HttpResponseMessage response = null;
+
+                try
+                {
+                    employee.Id = 0;
+                    employee.CompanyId = 1;
+                    employee.Follower = new List<TimeView.data.Employee>();
+                    employee.Following = new List<TimeView.data.Employee>();
+
+                    string json = JsonConvert.SerializeObject(employee);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    response = await client.PostAsync(url, content);
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
+                return null; ;
+            }
         }
     }
 }
