@@ -17,7 +17,7 @@ namespace TimeView.api.Controllers
     {
         private readonly TimeViewContext db = new TimeViewContext();
 
-        [ResponseType(typeof (Employee))]
+        [ResponseType(typeof(Employee))]
         public Employee GetEmployee(string username, string password)
         {
             try
@@ -45,7 +45,7 @@ namespace TimeView.api.Controllers
         }
 
         // GET: api/Employees/5
-        [ResponseType(typeof (Employee))]
+        [ResponseType(typeof(Employee))]
         public IHttpActionResult GetEmployee(int id)
         {
             var employee = db.Employee
@@ -53,7 +53,7 @@ namespace TimeView.api.Controllers
                 .Include(e => e.Following)
                 .Where(e => e.Id == id).First();
 
-// Avoid loops
+            // Avoid loops
 
             for (var i = 0; i < employee.Following.Count; i++)
             {
@@ -61,13 +61,13 @@ namespace TimeView.api.Controllers
                 employee.Following[i].Company.Employees = null;
             }
 
-// End avoid loops
+            // End avoid loops
 
             return Ok(employee);
         }
 
         // PUT: api/Companies/5
-        [ResponseType(typeof (void))]
+        [ResponseType(typeof(void))]
         public IHttpActionResult PutEmployee(Employee employee)
         {
             if (!ModelState.IsValid)
@@ -98,7 +98,7 @@ namespace TimeView.api.Controllers
         }
 
         // POST: api/Employees
-        [ResponseType(typeof (Employee))]
+        [ResponseType(typeof(Employee))]
         public IHttpActionResult PostEmployee(Employee employee)
         {
             // Temp data
@@ -111,7 +111,8 @@ namespace TimeView.api.Controllers
 
             var _found = db.Employee.Where(e => e.Username == employee.Username).First();
 
-            if (_found != null) {
+            if (_found != null)
+            {
                 IHttpActionResult response;
                 HttpResponseMessage responseMsg = new HttpResponseMessage(HttpStatusCode.Ambiguous);
                 response = ResponseMessage(responseMsg);
@@ -119,17 +120,17 @@ namespace TimeView.api.Controllers
             }
 
 
-            String salt = GetSalt().ToString();
+            String salt = GetSalt();
             employee.Password = salt + sha256(salt + employee.Password);
-            
+
             db.Employee.Add(employee);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new {id = employee.Id}, employee);
+            return CreatedAtRoute("DefaultApi", new { id = employee.Id }, employee);
         }
 
         // DELETE: api/Employees/5
-        [ResponseType(typeof (Employee))]
+        [ResponseType(typeof(Employee))]
         public IHttpActionResult DeleteEmployee(int id)
         {
             var employee = db.Employee.Find(id);
@@ -170,20 +171,19 @@ namespace TimeView.api.Controllers
             return hash.ToString();
         }
 
-        private static int saltLengthLimit = 32;
-        private static byte[] GetSalt()
+        private String GetSalt()
         {
-            return GetSalt(saltLengthLimit);
-        }
-        private static byte[] GetSalt(int maximumSaltLength)
-        {
-            var salt = new byte[maximumSaltLength];
-            using (var random = new RNGCryptoServiceProvider())
-            {
-                random.GetNonZeroBytes(salt);
-            }
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var stringChars = new char[8];
+            var random = new Random();
 
-            return salt;
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+            var finalString = new String(stringChars);
+
+            return finalString;
         }
     }
 }
