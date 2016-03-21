@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Text;
 using System.Windows.Input;
 using TimeView.data;
 using TimeView.wpf.Dialogs;

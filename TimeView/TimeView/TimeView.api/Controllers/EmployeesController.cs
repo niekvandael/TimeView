@@ -119,9 +119,20 @@ namespace TimeView.api.Controllers
                 return response;
             }
 
+            // 128 salt characters
+            try
+            {
+                String salt = GetSalt();
+                employee.Password = salt + Sha256(salt + employee.Password);
+            }
+            catch (Exception)
+            {
+                IHttpActionResult response;
+                HttpResponseMessage responseMsg = new HttpResponseMessage(HttpStatusCode.Conflict);
+                response = ResponseMessage(responseMsg);
+                return response;
+            }
 
-            String salt = GetSalt();
-            employee.Password = salt + sha256(salt + employee.Password);
 
             db.Employee.Add(employee);
             db.SaveChanges();
@@ -159,7 +170,7 @@ namespace TimeView.api.Controllers
             return db.Employee.Count(e => e.Id == id) > 0;
         }
 
-        static string sha256(string password)
+        static string Sha256(string password)
         {
             System.Security.Cryptography.SHA256Managed crypt = new System.Security.Cryptography.SHA256Managed();
             System.Text.StringBuilder hash = new System.Text.StringBuilder();
@@ -174,7 +185,7 @@ namespace TimeView.api.Controllers
         private String GetSalt()
         {
             var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            var stringChars = new char[8];
+            var stringChars = new char[128];
             var random = new Random();
 
             for (int i = 0; i < stringChars.Length; i++)
