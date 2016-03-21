@@ -100,7 +100,7 @@ namespace TimeView.api.Controllers
         // POST: api/Employees
         public IQueryable<Employee> PostEmployee(Employee employee)
         {
-            Object _found = null;
+            Employee _found = new Employee { Id = -1 };
             try
             {
                 _found = db.Employee.Where(e => e.Username == employee.Username).First();
@@ -111,7 +111,7 @@ namespace TimeView.api.Controllers
                 throw;
             }
 
-            if (_found != null)
+            if (_found.Id != -1)
             {
                 return null;
             }
