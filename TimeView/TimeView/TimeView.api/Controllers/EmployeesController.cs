@@ -120,7 +120,7 @@ namespace TimeView.api.Controllers
             try
             {
                 String salt = GetSalt();
-                employee.Password = salt + Sha256(salt + employee.Password);
+                employee.Password = salt.ToString() + Sha256(salt + employee.Password);
             }
             catch (Exception)
             {
@@ -135,6 +135,7 @@ namespace TimeView.api.Controllers
 
             try
             {
+
                 db.Employee.Add(employee);
                 db.SaveChanges();
             }
