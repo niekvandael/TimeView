@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using TimeView.data;
 
@@ -53,6 +55,34 @@ namespace TimeView.DAL.Repositories.Employee
             }
 
             return null;
+        }
+
+        async Task<data.Employee> IEmployeeRepository.CreateEmployee(data.Employee employee)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseAddress);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+                var url = "api/Employees/post";
+                HttpResponseMessage response = null;
+
+                try
+                {
+                    employee.CompanyId = 1;
+                    employee.Name = "TEST";
+                    string json = JsonConvert.SerializeObject(employee);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    response = await client.PostAsync(url, content);
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
+                return null; ;
+            }
         }
     }
 }

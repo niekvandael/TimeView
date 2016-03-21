@@ -34,7 +34,6 @@ namespace TimeViewMobile.ViewModels
 
             // Load data & commands
             this.Employees = new ObservableCollection<Employee>();
-            LoadData();
         }
 
         private String _title = "Select Schedule";
@@ -72,7 +71,7 @@ namespace TimeViewMobile.ViewModels
             }
         }
 
-        private Employee _currentUser = new Employee { Id = 2};
+        private Employee _currentUser;
         public Employee CurrentUser
         {
             get { return _currentUser; }
@@ -115,11 +114,12 @@ namespace TimeViewMobile.ViewModels
 
         public async void LoadData()
         {
+ /*
             // Hardcoded userid because of lack of time to implement settings screen
             _currentUser = await _employeeDataService.GetEmployee(new Employee { Id = 2 });
 
             CurrentUser = _currentUser;
-
+*/
             Employee copyCurrentUser = _currentUser;
             copyCurrentUser.ImageSource = "people.png";
             copyCurrentUser.Name = "My Schedule";

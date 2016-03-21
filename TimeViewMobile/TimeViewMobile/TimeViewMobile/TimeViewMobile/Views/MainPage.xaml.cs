@@ -15,6 +15,7 @@ namespace TimeViewMobile.Views
         public ScheduleListView scheduleList;
         private ScheduleDetailView scheduleDetail;
         private Login login;
+        private Register register;
 
         public MainPage()
         {
@@ -24,6 +25,7 @@ namespace TimeViewMobile.Views
             scheduleList = new ScheduleListView();
             scheduleDetail = new ScheduleDetailView();
             login = new Login();
+            register = new Register();
 
             this.Master = login;
             this.Detail = scheduleList;
@@ -59,6 +61,14 @@ namespace TimeViewMobile.Views
             MessagingCenter.Subscribe<LoadFollowersList, Employee>(this, "LoadFollowersList", (sender, arg) => {
                 NavigateToFollowingList();
             });
+
+            MessagingCenter.Subscribe<LoadRegisterView, Employee>(this, "LoadRegisterView", (sender, arg) => {
+                NavigateToRegisterView();
+            });
+
+
+
+            
         }
 
         void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -82,5 +92,12 @@ namespace TimeViewMobile.Views
             this.Master = followingListView;
             this.IsPresented = true;
         }
+
+        void NavigateToRegisterView() {
+            this.Master = register;
+            this.IsPresented = true;
+        }
+
+
     }
 }

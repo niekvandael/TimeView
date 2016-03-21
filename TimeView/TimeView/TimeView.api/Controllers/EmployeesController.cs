@@ -3,6 +3,9 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web.Http;
 using System.Web.Http.Description;
 using TimeView.context;
@@ -98,11 +101,25 @@ namespace TimeView.api.Controllers
         [ResponseType(typeof (Employee))]
         public IHttpActionResult PostEmployee(Employee employee)
         {
+            employee.CompanyId = 1;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            Employee emp = db.Employee.Find(employee.Username = employee.Username);
+
+            if (emp != null) {
+                IHttpActionResult response;
+                HttpResponseMessage responseMsg = new HttpResponseMessage(HttpStatusCode.Ambiguous);
+                response = ResponseMessage(responseMsg);
+                return response;
+            }
+
+            String salt = GetSalt().ToString();
+            employee.Password = salt + sha256(salt + employee.Password);
+            
             db.Employee.Add(employee);
             db.SaveChanges();
 
@@ -137,6 +154,34 @@ namespace TimeView.api.Controllers
         private bool EmployeeExists(int id)
         {
             return db.Employee.Count(e => e.Id == id) > 0;
+        }
+
+        static string sha256(string password)
+        {
+            System.Security.Cryptography.SHA256Managed crypt = new System.Security.Cryptography.SHA256Managed();
+            System.Text.StringBuilder hash = new System.Text.StringBuilder();
+            byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(password), 0, Encoding.UTF8.GetByteCount(password));
+            foreach (byte theByte in crypto)
+            {
+                hash.Append(theByte.ToString("x2"));
+            }
+            return hash.ToString();
+        }
+
+        private static int saltLengthLimit = 32;
+        private static byte[] GetSalt()
+        {
+            return GetSalt(saltLengthLimit);
+        }
+        private static byte[] GetSalt(int maximumSaltLength)
+        {
+            var salt = new byte[maximumSaltLength];
+            using (var random = new RNGCryptoServiceProvider())
+            {
+                random.GetNonZeroBytes(salt);
+            }
+
+            return salt;
         }
     }
 }

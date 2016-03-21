@@ -22,5 +22,10 @@ namespace TimeView.wpf.Services
         {
             return await _repository.GetEmployee(employee.Id);
         }
+
+        public async Task<Employee> CreateEmployee(Employee employee)
+        {
+            return await _repository.CreateEmployee(employee);
+        }
     }
 }
