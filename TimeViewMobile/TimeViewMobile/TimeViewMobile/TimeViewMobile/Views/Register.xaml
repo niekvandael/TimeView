@@ -11,6 +11,7 @@
     <ContentView>
       <StackLayout Orientation="Vertical">
           <Entry Placeholder="Email" Text="{Binding Employee.Username}"></Entry>
+          <Entry Placeholder="Name" Text="{Binding Employee.Name}"></Entry>
           <Entry Placeholder="Password" IsPassword="True" Text="{Binding Employee.Password}"></Entry>
           <Entry Placeholder="Repeat password" IsPassword="True" Text="{Binding Password2}"></Entry>
           

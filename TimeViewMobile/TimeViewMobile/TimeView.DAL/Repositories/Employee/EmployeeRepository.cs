@@ -71,8 +71,6 @@ namespace TimeView.DAL.Repositories.Employee
 
                 try
                 {
-                    employee.CompanyId = 1;
-                    employee.Name = "TEST";
                     string json = JsonConvert.SerializeObject(employee);
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
                     response = await client.PostAsync(url, content);
