@@ -108,8 +108,8 @@ namespace TimeView.api.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            Employee emp = db.Employee.Find(employee.Username = employee.Username);
+/*
+            Employee emp = db.Employee.Find(e => e.Username = employee.Username);
 
             if (emp != null) {
                 IHttpActionResult response;
@@ -117,6 +117,7 @@ namespace TimeView.api.Controllers
                 response = ResponseMessage(responseMsg);
                 return response;
             }
+*/
 
             String salt = GetSalt().ToString();
             employee.Password = salt + sha256(salt + employee.Password);
