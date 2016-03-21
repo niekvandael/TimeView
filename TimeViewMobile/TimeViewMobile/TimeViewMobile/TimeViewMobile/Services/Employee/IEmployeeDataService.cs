@@ -7,6 +7,6 @@ namespace TimeView.wpf.Services
     {
         Task<Employee> GetEmployee(string username, string password);
         Task<Employee> GetEmployee(Employee employee);
-        Task<Employee> CreateEmployee(Employee employee);
+        Task<bool> CreateEmployee(Employee employee);
     }
 }

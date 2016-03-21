@@ -58,7 +58,7 @@ namespace TimeView.DAL.Repositories.Employee
             return null;
         }
 
-        async Task<data.Employee> IEmployeeRepository.CreateEmployee(TimeView.data.Employee employee)
+        async Task<bool> IEmployeeRepository.CreateEmployee(TimeView.data.Employee employee)
         {
             using (var client = new HttpClient())
             {
@@ -80,12 +80,13 @@ namespace TimeView.DAL.Repositories.Employee
                     string json = JsonConvert.SerializeObject(employee);
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
                     response = await client.PostAsync(url, content);
+                    return true;
                 }
                 catch (Exception e)
                 {
-                    return null;
+                    return false;
                 }
-                return null; ;
+                return false;
             }
         }
     }

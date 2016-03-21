@@ -83,15 +83,15 @@ namespace TimeViewMobile.ViewModels
                 return;
             }
 
-            this._employee = await _IEmployeeDataService.CreateEmployee(this._employee);
-
-            if (this._employee != null && this._employee.Id != -1)
-            {
+            bool success = await _IEmployeeDataService.CreateEmployee(this._employee);
+            if (success) {
+                this._employee = await _IEmployeeDataService.GetEmployee(this._employee.Username, this._employee.Password);
                 MessagingCenter.Send<LoadFollowersList, Employee>(new LoadFollowersList(), "LoadFollowersList", this._employee);
             }
             else {
                 Message = "Username already in use";
             }
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

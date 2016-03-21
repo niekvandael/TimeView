@@ -52,10 +52,12 @@ namespace TimeViewMobile.ViewModels
         }
 
         private async void LoginAction() {
-            this._employee = await _IEmployeeDataService.GetEmployee(this._employee.Username, this._employee.Password);
+            Employee tempEmployee = new Employee { Id = -1 };
+            tempEmployee = await _IEmployeeDataService.GetEmployee(this._employee.Username, this._employee.Password);
 
-            if (this._employee != null && this._employee.Id != -1)
+            if (tempEmployee != null && tempEmployee.Id != -1)
             {
+                this._employee = tempEmployee;
                 MessagingCenter.Send<LoadFollowersList, Employee>(new LoadFollowersList(), "LoadFollowersList", this._employee);
             }
             else {

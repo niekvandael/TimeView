@@ -23,7 +23,7 @@ namespace TimeViewMobile.ViewModels
         {
             // Register to events
             MessagingCenter.Subscribe<LoadFollowersList, Employee>(this, "LoadFollowersList", (sender, arg) => {
-                this.SelectedEmployee = arg;
+                this._currentUser = arg;
                 LoadData();
             });
 
@@ -114,22 +114,20 @@ namespace TimeViewMobile.ViewModels
 
         public async void LoadData()
         {
- /*
-            // Hardcoded userid because of lack of time to implement settings screen
-            _currentUser = await _employeeDataService.GetEmployee(new Employee { Id = 2 });
 
-            CurrentUser = _currentUser;
-*/
             Employee copyCurrentUser = _currentUser;
             copyCurrentUser.ImageSource = "people.png";
             copyCurrentUser.Name = "My Schedule";
 
             var employees = new ObservableCollection<Employee>();
             employees.Add(copyCurrentUser);
-            foreach (Employee emp in CurrentUser.Following)
+            if (CurrentUser.Following != null)
             {
-                emp.ImageSource = "reminder.png";
-                employees.Add(emp);
+                foreach (Employee emp in CurrentUser.Following)
+                {
+                    emp.ImageSource = "reminder.png";
+                    employees.Add(emp);
+                }
             }
             Employees = employees.ToObservableCollection();
         }

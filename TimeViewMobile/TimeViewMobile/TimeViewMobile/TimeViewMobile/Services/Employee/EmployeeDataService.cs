@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using TimeView.DAL.Repositories.Employee;
 using TimeView.data;
 
@@ -23,7 +24,7 @@ namespace TimeView.wpf.Services
             return await _repository.GetEmployee(employee.Id);
         }
 
-        public async Task<Employee> CreateEmployee(Employee employee)
+        public async Task<bool> CreateEmployee(Employee employee)
         {
             return await _repository.CreateEmployee(employee);
         }

@@ -7,20 +7,25 @@
              >
   <Label Text="{Binding MainText}" VerticalOptions="Center" HorizontalOptions="Center" />
   <Label Text="TimeView Login"></Label>
-  
-  <Grid>
-    <ContentView>
-      <StackLayout Orientation="Vertical">
-          <Entry Placeholder="Email" Text="{Binding Employee.Username}"></Entry>
-          <Entry Placeholder="Password" IsPassword="True" Text="{Binding Employee.Password}"></Entry>
-          <Label Text="{Binding Message}" TextColor="Red"></Label>
-        <StackLayout VerticalOptions="EndAndExpand">
-          <Button FontSize="25" Text="Register" Command="{Binding RegisterCommand}"></Button>
-          <Button FontSize="25" Text="Login" Command="{Binding LoginCommand}"></Button>
-        </StackLayout>
+  <ContentView>
+    <StackLayout Orientation="Vertical">
+      <Entry Placeholder="Email" Text="{Binding Employee.Username}"></Entry>
+      <Entry Placeholder="Password" IsPassword="True" Text="{Binding Employee.Password}"></Entry>
+      <StackLayout VerticalOptions="EndAndExpand">
+        <Label Text="{Binding Message}" XAlign="Center" TextColor="Red" FontSize="15"></Label>
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+          </Grid.RowDefinitions>
+
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <Button Grid.Row="0" Grid.Column="0" FontSize="25" Text="Login" Command="{Binding LoginCommand}"></Button>
+          <Button Grid.Row="0" Grid.Column="1" FontSize="25" Text="Register" Command="{Binding RegisterCommand}"></Button>
+        </Grid>
       </StackLayout>
-    </ContentView>
-
-  </Grid>
-
+    </StackLayout>
+  </ContentView>
 </ContentPage>

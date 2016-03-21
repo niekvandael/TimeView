@@ -8,29 +8,32 @@
              >
 
   <ContentView>
-    <Grid>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="50" />
-        <RowDefinition Height="*" />
-      </Grid.RowDefinitions>
+    <StackLayout Orientation="Vertical">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="50" />
+          <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="*" />
-        <ColumnDefinition Width="*" />
-      </Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-      <Label FontSize="20" Text="{Binding CurrentUser.Name}"  HorizontalOptions="Center" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0"></Label>
+        <Label FontSize="20" Text="{Binding CurrentUser.Name}"  HorizontalOptions="Center" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0"></Label>
 
-      <ListView Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" x:Name="listView"
-                     ItemsSource="{Binding Employees}"
-                     SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}"
+        <ListView Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" x:Name="listView"
+                       ItemsSource="{Binding Employees}"
+                       SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}"
                 >
-        <ListView.ItemTemplate>
-          <DataTemplate>
-            <ImageCell Text="{Binding Name}" ImageSource="{Binding ImageSource}"/>
-          </DataTemplate>
-        </ListView.ItemTemplate>
-      </ListView>
-    </Grid>
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ImageCell Text="{Binding Name}" ImageSource="{Binding ImageSource}"/>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+      </Grid>
+      <Button IsEnabled="{Binding Editable}" VerticalOptions="EndAndExpand" FontSize="25" Text="+" Command="{Binding NewCommand}"></Button>
+    </StackLayout>
   </ContentView>
 </ContentPage>
