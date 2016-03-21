@@ -38,7 +38,7 @@ namespace TimeViewMobile.ViewModels
         }
 
         public ICommand LoginCommand { get; set; }
-
+        public ICommand RegisterCommand { get; set; }
 
         public LoginViewModel(IEmployeeDataService IEmployeeDataService)
         {
@@ -48,6 +48,7 @@ namespace TimeViewMobile.ViewModels
 
             // Set Commands
             LoginCommand = new Command(LoginAction);
+            RegisterCommand = new Command(RegisterAction);
         }
 
         private async void LoginAction() {
@@ -60,6 +61,10 @@ namespace TimeViewMobile.ViewModels
             else {
                 Message = "Incorrect credentials";
             }
+        }
+
+        private void RegisterAction() {
+            // Show empty register page
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

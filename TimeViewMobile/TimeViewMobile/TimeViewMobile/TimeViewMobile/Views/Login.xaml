@@ -15,7 +15,7 @@
           <Entry Placeholder="Password" IsPassword="True" Text="{Binding Employee.Password}"></Entry>
           <Label Text="{Binding Message}" TextColor="Red"></Label>
         <StackLayout VerticalOptions="EndAndExpand">
-          <Button FontSize="25" Text="Register" Command="{Binding LoginCommand}"></Button>
+          <Button FontSize="25" Text="Register" Command="{Binding RegisterCommand}"></Button>
           <Button FontSize="25" Text="Login" Command="{Binding LoginCommand}"></Button>
         </StackLayout>
       </StackLayout>
