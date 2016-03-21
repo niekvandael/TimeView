@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -57,7 +58,7 @@ namespace TimeView.DAL.Repositories.Employee
             return null;
         }
 
-        async Task<data.Employee> IEmployeeRepository.CreateEmployee(data.Employee employee)
+        async Task<data.Employee> IEmployeeRepository.CreateEmployee(TimeView.data.Employee employee)
         {
             using (var client = new HttpClient())
             {
@@ -73,6 +74,8 @@ namespace TimeView.DAL.Repositories.Employee
                 {
                     employee.Id = 0;
                     employee.CompanyId = 1;
+                    employee.Follower = new List<TimeView.data.Employee>();
+                    employee.Following = new List<TimeView.data.Employee>();
 
                     string json = JsonConvert.SerializeObject(employee);
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
