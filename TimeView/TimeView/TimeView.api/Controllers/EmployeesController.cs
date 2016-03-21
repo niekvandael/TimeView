@@ -101,6 +101,7 @@ namespace TimeView.api.Controllers
         [ResponseType(typeof (Employee))]
         public IHttpActionResult PostEmployee(Employee employee)
         {
+            // Temp data
             employee.CompanyId = 1;
 
             if (!ModelState.IsValid)
