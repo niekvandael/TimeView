@@ -101,9 +101,6 @@ namespace TimeView.api.Controllers
         [ResponseType(typeof(Employee))]
         public IHttpActionResult PostEmployee(Employee employee)
         {
-            // Temp data
-            employee.CompanyId = 1;
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -133,9 +130,22 @@ namespace TimeView.api.Controllers
                 return response;
             }
 
+            // Temp data
+            employee.CompanyId = 1;
 
-            db.Employee.Add(employee);
-            db.SaveChanges();
+            try
+            {
+                db.Employee.Add(employee);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                IHttpActionResult response;
+                HttpResponseMessage responseMsg = new HttpResponseMessage(HttpStatusCode.GatewayTimeout);
+                response = ResponseMessage(responseMsg);
+                return response;
+            }
+
 
             return CreatedAtRoute("DefaultApi", new { id = employee.Id }, employee);
         }
