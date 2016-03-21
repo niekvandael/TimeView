@@ -1,2 +1,2 @@
 [config]
-project = TimeView/TimeView/TimeView.sln
+project = TimeView/TimeView/TimeView.api/TimeView.api.csproj
