@@ -7,7 +7,10 @@ using TimeView.data;
 
 namespace TimeViewMobile.Messages
 {
-    public class LoadScheduleList
+    public class LoadFollowersList
     {
+        public LoadFollowersList()
+        {
+        }
     }
 }

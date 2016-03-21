@@ -9,7 +9,7 @@
     >
 
     <MasterDetailPage.Master>
-      <view:FollowingListView x:Name="masterPage" />
+      <view:Login x:Name="masterPage" />
     </MasterDetailPage.Master>
     <MasterDetailPage.Detail>
       <view:ScheduleListView />

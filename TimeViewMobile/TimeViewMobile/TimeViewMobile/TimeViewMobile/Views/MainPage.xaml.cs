@@ -11,19 +11,21 @@ namespace TimeViewMobile.Views
 {
     public partial class MainPage : MasterDetailPage
     {
-        public FollowingListView master;
+        public FollowingListView followingListView;
         public ScheduleListView scheduleList;
         private ScheduleDetailView scheduleDetail;
+        private Login login;
 
         public MainPage()
         {
 
             // Set the master and detail
-            master = new FollowingListView();
+            followingListView = new FollowingListView();
             scheduleList = new ScheduleListView();
             scheduleDetail = new ScheduleDetailView();
+            login = new Login();
 
-            this.Master = master;
+            this.Master = login;
             this.Detail = scheduleList;
 
             this.Master.Title = "Master";
@@ -39,7 +41,7 @@ namespace TimeViewMobile.Views
                 this.IsPresented = true;
             };
 
-            masterPage.ListView.ItemSelected += OnItemSelected;
+            followingListView.ListView.ItemSelected += OnItemSelected;
 
             MessagingCenter.Subscribe<LoadDetailMessage>(this, "LoadScheduleDetailView", (sender) => {
 
@@ -53,12 +55,16 @@ namespace TimeViewMobile.Views
                     return;
                 }
             });
+
+            MessagingCenter.Subscribe<LoadFollowersList, Employee>(this, "LoadFollowersList", (sender, arg) => {
+                NavigateToFollowingList();
+            });
         }
 
         void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             NavigateToScheduleList();
-            masterPage.ListView.SelectedItem = null;
+            followingListView.ListView.SelectedItem = null;
             IsPresented = false;
         }
 
@@ -71,5 +77,10 @@ namespace TimeViewMobile.Views
             this.Detail = scheduleList;
         }
 
+        void NavigateToFollowingList()
+        {
+            this.Master = followingListView;
+            this.IsPresented = true;
+        }
     }
 }

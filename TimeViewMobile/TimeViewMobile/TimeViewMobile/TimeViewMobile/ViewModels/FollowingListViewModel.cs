@@ -22,6 +22,10 @@ namespace TimeViewMobile.ViewModels
         public FollowingListViewModel(IEmployeeDataService employeeDataService)
         {
             // Register to events
+            MessagingCenter.Subscribe<LoadFollowersList, Employee>(this, "LoadFollowersList", (sender, arg) => {
+                this.SelectedEmployee = arg;
+                LoadData();
+            });
 
             // Dialogs
 
@@ -99,7 +103,7 @@ namespace TimeViewMobile.ViewModels
 
         private void OpenEmployeeSchedule(object obj)
         {
-            var a = 5;
+            
         }
 
         private bool CanOpenEmployeeSchedule(object obj)

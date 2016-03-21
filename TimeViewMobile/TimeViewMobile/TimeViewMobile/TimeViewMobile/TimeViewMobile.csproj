@@ -42,6 +42,7 @@
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Messages\DetailMessage.cs" />
     <Compile Include="Messages\LoadDetailMessage.cs" />
+    <Compile Include="Messages\LoadFollowersList.cs" />
     <Compile Include="Messages\LoadScheduleList.cs" />
     <Compile Include="Messages\ScheduleListTabbed.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -53,10 +54,14 @@
     <Compile Include="Services\Schedule\ScheduleDataService.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModels\FollowingListViewModel.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\ScheduleDetailViewModel.cs" />
     <Compile Include="ViewModels\ScheduleListViewModel.cs" />
     <Compile Include="Views\FollowingListView.xaml.cs">
       <DependentUpon>FollowingListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -134,6 +139,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\ScheduleDetailView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Login.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
