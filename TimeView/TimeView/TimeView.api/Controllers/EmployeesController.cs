@@ -22,17 +22,21 @@ namespace TimeView.api.Controllers
         {
             try
             {
-                var employee =
+                Employee employee =
                     db.Employee.Include(e => e.Company)
                         .Where(e => e.Username == username)
-                        .Where(e => e.Password == password)
                         .First();
 
-                employee.Company.Employees = null;
+                String Salt = employee.Password.Substring(0, 128);
+                if (Sha256(Salt + password) == employee.Password.Substring(128, 64))
+                {
+                    employee.Company.Employees = null;
+                    return employee;
+                }
+                return null;
 
-                return employee;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return null;
             }
@@ -98,7 +102,8 @@ namespace TimeView.api.Controllers
         }
 
         // POST: api/Employees
-        public IQueryable<Employee> PostEmployee(Employee employee)
+        [ResponseType(typeof(Employee))]
+        public IHttpActionResult PostEmployee(Employee employee)
         {
             Employee _found = new Employee { Id = -1 };
             try
@@ -119,7 +124,8 @@ namespace TimeView.api.Controllers
             try
             {
                 String salt = GetSalt();
-                employee.Password = salt.ToString() + Sha256(salt + employee.Password);
+                String encryptedPassword = Sha256(salt + employee.Password);
+                employee.Password = salt.ToString() + encryptedPassword;
             }
             catch (Exception)
             {
@@ -133,13 +139,14 @@ namespace TimeView.api.Controllers
             {
                 db.Employee.Add(employee);
                 db.SaveChanges();
+
+                return Ok(employee);
             }
             catch (Exception)
             {
                 return null;
             }
 
-            return db.Employee.Where(e => e.Username == employee.Username);
         }
 
         // DELETE: api/Employees/5
