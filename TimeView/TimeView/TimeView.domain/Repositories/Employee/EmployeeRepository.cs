@@ -11,7 +11,7 @@ namespace TimeView.data.Services
 {
     public class EmployeeRepository : IEmployeeRepository
     {
-        private readonly string baseAddress = "http://localhost:51150/";
+        private readonly string baseAddress = "https://timeview.azurewebsites.net/";
 
 
         async Task<Employee> IEmployeeRepository.GetEmployee(string username, string password)

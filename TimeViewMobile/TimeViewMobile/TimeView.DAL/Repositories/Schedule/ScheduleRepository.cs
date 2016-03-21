@@ -12,9 +12,8 @@ namespace TimeView.DAL.Repositories.Schedule
 {
     public class ScheduleRepository : IScheduleRepository
     {
-        private readonly string baseAddress = "http://timeview.azurewebsites.net/";
-//        private readonly string baseAddress = "http://localhost:51150/";
-        
+        private readonly string baseAddress = "https://timeview.azurewebsites.net/";
+
         async void IScheduleRepository.SaveSchedules(List<data.Schedule> schedules, Func<bool, bool> callback)
         {
             using (var client = new HttpClient())

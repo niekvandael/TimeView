@@ -8,7 +8,7 @@ namespace TimeView.DAL.Repositories.Category
 {
     public class CategoryEntryRepository : ICategoryEntryRepository
     {
-        private readonly string baseAddress = "http://timeview.azurewebsites.net/";
+        private readonly string baseAddress = "https://timeview.azurewebsites.net/";
 
         async Task<CategoryEntry[]> ICategoryEntryRepository.GetCategoryEntriesForCompany(int companyId)
         {

@@ -9,7 +9,7 @@ namespace TimeView.data.Services
 {
     public class ScheduleRepository : IScheduleRepository
     {
-        private readonly string baseAddress = "http://timeview.azurewebsites.net/";
+        private readonly string baseAddress = "https://timeview.azurewebsites.net/";
 
         async void IScheduleRepository.SaveSchedules(List<Schedule> schedules, Func<bool, bool> callback)
         {

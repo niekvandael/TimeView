@@ -8,7 +8,7 @@ namespace TimeView.data.Services
 {
     public class OpenDataRepository : IOpenDataRepository
     {
-        private readonly string baseAddress = "http://timeview.azurewebsites.net/";
+        private readonly string baseAddress = "https://timeview.azurewebsites.net/";
 
         public async Task<Company[]> UpdateOpenData()
         {
