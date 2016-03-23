@@ -113,7 +113,7 @@ namespace TimeViewMobile.ViewModels
      
         public async void LoadData()
         {
-            // Hardcoded userid because of lack of time to implement settings screen
+            Schedules = new ObservableCollection<Schedule>();
             SelectedEmployee = await _employeeDataService.GetEmployee(_selectedEmployee);
             var schedules = await _scheduleDataService.GetScheduleForEmployee(SelectedEmployee);
             Schedules = schedules.ToObservableCollection();
