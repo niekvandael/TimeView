@@ -113,8 +113,9 @@ namespace TimeViewMobile.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void LoadData()
+        public async void LoadData()
         {
+            this._currentUser = await this._employeeDataService.GetEmployee(this._currentUser);
 
             Employee copyCurrentUser = _currentUser;
             copyCurrentUser.ImageSource = "people.png";
