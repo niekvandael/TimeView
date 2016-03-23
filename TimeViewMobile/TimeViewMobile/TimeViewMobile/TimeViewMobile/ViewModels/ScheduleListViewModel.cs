@@ -51,6 +51,7 @@ namespace TimeViewMobile.ViewModels
             _employeeDataService = employeeDataService;
 
             // Load data & commands
+            this._schedules = new ObservableCollection<Schedule>();
             this.Schedules = new ObservableCollection<Schedule>();
             LoadCommands();
         }
@@ -77,7 +78,7 @@ namespace TimeViewMobile.ViewModels
             }
         }
 
-        private ObservableCollection<Schedule> _schedules = new ObservableCollection<Schedule>();
+        private ObservableCollection<Schedule> _schedules;
         public ObservableCollection<Schedule> Schedules
         {
             get { return _schedules; }

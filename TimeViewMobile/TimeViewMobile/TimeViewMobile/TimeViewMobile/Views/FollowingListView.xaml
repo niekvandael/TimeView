@@ -9,9 +9,12 @@
 
   <ContentView>
     <StackLayout Orientation="Vertical">
+      <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
+        <Button HorizontalOptions="End" VerticalOptions="Start" FontSize="13" Text="Logout" Command="{Binding LogoutCommand}"></Button>
+      </StackLayout>
       <Grid>
         <Grid.RowDefinitions>
-          <RowDefinition Height="50" />
+          <RowDefinition Height="0" />
           <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -33,7 +36,7 @@
           </ListView.ItemTemplate>
         </ListView>
       </Grid>
-      <Button VerticalOptions="EndAndExpand" FontSize="25" Text="+" Command="{Binding NewCommand}"></Button>
+      <Button VerticalOptions="EndAndExpand" FontSize="25" Text="Follow people" Command="{Binding NewCommand}"></Button>
     </StackLayout>
   </ContentView>
 </ContentPage>

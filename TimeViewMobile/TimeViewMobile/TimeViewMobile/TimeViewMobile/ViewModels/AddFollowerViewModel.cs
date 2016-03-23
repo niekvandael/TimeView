@@ -92,6 +92,7 @@ namespace TimeViewMobile.ViewModels
         }
 
         private void ShowFollowingList() {
+            this.CleanUp();
             MessagingCenter.Send<LoadFollowersList, Employee>(new LoadFollowersList(), "LoadFollowersList", this._currentUser);
         }
 
@@ -116,8 +117,14 @@ namespace TimeViewMobile.ViewModels
             bool success = await this._employeeDataService.UpdateEmployee(this._currentUser);
 
             if (success) {
+                this.CleanUp();
                 MessagingCenter.Send<LoadFollowersList, Employee>(new LoadFollowersList(), "LoadFollowersList", this._currentUser);
             }
+        }
+
+        private void CleanUp() {
+            this.Message = "";
+            this.Following = new Employee();
         }
     }
 }

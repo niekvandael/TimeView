@@ -17,21 +17,25 @@ namespace TimeViewMobile.Views
         private Login login;
         private Register register;
         private AddFollower addFollower;
+        private NotLoggedIn notLoggedIn;
 
-        public MainPage()
-        {
-
-            // Set the master and detail
+        private void ReloadAllViews() {
             followingListView = new FollowingListView();
             scheduleList = new ScheduleListView();
             scheduleDetail = new ScheduleDetailView();
             login = new Login();
             register = new Register();
             addFollower = new AddFollower();
+            notLoggedIn = new NotLoggedIn();
+        }
 
-            this.Master = login;
-            this.Detail = scheduleList;
 
+        public MainPage()
+        {
+            ReloadAllViews();
+
+
+            NavigateToLoginView();
             this.Master.Title = "Master";
             this.Detail.Title = "Detail";
 
@@ -71,6 +75,10 @@ namespace TimeViewMobile.Views
             MessagingCenter.Subscribe<ShowAddFollower, Employee>(this, "ShowAddFollower", (sender, arg) => {
                 NavigateToAddFollowerView();
             });
+            MessagingCenter.Subscribe<ShowLogin>(this, "ShowLogin", (sender) => {
+                NavigateToLoginView();
+            });
+            
 
 
         }
@@ -104,6 +112,15 @@ namespace TimeViewMobile.Views
 
         void NavigateToAddFollowerView() {
             this.Master = addFollower;
+            this.IsPresented = true;
+        }
+
+        void NavigateToLoginView() {
+            ReloadAllViews();
+
+            login = new Login();
+            this.Master = login;
+            this.Detail = notLoggedIn;
             this.IsPresented = true;
         }
     }

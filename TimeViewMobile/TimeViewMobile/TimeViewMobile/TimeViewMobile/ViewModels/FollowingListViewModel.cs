@@ -34,10 +34,12 @@ namespace TimeViewMobile.ViewModels
             // Load data & commands
             this.Employees = new ObservableCollection<Employee>();
             NewCommand = new Command(ShowAddFollower);
+            LogoutCommand = new Command(LogoutAction);
         }
 
         public ICommand NewCommand { get; set; }
-
+        public ICommand LogoutCommand { get; set; }
+        
         private String _title = "Select Schedule";
         public String Title
         {
@@ -145,6 +147,12 @@ namespace TimeViewMobile.ViewModels
 
         private void ShowAddFollower() {
             MessagingCenter.Send<ShowAddFollower, Employee>(new ShowAddFollower(), "ShowAddFollower", this._currentUser);
+        }
+
+        private void LogoutAction() {
+            Utilities.WriteSetting("Username", "");
+            Utilities.WriteSetting("Password", "");
+            MessagingCenter.Send<ShowLogin>(new ShowLogin(), "ShowLogin");
         }
     }
 }
