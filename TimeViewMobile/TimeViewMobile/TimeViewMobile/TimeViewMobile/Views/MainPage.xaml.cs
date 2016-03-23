@@ -16,6 +16,7 @@ namespace TimeViewMobile.Views
         private ScheduleDetailView scheduleDetail;
         private Login login;
         private Register register;
+        private AddFollower addFollower;
 
         public MainPage()
         {
@@ -26,6 +27,7 @@ namespace TimeViewMobile.Views
             scheduleDetail = new ScheduleDetailView();
             login = new Login();
             register = new Register();
+            addFollower = new AddFollower();
 
             this.Master = login;
             this.Detail = scheduleList;
@@ -66,9 +68,11 @@ namespace TimeViewMobile.Views
                 NavigateToRegisterView();
             });
 
+            MessagingCenter.Subscribe<ShowAddFollower, Employee>(this, "ShowAddFollower", (sender, arg) => {
+                NavigateToAddFollowerView();
+            });
 
 
-            
         }
 
         void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -98,6 +102,9 @@ namespace TimeViewMobile.Views
             this.IsPresented = true;
         }
 
-
+        void NavigateToAddFollowerView() {
+            this.Master = addFollower;
+            this.IsPresented = true;
+        }
     }
 }

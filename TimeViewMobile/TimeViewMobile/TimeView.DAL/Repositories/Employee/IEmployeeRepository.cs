@@ -8,5 +8,6 @@ namespace TimeView.DAL.Repositories.Employee
         Task<TimeView.data.Employee> GetEmployee(string username, string password);
         Task<TimeView.data.Employee> GetEmployee(int employeeId);
         Task<bool> CreateEmployee(TimeView.data.Employee employee);
+        Task<bool> UpdateEmployee(TimeView.data.Employee employee);
     }
 }

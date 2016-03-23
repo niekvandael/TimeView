@@ -86,7 +86,37 @@ namespace TimeView.DAL.Repositories.Employee
                 {
                     return false;
                 }
-                return false;
+            }
+        }
+
+        public async Task<bool> UpdateEmployee(data.Employee employee)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseAddress);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+                var url = "api/Employees/put";
+                HttpResponseMessage response = null;
+
+                try
+                {
+                    employee.Id = 0;
+                    employee.CompanyId = 1;
+                    employee.Follower = new List<TimeView.data.Employee>();
+                    employee.Following = new List<TimeView.data.Employee>();
+
+                    string json = JsonConvert.SerializeObject(employee);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    response = await client.PutAsync(url, content);
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
             }
         }
     }

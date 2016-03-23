@@ -74,20 +74,36 @@ namespace TimeView.api.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutEmployee(Employee employee)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
+            bool doAdd = true;
             foreach (var emp in db.Employee)
             {
                 if (employee.Username.Equals(emp.Username))
                 {
-                    return StatusCode(HttpStatusCode.Conflict);
+                    for (int i = 0; i < employee.Following.Count; i++)
+                    {
+                        Employee following = employee.Following[i];
+                        if (following.Id == -1 && following.Username != "")
+                        {
+                            Employee foundEmployee = (Employee)db.Employee.Where(e => e.Username == following.Username);
+                            employee.Following[i] = foundEmployee;
+                        }
+                    }
+
+                    // update
+                    db.Employee.Attach(employee);
+                    var entry = db.Entry(employee);
+                    entry.Property(e => e.Id).IsModified = true;
+
+                    // other changed properties
+                    db.SaveChanges();
+
+                    doAdd = false;
+                    break;
                 }
             }
 
-            db.Employee.Add(employee);
+            if(doAdd)
+                db.Employee.Add(employee);
 
             try
             {

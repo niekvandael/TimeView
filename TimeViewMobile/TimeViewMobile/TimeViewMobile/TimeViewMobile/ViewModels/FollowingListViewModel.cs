@@ -18,7 +18,6 @@ namespace TimeViewMobile.ViewModels
     public class FollowingListViewModel : INotifyPropertyChanged
     {
         private readonly IEmployeeDataService _employeeDataService;
-
         public FollowingListViewModel(IEmployeeDataService employeeDataService)
         {
             // Register to events
@@ -34,7 +33,10 @@ namespace TimeViewMobile.ViewModels
 
             // Load data & commands
             this.Employees = new ObservableCollection<Employee>();
+            NewCommand = new Command(ShowAddFollower);
         }
+
+        public ICommand NewCommand { get; set; }
 
         private String _title = "Select Schedule";
         public String Title
@@ -95,7 +97,6 @@ namespace TimeViewMobile.ViewModels
                 if (item.Id == this.CurrentUser.Id) {
                     mySchedule = true;
                 }
-
                 MessagingCenter.Send<DetailMessage, Employee>(new DetailMessage { MySchedule = mySchedule }, "LoadScheduleForUser", item);
             }
         }
@@ -112,7 +113,7 @@ namespace TimeViewMobile.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public async void LoadData()
+        public void LoadData()
         {
 
             Employee copyCurrentUser = _currentUser;
@@ -139,6 +140,10 @@ namespace TimeViewMobile.ViewModels
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        private void ShowAddFollower() {
+            MessagingCenter.Send<ShowAddFollower, Employee>(new ShowAddFollower(), "ShowAddFollower", this._currentUser);
         }
     }
 }
