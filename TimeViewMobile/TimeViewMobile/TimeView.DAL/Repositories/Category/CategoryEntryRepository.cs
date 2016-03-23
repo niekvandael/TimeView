@@ -18,7 +18,7 @@ namespace TimeView.DAL.Repositories.Category
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var url = "api/CategoryEntries?EmployeeId=" + companyId;
+                var url = "api/CategoryEntries?CompanyId=" + companyId;
 
                 var response = await client.GetAsync(url);
 

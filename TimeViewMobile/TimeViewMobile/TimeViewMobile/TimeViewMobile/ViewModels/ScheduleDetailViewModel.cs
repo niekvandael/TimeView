@@ -102,7 +102,7 @@ namespace TimeViewMobile.ViewModels
         }
 
         private async void LoadData() {
-            var result = await _categoryEntryDataService.GetCategoryEntriesForCompany(SelectedEmployee.CompanyId); // TODO
+            var result = await _categoryEntryDataService.GetCategoryEntriesForCompany(SelectedEmployee.CompanyId);
             this.CategoryEntries = result.ToObservableCollection();
 
             // Items is not yet available in xaml
