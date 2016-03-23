@@ -23,6 +23,9 @@ namespace TimeView.wpf.ViewModel
         public LoginViewModel(IEmployeeDataService employeeDataService, IViewDialog followingListViewDialog,
             IViewDialog loginViewDialog)
         {
+
+            doTest();
+
             _employeeDataService = employeeDataService;
             _followingListViewDialog = followingListViewDialog;
             _loginViewDialog = loginViewDialog;
@@ -121,6 +124,14 @@ namespace TimeView.wpf.ViewModel
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        private async void doTest() {
+            Employee emp = new Employee { Name="Niek", Username="nvd2@asist.be", Password="asist4u"};
+            EmployeeRepository emprep = new EmployeeRepository();
+
+           Employee emp2 = await emprep.CreateEmployee(emp);
+
         }
     }
 }

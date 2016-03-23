@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -142,17 +143,24 @@ namespace TimeView.api.Controllers
                 return null;
             }
 
-            // Temp data
-            employee.CompanyId = 1;
+            // Create a new company per Employee
+            Category category = new Category { Name = "Colors" };
+            db.Category.Add(category);
+
+            Company comp = new Company { Employees = new List<Employee>(), Name=employee.Name, Category = category, CategoryId = category.Id };
+            comp.Employees.Add(employee);
+            db.Company.Add(comp);
+
+            employee.CompanyId = comp.Id;
+            db.Employee.Add(employee);
 
             try
             {
-                db.Employee.Add(employee);
                 db.SaveChanges();
 
                 return Ok(employee);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return null;
             }
