@@ -11,10 +11,10 @@ namespace TimeView.data.Services
 {
     public class EmployeeRepository : IEmployeeRepository
     {
-        private readonly string baseAddress = "https://timeview.azurewebsites.net/";
+        private readonly string baseAddress = "http://localhost:51150/";
 
 
-        async Task<Employee> IEmployeeRepository.GetEmployee(string username, string password)
+        public async Task<Employee> GetEmployee(string username, string password)
         {
             using (var client = new HttpClient())
             {
@@ -36,7 +36,7 @@ namespace TimeView.data.Services
             return null;
         }
 
-        async Task<Employee> IEmployeeRepository.GetEmployee(int employeeId)
+        public async Task<TimeView.data.Employee> GetEmployee(int employeeId)
         {
             using (var client = new HttpClient())
             {
@@ -86,6 +86,32 @@ namespace TimeView.data.Services
                     return null;
                 }
                 return null; ;
+            }
+        }
+
+        public async Task<bool> UpdateEmployee(data.Employee employee)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseAddress);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+                var url = "api/Employees/put";
+                HttpResponseMessage response = null;
+
+                try
+                {
+                    string json = JsonConvert.SerializeObject(employee);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    response = await client.PutAsync(url, content);
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
             }
         }
     }

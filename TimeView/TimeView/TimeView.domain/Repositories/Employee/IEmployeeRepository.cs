@@ -7,5 +7,6 @@ namespace TimeView.domain
     {
         Task<Employee> GetEmployee(string username, string password);
         Task<Employee> GetEmployee(int employeeId);
+        Task<bool> UpdateEmployee (Employee Employee);
     }
 }

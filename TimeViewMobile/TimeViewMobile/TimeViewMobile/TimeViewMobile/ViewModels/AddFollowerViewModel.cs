@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using TimeView.data;
 using TimeView.wpf.Services;
+using TimeViewMobile.Extensions;
 using TimeViewMobile.Messages;
 using Xamarin.Forms;
 
@@ -30,7 +31,7 @@ namespace TimeViewMobile.ViewModels
             }
         }
 
-        private Employee _following;
+        private Employee _following = new Employee { Id = -1 };
         public Employee Following
         {
             get { return _following; }
@@ -94,9 +95,29 @@ namespace TimeViewMobile.ViewModels
             MessagingCenter.Send<LoadFollowersList, Employee>(new LoadFollowersList(), "LoadFollowersList", this._currentUser);
         }
 
-        private void AddNewFollower() {
-            this.CurrentUser.Following.Add(this._following);
-            this._employeeDataService.UpdateEmployee(this._currentUser);
+        private async void AddNewFollower() {
+            Message = "";
+            if (!Utilities.IsValidEmail(this._following.Username)){
+                Message = "Email address not valid";
+                return;
+            };
+
+            if (this._following.Username.ToLower() == this._currentUser.Username.ToLower())
+            {
+                Message = "Cannot add yourself";
+                return;
+            };
+
+            if (this._currentUser.Following == null) {
+                this._currentUser.Following = new List<Employee>();
+            }
+
+            this._currentUser.Following.Add(this._following);
+            bool success = await this._employeeDataService.UpdateEmployee(this._currentUser);
+
+            if (success) {
+                MessagingCenter.Send<LoadFollowersList, Employee>(new LoadFollowersList(), "LoadFollowersList", this._currentUser);
+            }
         }
     }
 }

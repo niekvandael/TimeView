@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TimeView.data;
 using TimeView.domain;
@@ -24,6 +25,11 @@ namespace TimeView.Test.Mocks
             }
 
             return Task.FromResult(employee);
+        }
+
+        public Task<bool> UpdateEmployee(Employee Employee)
+        {
+            throw new NotImplementedException();
         }
 
         private Employee GetOneEmployee()

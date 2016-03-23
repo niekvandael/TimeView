@@ -8,19 +8,24 @@
   <Label Text="Follow other people"></Label>
   <ContentView>
     <StackLayout Orientation="Vertical">
-      <Entry Placeholder="Email of person to follow" Text="{Binding Employee.Username}"></Entry>
-      <Grid>
-        <Grid.RowDefinitions>
-          <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+      <Entry Placeholder="Email of person to follow" Text="{Binding Following.Username}"></Entry>
+      <StackLayout Orientation="Vertical" VerticalOptions="EndAndExpand">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+          </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="*" />
-          <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Button Grid.Row="0" Grid.Column="0" FontSize="25" Text="Add" Command="{Binding NewCommand}"></Button>
-        <Button Grid.Row="0" Grid.Column="1" FontSize="25" Text="Cancel" Command="{Binding CancelCommand}"></Button>
-      </Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          
+          <Label HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="20" Text="{Binding Message}" TextColor="Red"></Label>
+          <Button Grid.Row="1" Grid.Column="0" FontSize="25" Text="Add" Command="{Binding NewCommand}"></Button>
+          <Button Grid.Row="1" Grid.Column="1" FontSize="25" Text="Cancel" Command="{Binding CancelCommand}"></Button>
+        </Grid>
+      </StackLayout>
     </StackLayout>
   </ContentView>
 </ContentPage>

@@ -103,11 +103,6 @@ namespace TimeView.DAL.Repositories.Employee
 
                 try
                 {
-                    employee.Id = 0;
-                    employee.CompanyId = 1;
-                    employee.Follower = new List<TimeView.data.Employee>();
-                    employee.Following = new List<TimeView.data.Employee>();
-
                     string json = JsonConvert.SerializeObject(employee);
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
                     response = await client.PutAsync(url, content);
