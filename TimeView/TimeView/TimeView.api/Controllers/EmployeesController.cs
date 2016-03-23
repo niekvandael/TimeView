@@ -74,30 +74,36 @@ namespace TimeView.api.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutEmployee(Employee employee)
         {
+            Employee DbEmployee =
+                db.Employee.Include(e => e.Company)
+                    .Where(e => e.Username == employee.Username)
+                    .Include(e => e.Following)
+                    .First();
 
-            for (int i = 0; i < employee.Following.Count; i++)
+            foreach (Employee following in employee.Following)
             {
-                Employee following = employee.Following[i];
-                if (following.Id == -1 && following.Username != "")
+                bool found = false;
+                foreach (Employee emp in DbEmployee.Following)
                 {
-                    try
-                    {
-                        Employee foundEmployee = db.Employee.Where(e => e.Username == following.Username).First();
-                        employee.Following[i] = foundEmployee;
+                    if (following.Id == DbEmployee.Id) {
+                        found = true;
                     }
-                    catch (Exception ex)
-                    {
-                        // Un-existing employee
-                    }
+                }
 
+                if (!found) {
+                    Employee empToAdd = db.Employee.Include(e => e.Company)
+                        .Where(e => e.Username == following.Username)
+                        .First();
+                    DbEmployee.Following.Add(empToAdd);
                 }
             }
+
 
             try
             {
                 db.SaveChanges();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
                 throw;
             }
