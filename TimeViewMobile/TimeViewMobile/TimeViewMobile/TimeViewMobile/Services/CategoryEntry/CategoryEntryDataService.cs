@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using TimeView.DAL.Repositories.Category;
 using TimeView.data;
 
@@ -13,9 +14,24 @@ namespace TimeView.wpf.Services
             _repository = repository;
         }
 
-        public async Task<CategoryEntry[]> GetCategoryEntriesForCompany(int companyId)
+        public async Task<CategoryEntry> CreateCategoryEntry(CategoryEntry categoryEntry)
         {
-            return await _repository.GetCategoryEntriesForCompany(companyId);
+            return await _repository.CreateCategoryEntry(categoryEntry);
+        }
+
+        public async Task<bool> DeleteCategoryEntry(CategoryEntry categoryEntry)
+        {
+            return await _repository.DeleteCategoryEntry(categoryEntry);
+        }
+
+        public async Task<CategoryEntry[]> GetCategoryEntries(int companyId)
+        {
+            return await _repository.GetCategoryEntries(companyId);
+        }
+
+        public async Task<CategoryEntry> UpdateCategoryEntry(CategoryEntry categoryEntry)
+        {
+            return await _repository.UpdateCategoryEntry(categoryEntry);
         }
     }
 }

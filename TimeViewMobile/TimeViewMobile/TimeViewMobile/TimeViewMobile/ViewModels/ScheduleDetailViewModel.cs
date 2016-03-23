@@ -102,7 +102,7 @@ namespace TimeViewMobile.ViewModels
         }
 
         private async void LoadData() {
-            var result = await _categoryEntryDataService.GetCategoryEntriesForCompany(SelectedEmployee.CompanyId);
+            var result = await _categoryEntryDataService.GetCategoryEntries(SelectedEmployee.CompanyId);
             this.CategoryEntries = result.ToObservableCollection();
 
             // Items is not yet available in xaml
@@ -115,6 +115,10 @@ namespace TimeViewMobile.ViewModels
             foreach (var item in CategoryEntries)
             {
                 _categoryEntryPicker.Items.Add(item.Name);  
+            }
+
+            if (this.CategoryEntries.Count == 0) {
+                _categoryEntryPicker.Items.Add("No entries yet...");
             }
         }
 

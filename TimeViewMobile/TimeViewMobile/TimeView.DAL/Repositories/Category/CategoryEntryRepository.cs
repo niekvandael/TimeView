@@ -10,7 +10,27 @@ namespace TimeView.DAL.Repositories.Category
     {
         private readonly string baseAddress = "https://timeview.azurewebsites.net/";
 
-        async Task<CategoryEntry[]> ICategoryEntryRepository.GetCategoryEntriesForCompany(int companyId)
+        public Task<CategoryEntry> CreateCategoryEntry(CategoryEntry categoryEntry)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteCategoryEntry(CategoryEntry categoryEntry)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<CategoryEntry> UpdateCategoryEntry(CategoryEntry categoryEntry)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<bool> ICategoryEntryRepository.DeleteCategoryEntry(CategoryEntry categoryEntry)
+        {
+            throw new NotImplementedException();
+        }
+
+        async Task<CategoryEntry[]> ICategoryEntryRepository.GetCategoryEntries(int categoryId)
         {
             using (var client = new HttpClient())
             {
@@ -18,7 +38,7 @@ namespace TimeView.DAL.Repositories.Category
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var url = "api/CategoryEntries?CompanyId=" + companyId;
+                var url = "api/CategoryEntries?CategoryId=" + categoryId;
 
                 var response = await client.GetAsync(url);
 

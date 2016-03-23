@@ -5,6 +5,9 @@ namespace TimeView.DAL.Repositories.Category
 {
     public interface ICategoryEntryRepository
     {
-        Task<CategoryEntry[]> GetCategoryEntriesForCompany(int companyId);
+        Task<CategoryEntry[]> GetCategoryEntries(int categoryId);
+        Task<CategoryEntry> CreateCategoryEntry(CategoryEntry categoryEntry);
+        Task<bool> DeleteCategoryEntry(CategoryEntry categoryEntry);
+        Task<CategoryEntry> UpdateCategoryEntry(CategoryEntry categoryEntry);
     }
 }

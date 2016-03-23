@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using TimeView.data;
 using TimeView.wpf.Services;
+using TimeViewMobile.Extensions;
 using TimeViewMobile.Messages;
 using Xamarin.Forms;
 
@@ -42,6 +43,10 @@ namespace TimeViewMobile.ViewModels
 
         public LoginViewModel(IEmployeeDataService IEmployeeDataService)
         {
+            // Get data from storage
+            this.Employee.Username = Utilities.GetSetting("Username");
+            this.Employee.Password = Utilities.GetSetting("Password");
+
             // Set Data
             this._IEmployeeDataService = IEmployeeDataService;
             this.Employee.Id = -1;
@@ -49,6 +54,11 @@ namespace TimeViewMobile.ViewModels
             // Set Commands
             LoginCommand = new Command(LoginAction);
             RegisterCommand = new Command(RegisterAction);
+
+            if (this.Employee.Username != "" && this.Employee.Password != "")
+            {
+                this.LoginAction();
+            }
         }
 
         private async void LoginAction() {
@@ -57,6 +67,9 @@ namespace TimeViewMobile.ViewModels
 
             if (tempEmployee != null && tempEmployee.Id != -1)
             {
+                Utilities.WriteSetting("Username", this._employee.Username);
+                Utilities.WriteSetting("Password", this._employee.Password);
+
                 this._employee = tempEmployee;
                 MessagingCenter.Send<LoadFollowersList, Employee>(new LoadFollowersList(), "LoadFollowersList", this._employee);
             }

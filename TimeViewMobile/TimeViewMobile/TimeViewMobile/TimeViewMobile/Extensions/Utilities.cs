@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Plugin.Settings;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,14 @@ namespace TimeViewMobile.Extensions
             {
                 return false;
             }
+        }
+
+        public static String GetSetting(string name) {
+            return CrossSettings.Current.GetValueOrDefault(name, "");
+        }
+
+        public static void WriteSetting(string name, string content) {
+            CrossSettings.Current.AddOrUpdateValue(name, content);
         }
     }
 }
