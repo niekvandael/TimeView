@@ -51,6 +51,7 @@ namespace TimeView.data.Services
                 {
 
                     string json = JsonConvert.SerializeObject(categoryEntry);
+ 
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
                     response = await client.PostAsync(url, content);
                     return true;
