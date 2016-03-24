@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
@@ -78,9 +79,18 @@ namespace TimeView.api.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            categoryEntry.Start = new DateTime(1900, 01, 01, categoryEntry.Start.Hour, categoryEntry.Start.Minute, categoryEntry.Start.Second);
+            categoryEntry.End = new DateTime(1900, 01, 01, categoryEntry.End.Hour, categoryEntry.End.Minute, categoryEntry.End.Second);
             db.CategoryEntry.Add(categoryEntry);
-            db.SaveChanges();
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
 
             return CreatedAtRoute("DefaultApi", new {id = categoryEntry.Id}, categoryEntry);
         }

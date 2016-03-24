@@ -23,6 +23,7 @@ namespace TimeViewMobile.ViewModels
         private Picker _categoryEntryPicker;
 
         public ICommand SaveCommand { get; set; }
+        public ICommand AddCategoryEntryCommand { get; set; }
 
         public ScheduleDetailViewModel(ICategoryEntryDataService categoryEntryDataService, IScheduleDataService scheduleDataService, Picker categoryEntryPicker)
         {
@@ -36,11 +37,13 @@ namespace TimeViewMobile.ViewModels
                 if (sender.IsScheduleDetail)
                 {
                     this.Message = "";
-                    this.Schedule = sender.Schedule;
-
-                    SetItemInCategoryEntryPicker();
+                    if (sender.Schedule != null) {
+                        this.Schedule = sender.Schedule;
+                        SetItemInCategoryEntryPicker();
+                    }
                 }
             });
+
 
             // Set data
             this._categoryEntryDataService = categoryEntryDataService;
@@ -49,6 +52,7 @@ namespace TimeViewMobile.ViewModels
 
             // Set Commands
             SaveCommand = new Command(SaveAction);
+            AddCategoryEntryCommand = new Command(AddCategoryEntryAction);
         }
         
 
@@ -86,6 +90,10 @@ namespace TimeViewMobile.ViewModels
             SchedulesToUpdate.Add(Schedule);
 
             this._scheduleDataService.SaveSchedules(SchedulesToUpdate, SaveCallback);
+        }
+
+        private void AddCategoryEntryAction(){
+            MessagingCenter.Send<ShowAddCategoryEntry, Employee>(new ShowAddCategoryEntry(), "ShowAddCategoryEntry", this._selectedEmployee);
         }
 
         private bool SaveCallback(bool success)

@@ -12,7 +12,7 @@
         <Grid>
           <Grid.RowDefinitions>
             <RowDefinition Height="50" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="0" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -29,8 +29,10 @@
           <DatePicker Date="{Binding Schedule.Day}" Grid.Row="2" Grid.Column="1" Format="ddd dd-MM-yyyy"></DatePicker>
 
           <Label FontSize="20" Text="Time" Grid.Row="3" Grid.Column="0"/>
-          <Picker x:Name="CategoryEntryPicker"  Grid.Row="3" Grid.Column="1" />
-        
+          <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="1" >
+            <Picker x:Name="CategoryEntryPicker" />
+            <Button Text="Add Colors"  Command="{Binding AddCategoryEntryCommand}"></Button>
+          </StackLayout>
         </Grid>
         <Label Text="{Binding Message}" TextColor="Red"></Label>
         <Button VerticalOptions="EndAndExpand" FontSize="25" Text="Save" Command="{Binding SaveCommand}"></Button>

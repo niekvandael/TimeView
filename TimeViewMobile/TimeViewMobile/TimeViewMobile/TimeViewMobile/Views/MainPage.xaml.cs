@@ -18,6 +18,7 @@ namespace TimeViewMobile.Views
         private Register register;
         private AddFollower addFollower;
         private NotLoggedIn notLoggedIn;
+        private AddCategoryEntry addCategoryEntry;
 
         private void ReloadAllViews() {
             followingListView = new FollowingListView();
@@ -27,6 +28,7 @@ namespace TimeViewMobile.Views
             register = new Register();
             addFollower = new AddFollower();
             notLoggedIn = new NotLoggedIn();
+            addCategoryEntry = new AddCategoryEntry();
         }
 
 
@@ -78,6 +80,9 @@ namespace TimeViewMobile.Views
             MessagingCenter.Subscribe<ShowLogin>(this, "ShowLogin", (sender) => {
                 NavigateToLoginView();
             });
+            MessagingCenter.Subscribe<ShowAddCategoryEntry, Employee>(this, "ShowAddCategoryEntry", (sender, arg) => {
+                NavigateToAddCategoryEntryView();
+            });
             
 
 
@@ -122,6 +127,10 @@ namespace TimeViewMobile.Views
             this.Master = login;
             this.Detail = notLoggedIn;
             this.IsPresented = true;
+        }
+
+        void NavigateToAddCategoryEntryView() {
+            this.Detail = addCategoryEntry;
         }
     }
 }

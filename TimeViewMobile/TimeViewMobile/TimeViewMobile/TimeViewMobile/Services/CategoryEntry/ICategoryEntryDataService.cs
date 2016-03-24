@@ -6,7 +6,7 @@ namespace TimeView.wpf.Services
     public interface ICategoryEntryDataService
     {
         Task<CategoryEntry[]> GetCategoryEntries(int categoryEntryId);
-        Task<CategoryEntry> CreateCategoryEntry(CategoryEntry categoryEntry);
+        Task<bool> CreateCategoryEntry(CategoryEntry categoryEntry);
         Task<bool> DeleteCategoryEntry(CategoryEntry categoryEntry);
         Task<CategoryEntry> UpdateCategoryEntry(CategoryEntry categoryEntry);
     }

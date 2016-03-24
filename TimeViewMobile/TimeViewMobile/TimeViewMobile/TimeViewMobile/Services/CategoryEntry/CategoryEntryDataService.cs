@@ -14,7 +14,7 @@ namespace TimeView.wpf.Services
             _repository = repository;
         }
 
-        public async Task<CategoryEntry> CreateCategoryEntry(CategoryEntry categoryEntry)
+        public async Task<bool> CreateCategoryEntry(CategoryEntry categoryEntry)
         {
             return await _repository.CreateCategoryEntry(categoryEntry);
         }

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using TimeView.data;
 
@@ -8,11 +10,36 @@ namespace TimeView.DAL.Repositories.Category
 {
     public class CategoryEntryRepository : ICategoryEntryRepository
     {
-        private readonly string baseAddress = "https://timeview.azurewebsites.net/";
+        private readonly string baseAddress = "http://timeview.azurewebsites.net/";
 
-        public Task<CategoryEntry> CreateCategoryEntry(CategoryEntry categoryEntry)
+        public async Task<bool> CreateCategoryEntry(CategoryEntry categoryEntry)
         {
-            throw new NotImplementedException();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseAddress);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+                var url = "api/CategoryEntries/post";
+                HttpResponseMessage response = null;
+
+                try
+                {
+                    string json = JsonConvert.SerializeObject(categoryEntry);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    response = await client.PostAsync(url, content);
+
+                    if (response.IsSuccessStatusCode) {
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+            }
         }
 
         public bool DeleteCategoryEntry(CategoryEntry categoryEntry)
