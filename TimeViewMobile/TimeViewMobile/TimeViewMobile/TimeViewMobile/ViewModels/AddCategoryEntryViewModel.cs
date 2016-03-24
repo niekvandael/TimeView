@@ -20,6 +20,8 @@ namespace TimeViewMobile.ViewModels
         public ICommand CancelCommand { get; set; }
 
         private Picker _categoryEntryPicker;
+        private TimePicker _startTimePicker;
+        private TimePicker _endTimePicker;
 
         private readonly IEmployeeDataService _employeeDataService;
         private readonly ICategoryEntryDataService _categoryEntryDataService;
@@ -59,12 +61,13 @@ namespace TimeViewMobile.ViewModels
 
         public ICommand LoginCommand { get; set; }
 
-        public AddCategoryEntryViewModel(IEmployeeDataService IEmployeeDataService, ICategoryEntryDataService ICategoryEntryDataService, Picker categoryEntryPicker)
+        public AddCategoryEntryViewModel(IEmployeeDataService IEmployeeDataService, ICategoryEntryDataService ICategoryEntryDataService, Picker categoryEntryPicker, TimePicker startTimePicker, TimePicker endTimePicker)
         {
             this._employeeDataService = IEmployeeDataService;
             this._categoryEntryDataService = ICategoryEntryDataService;
             this._categoryEntryPicker = categoryEntryPicker;
-
+            this._startTimePicker = startTimePicker;
+            this._endTimePicker = endTimePicker;
             LoadCategoryEntryPicker();
             this._categoryEntry = new CategoryEntry ();
 
@@ -76,7 +79,7 @@ namespace TimeViewMobile.ViewModels
 
             // Commands
             SaveCommand = new Command(SaveCategoryEntry);
-            CancelCommand = new Command(ShowScheduleDetailView);
+            CancelCommand = new Command(ShowScheduleDetailViewWithoutDefault);
 
         }
 
@@ -89,62 +92,38 @@ namespace TimeViewMobile.ViewModels
             }
         }
 
-        public IList<String> GetAllColors()
-        {
-            /*
-                All Colors in Xamarin.Forms.Color
-            */
-            String[] colors = {
-                "Aqua",
-                "Black",
-                "Blue",
-                "Fuchsia",
-                "Gray",
-                "Green",
-                "Lime",
-                "Maroon",
-                "Navy",
-                "Olive",
-                "Pink",
-                "Purple",
-                "Red",
-                "Silver",
-                "Teal",
-                "Transparent",
-                "White",
-                "Yellow"
-            };
-
-            foreach (String color in colors)
-            {
-                this._categoryEntryPicker.Items.Add(color);
-            }
-            return colors;
-        }
-
         public void LoadCategoryEntryPicker()
         {
-            var allColors = this.GetAllColors();
+            var allColors = Utilities.GetColors();
             foreach (String color in allColors)
             {
                 this._categoryEntryPicker.Items.Add(color);
             }
         }
 
-        private void ShowScheduleDetailView()
+        private void ShowScheduleDetailViewWithoutDefault() {
+            this.ShowScheduleDetailView(null);
+        }
+
+        private void ShowScheduleDetailView(CategoryEntry defaultCategoryEntry)
         {
             this.CleanUp();
-            MessagingCenter.Send<LoadDetailMessage>(new LoadDetailMessage { IsScheduleDetail = true }, "LoadScheduleDetailView");
-            MessagingCenter.Send<LoadDetailMessage>(new LoadDetailMessage { IsScheduleDetail = true, Schedule = null }, "LoadScheduleDetailView");
+            MessagingCenter.Send<LoadDetailMessage>(new LoadDetailMessage { IsScheduleDetail = true, Schedule = null, DefaultCategoryEntry = defaultCategoryEntry }, "LoadScheduleDetailView");
         }
 
         private async void SaveCategoryEntry() {
+            TimeSpan start = this._startTimePicker.Time;
+            TimeSpan end = this._endTimePicker.Time;
+
+            this.CategoryEntry.Start = new DateTime(1900, 01, 01, this._startTimePicker.Time.Hours, this._startTimePicker.Time.Minutes, this._startTimePicker.Time.Seconds);
+            this.CategoryEntry.End = new DateTime(1900, 01, 01, this._endTimePicker.Time.Hours, this._endTimePicker.Time.Minutes, this._endTimePicker.Time.Seconds);
+
             if (this.CategoryEntry.Start == null || this.CategoryEntry.End == null || this._categoryEntryPicker.SelectedIndex == -1) {
                 Message = "Please complete the form";
                 return;
             }
 
-            if (this.CategoryEntry.Start > this.CategoryEntry.End) {
+            if (this.CategoryEntry.Start >= this.CategoryEntry.End) {
                 Message = "Start time must be before End time";
                 return;
             }
@@ -155,7 +134,7 @@ namespace TimeViewMobile.ViewModels
 
             if (success)
             {
-                ShowScheduleDetailView();
+                ShowScheduleDetailView(this._categoryEntry);
             } else {
                 Message = "Something went wrong, please try again";
             }
@@ -165,6 +144,10 @@ namespace TimeViewMobile.ViewModels
         {
             this.Message = "";
             this.CategoryEntry = new CategoryEntry();
+
+            this._categoryEntryPicker.SelectedIndex = -1;
+            this._startTimePicker.Time = new TimeSpan();
+            this._endTimePicker.Time = new TimeSpan();
         }
     }
 }

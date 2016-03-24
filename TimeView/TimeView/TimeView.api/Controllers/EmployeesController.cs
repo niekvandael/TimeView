@@ -25,6 +25,7 @@ namespace TimeView.api.Controllers
             {
                 Employee employee =
                     db.Employee.Include(e => e.Company)
+                        .Include(e=>e.Company)
                         .Where(e => e.Username == username)
                         .First();
 
@@ -56,6 +57,7 @@ namespace TimeView.api.Controllers
             var employee = db.Employee
                 .Include(e => e.Following.Select(f => f.Company))
                 .Include(e => e.Following)
+                .Include(e => e.Company)
                 .Where(e => e.Id == id).First();
 
             // Avoid loops

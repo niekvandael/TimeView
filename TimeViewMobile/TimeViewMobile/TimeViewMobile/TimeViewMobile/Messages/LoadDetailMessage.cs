@@ -13,5 +13,7 @@ namespace TimeViewMobile.Messages
         public bool IsScheduleDetail { get; set; }
 
         public Schedule Schedule { get; set; }
+
+        public CategoryEntry DefaultCategoryEntry { get; set; }
     }
 }

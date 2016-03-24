@@ -31,5 +31,31 @@ namespace TimeViewMobile.Extensions
         public static void WriteSetting(string name, string content) {
             CrossSettings.Current.AddOrUpdateValue(name, content);
         }
+
+        public static String[] GetColors()
+        {
+            String[] colors = {
+                "Aqua",
+                "Black",
+                "Blue",
+                "Fuchsia",
+                "Gray",
+                "Green",
+                "Lime",
+                "Maroon",
+                "Navy",
+                "Olive",
+                "Pink",
+                "Purple",
+                "Red",
+                "Silver",
+                "Teal",
+                "Transparent",
+                "White",
+                "Yellow"
+            };
+
+            return colors;
+        }
     }
 }

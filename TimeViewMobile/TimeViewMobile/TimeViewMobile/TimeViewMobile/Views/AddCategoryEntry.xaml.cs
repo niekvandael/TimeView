@@ -29,7 +29,7 @@ namespace TimeViewMobile.Views
             //
             // ListViews
             //
-            AddCategoryEntryViewModel AddCategoryEntryViewModel = new AddCategoryEntryViewModel(EmployeeDataService, CategoryEntryDataService, CategoryEntryPicker);
+            AddCategoryEntryViewModel AddCategoryEntryViewModel = new AddCategoryEntryViewModel(EmployeeDataService, CategoryEntryDataService, CategoryEntryPicker, StartTimePicker, EndTimePicker);
             this.BindingContext = AddCategoryEntryViewModel;
         }
     }

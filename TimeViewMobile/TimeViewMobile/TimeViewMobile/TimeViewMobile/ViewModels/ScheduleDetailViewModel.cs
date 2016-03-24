@@ -28,18 +28,28 @@ namespace TimeViewMobile.ViewModels
         public ScheduleDetailViewModel(ICategoryEntryDataService categoryEntryDataService, IScheduleDataService scheduleDataService, Picker categoryEntryPicker)
         {
             // Register to events
-            MessagingCenter.Subscribe<DetailMessage, Employee>(this, "LoadScheduleForUser", (sender, arg) => {
+            MessagingCenter.Subscribe<DetailMessage, Employee>(this, "LoadScheduleForUser", (sender, arg) =>
+            {
                 this.SelectedEmployee = arg;
                 LoadData();
+                SetItemInCategoryEntryPicker();
             });
+           
 
-            MessagingCenter.Subscribe<LoadDetailMessage>(this, "LoadScheduleDetailView", (sender) => {
+            MessagingCenter.Subscribe<LoadDetailMessage>(this, "LoadScheduleDetailView", (sender) =>
+            {
                 if (sender.IsScheduleDetail)
                 {
                     this.Message = "";
-                    if (sender.Schedule != null) {
+                    LoadData();
+                    if (sender.Schedule != null)
+                    {
                         this.Schedule = sender.Schedule;
                         SetItemInCategoryEntryPicker();
+                    }
+
+                    if (sender.DefaultCategoryEntry != null) {
+                        this.Schedule.CategoryEntry = sender.DefaultCategoryEntry;
                     }
                 }
             });
@@ -54,36 +64,42 @@ namespace TimeViewMobile.ViewModels
             SaveCommand = new Command(SaveAction);
             AddCategoryEntryCommand = new Command(AddCategoryEntryAction);
         }
-        
+
 
         // Binding to picker not yet available in Xamarin
-        private void SetItemInCategoryEntryPicker() {
-            if (_schedule.CategoryEntry == null)
+        private void SetItemInCategoryEntryPicker()
+        {
+            if (_schedule == null || _schedule.CategoryEntry == null)
             {
                 return; // New Instance
             }
             for (int i = 0; i < _categoryEntryPicker.Items.Count; i++)
             {
-                if (_categoryEntryPicker.Items[i].Equals(_schedule.CategoryEntry.Name)) {
+                if (_categoryEntryPicker.Items[i].Equals(ConvertCategoryEntryToDisplay(_schedule.CategoryEntry)))
+                {
                     _categoryEntryPicker.SelectedIndex = i;
+                    break;
                 }
             }
         }
 
         // Binding to picker not yet available in Xamarin
-        private void GetItemFromCategoryEntryPicker() {
+        private void GetItemFromCategoryEntryPicker()
+        {
             var selection = _categoryEntryPicker.Items[_categoryEntryPicker.SelectedIndex];
 
             foreach (CategoryEntry categoryEntry in CategoryEntries)
             {
-                if (categoryEntry.Name.Equals(selection)) {
+                if (ConvertCategoryEntryToDisplay(categoryEntry).Equals(selection))
+                {
                     Schedule.CategoryEntryId = categoryEntry.Id;
                 }
             }
 
         }
 
-        private void SaveAction() {
+        private void SaveAction()
+        {
             List<Schedule> SchedulesToUpdate = new List<Schedule>();
             // No binding on CategoryEntryPicker: it is not supported
             GetItemFromCategoryEntryPicker();
@@ -92,7 +108,8 @@ namespace TimeViewMobile.ViewModels
             this._scheduleDataService.SaveSchedules(SchedulesToUpdate, SaveCallback);
         }
 
-        private void AddCategoryEntryAction(){
+        private void AddCategoryEntryAction()
+        {
             MessagingCenter.Send<ShowAddCategoryEntry, Employee>(new ShowAddCategoryEntry(), "ShowAddCategoryEntry", this._selectedEmployee);
         }
 
@@ -109,7 +126,8 @@ namespace TimeViewMobile.ViewModels
             return true;
         }
 
-        private async void LoadData() {
+        private async void LoadData()
+        {
             var result = await _categoryEntryDataService.GetCategoryEntries(SelectedEmployee.CompanyId);
             this.CategoryEntries = result.ToObservableCollection();
 
@@ -120,14 +138,32 @@ namespace TimeViewMobile.ViewModels
                 _categoryEntryPicker.Items.RemoveAt(0);
             }
 
+            List<String> entries = new List<String>();
             foreach (var item in CategoryEntries)
             {
-                _categoryEntryPicker.Items.Add(item.Name);  
+                entries.Add(ConvertCategoryEntryToDisplay(item));
+            }
+            entries.Sort();
+
+            foreach (var item in entries)
+            {
+                _categoryEntryPicker.Items.Add(item);
             }
 
-            if (this.CategoryEntries.Count == 0) {
+
+            if (this.CategoryEntries.Count == 0)
+            {
                 _categoryEntryPicker.Items.Add("No entries yet...");
             }
+            else {
+                SetItemInCategoryEntryPicker();
+            }
+           
+        }
+
+        private String ConvertCategoryEntryToDisplay(CategoryEntry categoryEntry)
+        {
+            return categoryEntry.Name + "  [" + categoryEntry.Start.ToString("HH:mm") + " - " + categoryEntry.End.ToString("HH:mm") + "]";
         }
 
         private ObservableCollection<CategoryEntry> _categoryEntries;

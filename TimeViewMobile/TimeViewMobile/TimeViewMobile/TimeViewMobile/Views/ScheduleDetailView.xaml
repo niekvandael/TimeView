@@ -20,25 +20,23 @@
 
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="5*" />
           </Grid.ColumnDefinitions>
 
           <Label FontSize="20" Text="{Binding SelectedEmployee.Name}"  HorizontalOptions="Center" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0"></Label>
-          
+
           <Label FontSize="20" Text="Date" Grid.Row="2" Grid.Column="0"/>
           <DatePicker Date="{Binding Schedule.Day}" Grid.Row="2" Grid.Column="1" Format="ddd dd-MM-yyyy"></DatePicker>
 
           <Label FontSize="20" Text="Time" Grid.Row="3" Grid.Column="0"/>
-          <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="1" >
-            <Picker x:Name="CategoryEntryPicker" />
-            <Button Text="Add Colors"  Command="{Binding AddCategoryEntryCommand}"></Button>
-          </StackLayout>
+          <Picker x:Name="CategoryEntryPicker" Grid.Row="3" Grid.Column="1" />
+          <Button Text="+" HorizontalOptions="FillAndExpand" Command="{Binding AddCategoryEntryCommand}" Grid.Row="4" Grid.Column="1" ></Button>
         </Grid>
         <Label Text="{Binding Message}" TextColor="Red"></Label>
         <Button VerticalOptions="EndAndExpand" FontSize="25" Text="Save" Command="{Binding SaveCommand}"></Button>
       </StackLayout>
     </ContentView>
-    
+
   </Grid>
-  
+
 </ContentPage>

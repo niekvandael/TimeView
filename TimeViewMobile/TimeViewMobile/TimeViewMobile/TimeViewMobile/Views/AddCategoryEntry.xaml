@@ -5,10 +5,11 @@
              Title="Add Category Entry"
              >
   <Label Text="{Binding MainText}" VerticalOptions="Center" HorizontalOptions="Center" />
-  <Label Text="Category Entry"></Label>
 
   <ContentView>
+
     <StackLayout Orientation="Vertical">
+      <Label HorizontalOptions="CenterAndExpand" FontSize="20" Text="New TimeColor"></Label>
 
       <Grid>
         <Grid.RowDefinitions>
@@ -26,10 +27,10 @@
         <Picker Grid.Row="0" Grid.Column="1" x:Name="CategoryEntryPicker" />
 
         <Label FontSize="20" Grid.Row="1" Grid.Column="0" Text="Start: "></Label>
-        <TimePicker Time="{Binding CategoryEntry.Start}" Grid.Row="1" Grid.Column="1"></TimePicker>
+        <TimePicker x:Name="StartTimePicker" Time="{Binding StartTime}" Grid.Row="1" Grid.Column="1"></TimePicker>
 
         <Label FontSize="20" Grid.Row="2" Grid.Column="0" Text="End: "></Label>
-        <TimePicker Time="{Binding CategoryEntry.End}" Grid.Row="2" Grid.Column="1" ></TimePicker>
+        <TimePicker x:Name="EndTimePicker" Time="{Binding EndTime}" Grid.Row="2" Grid.Column="1" ></TimePicker>
 
       </Grid>
       <StackLayout Orientation="Vertical" VerticalOptions="EndAndExpand">
