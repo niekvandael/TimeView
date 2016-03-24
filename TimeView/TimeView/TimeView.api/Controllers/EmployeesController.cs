@@ -24,8 +24,8 @@ namespace TimeView.api.Controllers
             try
             {
                 Employee employee =
-                    db.Employee.Include(e => e.Company)
-                        .Include(e=>e.Company)
+                    db.Employee
+                        .Include(e => e.Company)
                         .Where(e => e.Username == username)
                         .First();
 
@@ -55,11 +55,13 @@ namespace TimeView.api.Controllers
         public IHttpActionResult GetEmployee(int id)
         {
             var employee = db.Employee
+                .Include(e => e.Company)
                 .Include(e => e.Following.Select(f => f.Company))
                 .Include(e => e.Following)
                 .Where(e => e.Id == id).First();
 
             // Avoid loops
+            employee.Company.Employees = null;
 
             for (var i = 0; i < employee.Following.Count; i++)
             {
