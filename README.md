@@ -1,4 +1,4 @@
-# Timeview: Consult work times abased on colors
+# Timeview: Consult work times based on colors
 
 ### System to consult worktimes
 System to consult worktimes based on colors.
@@ -17,7 +17,8 @@ We will focus on colors but make sure the app is easiliy extenable.
 
 ### Security
 All information will be retrieved using SSL (https).  
-User's credentials are stored using SHA-256 in combination with a random salt.
+User's credentials are stored using SHA-256 in combination with a random salt.  
+Credentials are safely stored on the user's phone once entered.
 
 ### Techniques and programming languages
 - .NET Web API
@@ -32,7 +33,7 @@ User's credentials are stored using SHA-256 in combination with a random salt.
 - C#
 
 ### Deployment
-All features are deployed on Microsoft Azure.  
+All API features are deployed on Microsoft Azure.  
 Binaries will be made available on request.
 
 ## Screenshots
