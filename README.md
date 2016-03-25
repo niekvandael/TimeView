@@ -1,39 +1,49 @@
-# TimeView
+# Timeview: Consult work times abased on colors
 
-### Systeem om werktijden van collega's of aanverwanten te raadplegen
- Hierbij gaan we ons vooral toespitsen op shiften in de zorgsector.
+### System to consult worktimes
+System to consult worktimes based on colors.
 
- We maken gebruik van volgende datasets:
- - http://opendata.brussel.be/explore/dataset/openbare-ziekenhuizen/table/
- - http://opendata.brussel.be/explore/dataset/rusthuizen-voor-ouderen/table/
- 
-### Omschrijving
- De gebruiker zal allereerst een account moeten maken. Dit account zal gekoppeld worden aan een bepaald zorgcentrum.  
-Deze centra worden geladen via de opendata sets die beschikaar zijn via de website van brussel.  
+### Description
+Anyone can create an account.  
+Once the account is created, the inituitive app will guide you trough the process of setting up your colors and times.  
+e.g. Create a color named 'Red' for the early shift (You can choose the start- and ending time)  
 
-De gebruiker (werknemer) kan eenvoudigweg zijn of haar uurrooster invullen via de applicatie en dit delen met andere gebruikers (Guests).  
-Zo is het mogelijk dat een aanverwante (guest) de applicatie enkel gebruikt ter raadpleging van het uurrrooster van de werknemer.  
-
-Eventueel kunnen wijzigingen direct gemeld worden aan de guest via email of een push bericht.
+Anyone who consult's your schedule will see the color's you have entered, not theirs.
 
 ### Details
-Iedere instelling werkt anders. Toch zijn er gelijkenissen.  
-Zo zullen bepaalde instellingen aan shiften bepaalde kleuren toekennen, en andere een naam van een dier.  
+All institutions work differently, but there are similarities.  
+Some will refer to a particular shift or customer as a color, others with an abbriviation or other reference.  
+We will focus on colors but make sure the app is easiliy extenable.  
 
-_Voorbeeld A:_
-> Shift: 9u-17u : GROEN  
-> Shift: 14u-22u : ROOD  
+### Security
+All information will be retrieved using SSL (https).  
+User's credentials are stored using SHA-256 in combination with a random salt.
 
-_Voorbeeld B:_
-> Shift: 9u-17u : Konijn  
-> Shift: 14u-22u : Eeland   
+### Techniques and programming languages
+- .NET Web API
+- .NET Entity Framework
+- REST Webservices
+- Xamarin.Forms
+- MVVM Pattern
+- XAML
+- Linq
+- Responsive design
+- Windows Presentation Foundation (WPF)
+- C#
 
-Het moet aldus mogelijk kunnen zijn om per instelling een bepaalde code te definieren om werkschema's vast te leggen.  
-Op die manier kan dan ook enkel de 'administator' van een instelling deze code's toevoegen of wijzingen.  
-Ook kan het mogelijk zijn om deze codes toe te voegen per afdeling van een instelling: dan zal er binnen een afdeling een administrator toegewezen moeten worden (1 of meer). 
+### Deployment
+All features are deployed on Microsoft Azure.  
+Binaries will be made available on request.
 
-### Extra
+## Screenshots
+### WPF Application
+![Alt text](https://raw.githubusercontent.com/niekvandael/TimeView/master/Screenshots/WPF/Following.png "Following List")
+![Alt text](https://raw.githubusercontent.com/niekvandael/TimeView/master/Screenshots/WPF/Schedule.png "Schedule")
 
-Als extra functionaliteit kan er gebruik gemaakt worden van de interne kalender of wekker functionaliteit.  
-Zo zou het mogelijk kunnen zijn om de kalender automatisch te vullen / wijzigen of de wekker bijvoorbeeld 60 min voor aanvangstijd te activeren.
+### Xamarin.Forms Application (Android screenshots)
+![Alt text](https://raw.githubusercontent.com/niekvandael/TimeView/master/Screenshots/Android/Login.png "Login")
+![Alt text](https://raw.githubusercontent.com/niekvandael/TimeView/master/Screenshots/Android/Register.png "Register")
+![Alt text](https://raw.githubusercontent.com/niekvandael/TimeView/master/Screenshots/Android/Following.png "Following")
+![Alt text](https://raw.githubusercontent.com/niekvandael/TimeView/master/Screenshots/Android/Schedule.png "Schedule")
+![Alt text](https://raw.githubusercontent.com/niekvandael/TimeView/master/Screenshots/Android/NewColor.png "New color")
 
